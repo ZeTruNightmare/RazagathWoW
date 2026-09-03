@@ -377,7 +377,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 576);
+            ClientSize = new Size(720, 592);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -432,19 +432,19 @@ namespace RazagathWoW
             _tabs.TabPages.Add(clTab);
             _tabs.TabPages.Add(setTab);
 
-            var footer = new Panel { Dock = DockStyle.Bottom, Height = 116, BackColor = Color.FromArgb(18, 15, 24) };
+            var footer = new Panel { Dock = DockStyle.Bottom, Height = 132, BackColor = Color.FromArgb(18, 15, 24) };
             _statusLabel.Text = "Starting...";
             _statusLabel.ForeColor = Color.Gainsboro;
             _statusLabel.AutoSize = false;
-            _statusLabel.Location = new Point(24, 34);
-            _statusLabel.Size = new Size(430, 20);
-            _progress.Location = new Point(24, 60);
-            _progress.Size = new Size(430, 18);
+            _statusLabel.Location = new Point(24, 44);
+            _statusLabel.Size = new Size(350, 20);
+            _progress.Location = new Point(24, 72);
+            _progress.Size = new Size(350, 18);
             _progress.Style = ProgressBarStyle.Continuous;
 
             _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
-            _playButton.Size = new Size(238, 106);
-            _playButton.Location = new Point(720 - 24 - 238, (116 - 106) / 2);
+            _playButton.Size = new Size(332, 120);
+            _playButton.Location = new Point(720 - 6 - 332, (132 - 120) / 2);
             _playButton.Enabled = false;
             _playButton.Click += async (s, e) => await OnPlayClicked();
 
