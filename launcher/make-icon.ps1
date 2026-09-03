@@ -1,43 +1,49 @@
+<#  Build launcher\razagath.ico from launcher\icon-src.png (a square PNG with
+    transparency). Produces a multi-resolution ICO (16..256) that Windows uses
+    for the exe, the taskbar, and the launcher's own title-bar icon.
+#>
 Add-Type -AssemblyName System.Drawing
 $Here = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$sizes = 16,24,32,48,64,128,256
-$pngs = New-Object System.Collections.ArrayList
+$src  = Join-Path $Here "icon-src.png"
+$out  = Join-Path $Here "razagath.ico"
+if (-not (Test-Path $src)) { throw "no icon-src.png in $Here" }
+
+$srcImg = [System.Drawing.Image]::FromFile($src)
+$sizes  = 16, 24, 32, 48, 64, 128, 256
+$pngs   = New-Object System.Collections.ArrayList
+
 foreach ($s in $sizes) {
     $bmp = New-Object System.Drawing.Bitmap $s, $s
     $g = [System.Drawing.Graphics]::FromImage($bmp)
-    $g.SmoothingMode = 'AntiAlias'
-    $g.TextRenderingHint = 'AntiAliasGridFit'
-    $rect = New-Object System.Drawing.Rectangle 0, 0, $s, $s
-    $c1 = [System.Drawing.Color]::FromArgb(70, 20, 120)
-    $c2 = [System.Drawing.Color]::FromArgb(150, 60, 220)
-    $br = New-Object System.Drawing.Drawing2D.LinearGradientBrush $rect, $c1, $c2, 45
-    $g.FillEllipse($br, 0, 0, ($s - 1), ($s - 1))
-    $fs = [int]($s * 0.62)
-    $font = New-Object System.Drawing.Font 'Georgia', $fs, ([System.Drawing.FontStyle]::Bold), ([System.Drawing.GraphicsUnit]::Pixel)
-    $sf = New-Object System.Drawing.StringFormat
-    $sf.Alignment = 'Center'; $sf.LineAlignment = 'Center'
-    $rf = New-Object System.Drawing.RectangleF 0, 0, $s, $s
-    $g.DrawString('R', $font, [System.Drawing.Brushes]::White, $rf, $sf)
+    $g.SmoothingMode     = 'AntiAlias'
+    $g.InterpolationMode  = 'HighQualityBicubic'
+    $g.PixelOffsetMode    = 'HighQuality'
+    $g.Clear([System.Drawing.Color]::Transparent)
+    # tiny sizes: shave a pixel so the round crest doesn't clip at the edges
+    $pad = if ($s -le 32) { 1 } else { 0 }
+    $g.DrawImage($srcImg, $pad, $pad, $s - 2 * $pad, $s - 2 * $pad)
     $g.Dispose()
     $ms = New-Object System.IO.MemoryStream
     $bmp.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
     [void]$pngs.Add($ms.ToArray())
     $bmp.Dispose()
 }
-$out = New-Object System.IO.MemoryStream
-$bw = New-Object System.IO.BinaryWriter $out
-$bw.Write([uint16]0); $bw.Write([uint16]1); $bw.Write([uint16]$pngs.Count)
+$srcImg.Dispose()
+
+$fs = New-Object System.IO.MemoryStream
+$bw = New-Object System.IO.BinaryWriter $fs
+$bw.Write([uint16]0); $bw.Write([uint16]1); $bw.Write([uint16]$pngs.Count)   # ICONDIR
 $offset = 6 + 16 * $pngs.Count
 for ($i = 0; $i -lt $pngs.Count; $i++) {
     $s = $sizes[$i]; $d = $pngs[$i]
     $dim = if ($s -ge 256) { 0 } else { $s }
-    $bw.Write([byte]$dim); $bw.Write([byte]$dim)
-    $bw.Write([byte]0); $bw.Write([byte]0)
-    $bw.Write([uint16]1); $bw.Write([uint16]32)
+    $bw.Write([byte]$dim); $bw.Write([byte]$dim)         # width, height
+    $bw.Write([byte]0); $bw.Write([byte]0)               # palette, reserved
+    $bw.Write([uint16]1); $bw.Write([uint16]32)          # planes, bpp
     $bw.Write([uint32]$d.Length); $bw.Write([uint32]$offset)
     $offset += $d.Length
 }
 foreach ($d in $pngs) { $bw.Write($d) }
 $bw.Flush()
-[System.IO.File]::WriteAllBytes((Join-Path $Here 'razagath.ico'), $out.ToArray())
-Write-Host ("wrote razagath.ico ({0} bytes)" -f $out.Length)
+[System.IO.File]::WriteAllBytes($out, $fs.ToArray())
+Write-Host ("wrote {0} ({1:N0} bytes, {2} sizes)" -f $out, $fs.Length, $pngs.Count)
