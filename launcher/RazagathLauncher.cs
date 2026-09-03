@@ -394,6 +394,69 @@ namespace RazagathWoW
         }
     }
 
+    // ---- owner-drawn scrolling rich text on a textured panel --------------
+    internal sealed class ChangelogView : TexturePanel
+    {
+        private struct Run { public string Text; public Color Color; public Font Font; public int Indent; public int GapAbove; }
+        private readonly System.Collections.Generic.List<Run> _runs = new System.Collections.Generic.List<Run>();
+        private int _scroll, _contentH, _viewH;
+
+        public ChangelogView()
+        {
+            Padding = new Padding(20, 16, 16, 16);
+            SetStyle(ControlStyles.Selectable, true);
+            TabStop = false;
+        }
+
+        public void Clear() { foreach (var r in _runs) r.Font.Dispose(); _runs.Clear(); _scroll = 0; Invalidate(); }
+        public void Add(string text, Color c, float size, FontStyle fs, int indent, int gapAbove)
+        {
+            _runs.Add(new Run { Text = text ?? "", Color = c, Font = new Font("Segoe UI", size, fs), Indent = indent, GapAbove = gapAbove });
+            Invalidate();
+        }
+
+        protected override void OnMouseEnter(EventArgs e) { if (CanFocus) Focus(); base.OnMouseEnter(e); }
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            int max = Math.Max(0, _contentH - _viewH);
+            _scroll = Math.Max(0, Math.Min(max, _scroll - Math.Sign(e.Delta) * 48));
+            Invalidate();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e); // texture
+            var g = e.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            int x0 = Padding.Left;
+            int w = ClientSize.Width - Padding.Horizontal;
+            _viewH = ClientSize.Height - Padding.Vertical;
+            int y = Padding.Top - _scroll;
+
+            foreach (var r in _runs)
+            {
+                y += r.GapAbove;
+                var flags = TextFormatFlags.WordBreak | TextFormatFlags.NoPadding;
+                var sz = TextRenderer.MeasureText(g, r.Text, r.Font, new Size(w - r.Indent, 0), flags);
+                if (y + sz.Height > Padding.Top - 2 && y < ClientSize.Height)
+                    TextRenderer.DrawText(g, r.Text, r.Font,
+                        new Rectangle(x0 + r.Indent, y, w - r.Indent, sz.Height), r.Color, flags);
+                y += sz.Height;
+            }
+            _contentH = y + _scroll - Padding.Top;
+
+            if (_contentH > _viewH)
+            {
+                int trackH = ClientSize.Height - 8;
+                int thumbH = Math.Max(24, (int)((float)_viewH / _contentH * trackH));
+                int max = _contentH - _viewH;
+                int thumbY = 4 + (max > 0 ? (int)((float)_scroll / max * (trackH - thumbH)) : 0);
+                using (var b = new SolidBrush(Color.FromArgb(70, 255, 255, 255)))
+                    g.FillRectangle(b, ClientSize.Width - 6, thumbY, 4, thumbH);
+            }
+        }
+    }
+
     // ---- our own dark tab buttons, wired to a DarkTabControl ----------------
     internal sealed class TabStrip : Panel
     {
@@ -401,7 +464,7 @@ namespace RazagathWoW
         private readonly string[] _labels;
         private int _hot = -1;
         public Image Texture;
-        private static readonly Color Accent = Color.FromArgb(170, 110, 55, 210);
+        private static readonly Color Accent = Color.FromArgb(235, 0, 0, 0);
         private const int BtnW = 118;
 
         public TabStrip(DarkTabControl tabs, params string[] labels)
@@ -453,8 +516,8 @@ namespace RazagathWoW
         private readonly Label _statusLabel = new Label();
         private readonly ProgressBar _progress = new ProgressBar();
         private readonly DarkTabControl _tabs = new DarkTabControl();
-        private readonly RichTextBox _news = new RichTextBox();
-        private readonly RichTextBox _changelog = new RichTextBox();
+        private readonly ChangelogView _news = new ChangelogView();
+        private readonly ChangelogView _changelog = new ChangelogView();
         private TextBox _realmBox;
         private CheckBox _windowedBox;
         private bool _busy;
@@ -490,7 +553,8 @@ namespace RazagathWoW
                 ScrimAlpha = 90          // 0-255 dark wash over the photo
             };
 
-            var panelTex = LoadEmbedded("RazagathWoW.panel-bg.jpg");
+            var panelTex   = LoadEmbedded("RazagathWoW.panel-bg.jpg");
+            var contentTex = LoadEmbedded("RazagathWoW.content-bg.jpg");
 
             _tabs.Dock = DockStyle.Fill;
             _tabs.Padding = new Point(14, 6);
@@ -498,25 +562,14 @@ namespace RazagathWoW
             // ---- Play tab ----
             var playTab = new TabPage("  Play  ") { BackColor = BackColor };
             _news.Dock = DockStyle.Fill;
-            _news.BorderStyle = BorderStyle.None;
-            _news.BackColor = Color.FromArgb(30, 25, 40);
-            _news.ForeColor = Color.Gainsboro;
-            _news.ReadOnly = true;
-            _news.Margin = new Padding(12);
-            var newsHost = new Panel { Dock = DockStyle.Fill, Padding = new Padding(12, 12, 12, 12), BackColor = BackColor };
-            newsHost.Controls.Add(_news);
-            playTab.Controls.Add(newsHost);
+            _news.Texture = contentTex;
+            playTab.Controls.Add(_news);
 
             // ---- Changelog tab ----
             var clTab = new TabPage("  Changelog  ") { BackColor = BackColor };
             _changelog.Dock = DockStyle.Fill;
-            _changelog.BorderStyle = BorderStyle.None;
-            _changelog.BackColor = Color.FromArgb(30, 25, 40);
-            _changelog.ForeColor = Color.Gainsboro;
-            _changelog.ReadOnly = true;
-            var clHost = new Panel { Dock = DockStyle.Fill, Padding = new Padding(12), BackColor = BackColor };
-            clHost.Controls.Add(_changelog);
-            clTab.Controls.Add(clHost);
+            _changelog.Texture = contentTex;
+            clTab.Controls.Add(_changelog);
 
             // ---- Settings tab ----
             var setTab = new TabPage("  Settings  ") { BackColor = BackColor };
@@ -755,39 +808,42 @@ namespace RazagathWoW
         }
 
         // ------------------------------------------------------- rendering --
+        private static readonly Color HeadColor = Color.FromArgb(214, 176, 255);
+        private static readonly Color BodyColor = Color.FromArgb(226, 220, 232);
+        private static readonly Color SubColor  = Color.FromArgb(185, 176, 198);
+
         private void RenderNews(Manifest m)
         {
             _news.Clear();
             if (m.changelog == null || m.changelog.Count == 0)
             {
-                AppendLine(_news, "Welcome to RazagathWoW.", Color.Gainsboro, 11f, FontStyle.Regular);
+                _news.Add("Welcome to RazagathWoW.", BodyColor, 11f, FontStyle.Regular, 0, 0);
                 return;
             }
             var latest = m.changelog[0];
-            AppendLine(_news, "Latest patch  -  " + latest.version + (string.IsNullOrEmpty(latest.date) ? "" : "  (" + latest.date + ")"),
-                Color.FromArgb(196, 150, 255), 13f, FontStyle.Bold);
+            _news.Add("Latest patch  -  " + latest.version
+                + (string.IsNullOrEmpty(latest.date) ? "" : "  (" + latest.date + ")"),
+                HeadColor, 13f, FontStyle.Bold, 0, 0);
             if (!string.IsNullOrEmpty(latest.title))
-                AppendLine(_news, latest.title, Color.Gainsboro, 10.5f, FontStyle.Italic);
-            _news.AppendText("\n");
+                _news.Add(latest.title, SubColor, 10.5f, FontStyle.Italic, 0, 2);
             foreach (var n in latest.notes ?? new List<string>())
-                AppendLine(_news, "  -  " + n, Color.Gainsboro, 10f, FontStyle.Regular);
+                _news.Add("-   " + n, BodyColor, 10f, FontStyle.Regular, 14, 8);
         }
 
         private void RenderChangelog(Manifest m)
         {
             _changelog.Clear();
+            bool first = true;
             foreach (var c in m.changelog ?? new List<ChangeEntry>())
             {
-                AppendLine(_changelog, c.version + (string.IsNullOrEmpty(c.date) ? "" : "   -   " + c.date),
-                    Color.FromArgb(196, 150, 255), 12f, FontStyle.Bold);
+                _changelog.Add(c.version + (string.IsNullOrEmpty(c.date) ? "" : "    -    " + c.date),
+                    HeadColor, 12f, FontStyle.Bold, 0, first ? 0 : 18);
+                first = false;
                 if (!string.IsNullOrEmpty(c.title))
-                    AppendLine(_changelog, c.title, Color.FromArgb(170, 160, 190), 10f, FontStyle.Italic);
+                    _changelog.Add(c.title, SubColor, 9.75f, FontStyle.Italic, 0, 2);
                 foreach (var n in c.notes ?? new List<string>())
-                    AppendLine(_changelog, "   -  " + n, Color.Gainsboro, 9.75f, FontStyle.Regular);
-                _changelog.AppendText("\n");
+                    _changelog.Add("-   " + n, BodyColor, 9.5f, FontStyle.Regular, 14, 6);
             }
-            _changelog.SelectionStart = 0;
-            _changelog.ScrollToCaret();
         }
 
         private static Image LoadEmbedded(string name)
@@ -806,15 +862,6 @@ namespace RazagathWoW
                 }
             }
             catch { return null; }
-        }
-
-        private static void AppendLine(RichTextBox box, string text, Color color, float size, FontStyle style)
-        {
-            box.SelectionStart = box.TextLength;
-            box.SelectionLength = 0;
-            box.SelectionColor = color;
-            box.SelectionFont = new Font("Segoe UI", size, style);
-            box.AppendText(text + "\n");
         }
 
         // -------------------------------------------------------- helpers ----
