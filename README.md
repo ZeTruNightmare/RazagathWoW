@@ -14,8 +14,8 @@ files from the latest GitHub Release, shows the changelog, and starts the game.
 | `launcher/` | `RazagathLauncher.cs` + `build.ps1` — the launcher (compiled with the Roslyn `csc` from Visual Studio, targets .NET Framework 4.8, no SDK needed) |
 | `overlay/` | Files laid onto a base client: the `SpellBladeUI` addon, `WTF/Config.wtf` (windowed by default), `realmlist.wtf` |
 | `patch/` | `patch-enUS-Z.MPQ` and the patched `Wow.exe` — **gitignored**, pulled from the module by `tools/sync-from-module.ps1`, distributed as Release assets |
-| `tools/` | `sync-from-module.ps1`, `build-release.ps1` (cut a patch), `stage-client.ps1` (full-client bundle) |
-| `installer/` | `RazagathWoW.nsi` — NSIS patcher for players who already own a 3.3.5a client |
+| `tools/` | `sync-from-module.ps1`, `build-release.ps1` (cut a patch), `build-installer.ps1`, `stage-client.ps1` (full-client bundle + publish) |
+| `installer/` | `RazagathWoW.nsi` — two-mode installer (patch existing / download full). `tools/` holds `fetch-deps.ps1` + the gitignored `7zr.exe` / `NScurl.dll`. `client-base.nsh` (generated) lists the full-client volumes. |
 | `manifest.json` | Version + file hashes + Release URLs + changelog. The one file the launcher reads. |
 
 ## Cutting a patch
@@ -32,24 +32,37 @@ That rebuilds the launcher, hashes everything, rewrites `manifest.json`,
 creates the GitHub Release, uploads assets, and pushes. Players get it on next
 launch.
 
-## Building the installers
+## Building the installer
+
+`RazagathWoW-Setup.exe` has two modes on a page after Welcome:
+
+1. **Patch an existing 3.3.5a client** — point it at the folder, it patches in place.
+2. **Download the full client (~15 GB)** — only offered when `installer/client-base.nsh`
+   is present. It NScurl-downloads the split volumes (resumable, SHA-256 checked)
+   from the `client-base-<ver>` release and extracts them with a bundled `7zr.exe`.
 
 ```powershell
-# 1. build the launcher + sync artifacts
-pwsh tools/build-release.ps1 -Repo <owner>/RazagathWoW -Version <v> -IncludeExe -DryRun
-
-# 2a. patcher (needs NSIS on PATH)
-makensis /DVERSION=<v> /DREALM=logon.example.com /DMANIFEST_URL=https://raw.githubusercontent.com/<owner>/RazagathWoW/main/manifest.json installer/RazagathWoW.nsi
-
-# 2b. full client bundle (split 7z from a clean client)
-pwsh tools/stage-client.ps1 -Source "D:\clean-335" -Dest "D:\RazagathWoW" -Zip -ManifestUrl https://raw.githubusercontent.com/<owner>/RazagathWoW/main/manifest.json
+pwsh installer/tools/fetch-deps.ps1          # once: grabs 7zr.exe + NScurl.dll (gitignored)
+pwsh tools/build-installer.ps1 -Version 2026.09.04
 ```
+
+To (re)build and publish the full-client bundle, from a **clean** 3.3.5a client:
+
+```powershell
+pwsh tools/stage-client.ps1 -Source "D:\ChromieCraft_clean" -Work "D:\rz-stage" `
+     -Repo ZeTruNightmare/RazagathWoW -Version 2026.09.04 -Publish
+```
+
+That stages + patches + compresses into split `.7z` volumes, publishes the
+`client-base-2026.09.04` release, writes `installer/client-base.nsh`, and pushes.
+Then re-run `build-installer.ps1` to bundle the new volume list.
 
 ## Distribution
 
-- **Patch files** (small): GitHub Releases — the launcher pulls from there.
-- **Full client** (~15 GB): split `RazagathWoW-client.7z.0NN` as Release assets
-  (each < 2 GB), or a mirror (Cloudflare R2 / Internet Archive / torrent).
+- **Patch files** (small): GitHub Releases — the launcher pulls from there each start.
+- **Full client** (~15 GB): split `RazagathWoW-client-<ver>.7z.0NN` on the
+  `client-base-<ver>` GitHub Release (each < 2 GB). Add a torrent / Cloudflare R2
+  mirror later by pointing `CLIENT_BASEURL` in `client-base.nsh` elsewhere.
 
 ## What this repo does and doesn't contain
 

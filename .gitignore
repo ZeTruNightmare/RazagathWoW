@@ -9,3 +9,8 @@
 launcher/*.g.cs
 launcher/Version.g.cs
 *.user
+
+# installer build deps (fetched by installer/tools/fetch-deps.ps1)
+installer/tools/*.exe
+installer/tools/*.dll
+installer/tools/*.zip
