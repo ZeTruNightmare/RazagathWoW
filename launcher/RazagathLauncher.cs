@@ -397,8 +397,14 @@ namespace RazagathWoW
     // ---- owner-drawn scrolling rich text on a textured panel --------------
     internal sealed class ChangelogView : TexturePanel
     {
-        private struct Run { public string Text; public Color Color; public Font Font; public int Indent; public int GapAbove; }
+        private struct Run { public string Text; public Color Color; public Font Font; public int Indent; public int GapAbove; public bool Outline; }
         private readonly System.Collections.Generic.List<Run> _runs = new System.Collections.Generic.List<Run>();
+        private static readonly Point[] OutlineOffsets =
+        {
+            new Point(-1,-1), new Point(0,-1), new Point(1,-1),
+            new Point(-1, 0),                  new Point(1, 0),
+            new Point(-1, 1), new Point(0, 1), new Point(1, 1),
+        };
         private int _scroll, _contentH, _viewH;
         public Image Divider;                 // small gold flourish at top + bottom edges
         private const int DivH = 21;          // divider render height
@@ -412,9 +418,10 @@ namespace RazagathWoW
         }
 
         public void Clear() { foreach (var r in _runs) r.Font.Dispose(); _runs.Clear(); _scroll = 0; Invalidate(); }
-        public void Add(string text, Color c, float size, FontStyle fs, int indent, int gapAbove)
+        public void Add(string text, Color c, float size, FontStyle fs, int indent, int gapAbove, bool outline = false)
         {
-            _runs.Add(new Run { Text = text ?? "", Color = c, Font = new Font("Segoe UI", size, fs), Indent = indent, GapAbove = gapAbove });
+            _runs.Add(new Run { Text = text ?? "", Color = c, Font = new Font("Segoe UI", size, fs),
+                Indent = indent, GapAbove = gapAbove, Outline = outline });
             Invalidate();
         }
 
@@ -443,8 +450,18 @@ namespace RazagathWoW
                 var flags = TextFormatFlags.WordBreak | TextFormatFlags.NoPadding;
                 var sz = TextRenderer.MeasureText(g, r.Text, r.Font, new Size(w - r.Indent, 0), flags);
                 if (y + sz.Height > Padding.Top - 2 && y < ClientSize.Height)
-                    TextRenderer.DrawText(g, r.Text, r.Font,
-                        new Rectangle(x0 + r.Indent, y, w - r.Indent, sz.Height), r.Color, flags);
+                {
+                    var rect = new Rectangle(x0 + r.Indent, y, w - r.Indent, sz.Height);
+                    if (r.Outline)
+                    {
+                        foreach (var o in OutlineOffsets)
+                        {
+                            var rr = rect; rr.Offset(o);
+                            TextRenderer.DrawText(g, r.Text, r.Font, rr, Color.Black, flags);
+                        }
+                    }
+                    TextRenderer.DrawText(g, r.Text, r.Font, rect, r.Color, flags);
+                }
                 y += sz.Height;
             }
             g.ResetClip();
@@ -666,7 +683,7 @@ namespace RazagathWoW
             var ver = new Label
             {
                 Text = "Launcher " + LauncherVersion() + "   -   client " + (_manifest != null ? _manifest.clientVersion : "?"),
-                ForeColor = Color.FromArgb(120, 110, 140),
+                ForeColor = Color.FromArgb(135, 132, 138),
                 AutoSize = true,
                 Anchor = AnchorStyles.Left,
                 Margin = new Padding(0, 16, 0, 0)
@@ -829,9 +846,22 @@ namespace RazagathWoW
         }
 
         // ------------------------------------------------------- rendering --
-        private static readonly Color HeadColor = Color.FromArgb(214, 176, 255);
-        private static readonly Color BodyColor = Color.FromArgb(226, 220, 232);
-        private static readonly Color SubColor  = Color.FromArgb(185, 176, 198);
+        private static readonly Color HeadColor = Color.FromArgb(0xA1, 0xFC, 0x03);   // #a1fc03
+        private static readonly Color BodyColor = Color.FromArgb(228, 224, 220);
+        private static readonly Color SubColor  = Color.FromArgb(182, 178, 172);
+
+        // Show one date only, British style DD.MM.YYYY. version is usually
+        // YYYY.MM.DD (build-release default); fall back to the ISO date field.
+        private static string PatchDate(string version, string date)
+        {
+            var m = System.Text.RegularExpressions.Regex.Match(version ?? "", @"^(\d{4})\.(\d{1,2})\.(\d{1,2})$");
+            if (!m.Success)
+                m = System.Text.RegularExpressions.Regex.Match(date ?? "", @"^(\d{4})-(\d{1,2})-(\d{1,2})$");
+            if (m.Success)
+                return string.Format("{0:00}.{1:00}.{2}", int.Parse(m.Groups[3].Value),
+                    int.Parse(m.Groups[2].Value), m.Groups[1].Value);
+            return string.IsNullOrEmpty(version) ? (date ?? "") : version;
+        }
 
         private void RenderNews(Manifest m)
         {
@@ -842,9 +872,8 @@ namespace RazagathWoW
                 return;
             }
             var latest = m.changelog[0];
-            _news.Add("Latest patch  -  " + latest.version
-                + (string.IsNullOrEmpty(latest.date) ? "" : "  (" + latest.date + ")"),
-                HeadColor, 13f, FontStyle.Bold, 0, 0);
+            _news.Add("Latest patch  -  " + PatchDate(latest.version, latest.date),
+                HeadColor, 13f, FontStyle.Bold, 0, 0, true);
             if (!string.IsNullOrEmpty(latest.title))
                 _news.Add(latest.title, SubColor, 10.5f, FontStyle.Italic, 0, 2);
             foreach (var n in latest.notes ?? new List<string>())
@@ -857,8 +886,7 @@ namespace RazagathWoW
             bool first = true;
             foreach (var c in m.changelog ?? new List<ChangeEntry>())
             {
-                _changelog.Add(c.version + (string.IsNullOrEmpty(c.date) ? "" : "    -    " + c.date),
-                    HeadColor, 12f, FontStyle.Bold, 0, first ? 0 : 18);
+                _changelog.Add(PatchDate(c.version, c.date), HeadColor, 12f, FontStyle.Bold, 0, first ? 0 : 18, true);
                 first = false;
                 if (!string.IsNullOrEmpty(c.title))
                     _changelog.Add(c.title, SubColor, 9.75f, FontStyle.Italic, 0, 2);
