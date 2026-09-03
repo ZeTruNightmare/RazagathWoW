@@ -368,21 +368,46 @@ namespace RazagathWoW
         }
     }
 
+    // ---- a panel that paints an image cover-fit as its background ----------
+    internal class TexturePanel : Panel
+    {
+        public Image Texture;
+        public TexturePanel()
+        {
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer
+                   | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+            BackColor = Color.FromArgb(14, 11, 18);
+        }
+        protected override void OnPaintBackground(PaintEventArgs e) { }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            PaintTexture(e.Graphics, ClientRectangle, Texture, BackColor);
+            base.OnPaint(e);
+        }
+        public static void PaintTexture(Graphics g, Rectangle r, Image tex, Color fallback)
+        {
+            g.Clear(fallback);
+            if (tex == null) return;
+            float s = Math.Max((float)r.Width / tex.Width, (float)r.Height / tex.Height);
+            int dw = (int)Math.Ceiling(tex.Width * s), dh = (int)Math.Ceiling(tex.Height * s);
+            g.DrawImage(tex, r.Left + (r.Width - dw) / 2, r.Top + (r.Height - dh) / 2, dw, dh);
+        }
+    }
+
     // ---- our own dark tab buttons, wired to a DarkTabControl ----------------
     internal sealed class TabStrip : Panel
     {
         private readonly DarkTabControl _tabs;
         private readonly string[] _labels;
         private int _hot = -1;
-        private static readonly Color Bg     = Color.FromArgb(18, 15, 24);
-        private static readonly Color Sel    = Color.FromArgb(30, 25, 40);
-        private static readonly Color Accent = Color.FromArgb(150, 96, 40, 200);
+        public Image Texture;
+        private static readonly Color Accent = Color.FromArgb(170, 110, 55, 210);
         private const int BtnW = 118;
 
         public TabStrip(DarkTabControl tabs, params string[] labels)
         {
             _tabs = tabs; _labels = labels;
-            Height = 32; BackColor = Bg;
+            Height = 32; BackColor = Color.FromArgb(14, 11, 18);
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer
                    | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
             _tabs.SelectedIndexChanged += (s, e) => Invalidate();
@@ -398,19 +423,20 @@ namespace RazagathWoW
             if (i >= 0 && i < _tabs.TabCount) _tabs.SelectedIndex = i;
             base.OnMouseDown(e);
         }
+        protected override void OnPaintBackground(PaintEventArgs e) { }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.Clear(Bg);
+            TexturePanel.PaintTexture(g, ClientRectangle, Texture, BackColor);
             for (int i = 0; i < _labels.Length; i++)
             {
                 var r = new Rectangle(i * BtnW, 0, BtnW, Height);
                 bool sel = i == _tabs.SelectedIndex;
-                if (sel) using (var b = new SolidBrush(Sel)) g.FillRectangle(b, r);
-                else if (i == _hot) using (var b = new SolidBrush(Color.FromArgb(24, 20, 30))) g.FillRectangle(b, r);
+                if (sel) using (var b = new SolidBrush(Color.FromArgb(70, 255, 255, 255))) g.FillRectangle(b, r);
+                else if (i == _hot) using (var b = new SolidBrush(Color.FromArgb(32, 255, 255, 255))) g.FillRectangle(b, r);
                 if (sel) using (var b = new SolidBrush(Accent)) g.FillRectangle(b, r.Left, r.Bottom - 3, r.Width, 3);
-                TextRenderer.DrawText(g, _labels[i], Font, r, sel ? Color.White : Color.FromArgb(170, 165, 180),
+                TextRenderer.DrawText(g, _labels[i], Font, r, sel ? Color.White : Color.FromArgb(175, 170, 185),
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }
         }
@@ -464,6 +490,8 @@ namespace RazagathWoW
                 ScrimAlpha = 90          // 0-255 dark wash over the photo
             };
 
+            var panelTex = LoadEmbedded("RazagathWoW.panel-bg.jpg");
+
             _tabs.Dock = DockStyle.Fill;
             _tabs.Padding = new Point(14, 6);
 
@@ -498,9 +526,10 @@ namespace RazagathWoW
             _tabs.TabPages.Add(clTab);
             _tabs.TabPages.Add(setTab);
 
-            var footer = new Panel { Dock = DockStyle.Bottom, Height = 124, BackColor = Color.FromArgb(18, 15, 24) };
+            var footer = new TexturePanel { Dock = DockStyle.Bottom, Height = 124, Texture = panelTex };
             _statusLabel.Text = "Starting...";
             _statusLabel.ForeColor = Color.Gainsboro;
+            _statusLabel.BackColor = Color.Transparent;
             _statusLabel.AutoSize = false;
             _statusLabel.Location = new Point(24, 40);
             _statusLabel.Size = new Size(350, 20);
@@ -518,7 +547,7 @@ namespace RazagathWoW
             footer.Controls.Add(_progress);
             footer.Controls.Add(_playButton);
 
-            var tabStrip = new TabStrip(_tabs, "Play", "Changelog", "Settings") { Dock = DockStyle.Top };
+            var tabStrip = new TabStrip(_tabs, "Play", "Changelog", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
 
             // docking is applied in reverse add-order: _tabs (Fill) added first
             // so it docks last and takes the space left by the others
