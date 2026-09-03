@@ -400,10 +400,13 @@ namespace RazagathWoW
         private struct Run { public string Text; public Color Color; public Font Font; public int Indent; public int GapAbove; }
         private readonly System.Collections.Generic.List<Run> _runs = new System.Collections.Generic.List<Run>();
         private int _scroll, _contentH, _viewH;
+        public Image Divider;                 // small gold flourish at top + bottom edges
+        private const int DivH = 16;          // divider render height
+        private const int DivPad = 26;        // text inset that clears the divider
 
         public ChangelogView()
         {
-            Padding = new Padding(20, 16, 16, 16);
+            Padding = new Padding(22, DivPad, 16, DivPad);
             SetStyle(ControlStyles.Selectable, true);
             TabStop = false;
         }
@@ -433,6 +436,7 @@ namespace RazagathWoW
             _viewH = ClientSize.Height - Padding.Vertical;
             int y = Padding.Top - _scroll;
 
+            g.SetClip(new Rectangle(0, Padding.Top - 2, ClientSize.Width, _viewH + 4));
             foreach (var r in _runs)
             {
                 y += r.GapAbove;
@@ -443,6 +447,7 @@ namespace RazagathWoW
                         new Rectangle(x0 + r.Indent, y, w - r.Indent, sz.Height), r.Color, flags);
                 y += sz.Height;
             }
+            g.ResetClip();
             _contentH = y + _scroll - Padding.Top;
 
             if (_contentH > _viewH)
@@ -453,6 +458,18 @@ namespace RazagathWoW
                 int thumbY = 4 + (max > 0 ? (int)((float)_scroll / max * (trackH - thumbH)) : 0);
                 using (var b = new SolidBrush(Color.FromArgb(70, 255, 255, 255)))
                     g.FillRectangle(b, ClientSize.Width - 6, thumbY, 4, thumbH);
+            }
+
+            if (Divider != null)
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                int dw = (int)((float)Divider.Width / Divider.Height * DivH);
+                int maxw = ClientSize.Width - 24;
+                if (dw > maxw) dw = maxw;
+                int dh = (int)((float)Divider.Height / Divider.Width * dw);
+                int dx = (ClientSize.Width - dw) / 2;
+                g.DrawImage(Divider, dx, 5, dw, dh);
+                g.DrawImage(Divider, dx, ClientSize.Height - dh - 5, dw, dh);
             }
         }
     }
@@ -554,6 +571,7 @@ namespace RazagathWoW
 
             var panelTex   = LoadEmbedded("RazagathWoW.panel-bg.jpg");
             var contentTex = LoadEmbedded("RazagathWoW.content-bg.jpg");
+            var dividerImg = LoadEmbedded("RazagathWoW.divider.png");
 
             _tabs.Dock = DockStyle.Fill;
             _tabs.Padding = new Point(14, 6);
@@ -562,12 +580,14 @@ namespace RazagathWoW
             var playTab = new TabPage("  Play  ") { BackColor = BackColor };
             _news.Dock = DockStyle.Fill;
             _news.Texture = contentTex;
+            _news.Divider = dividerImg;
             playTab.Controls.Add(_news);
 
             // ---- Changelog tab ----
             var clTab = new TabPage("  Changelog  ") { BackColor = BackColor };
             _changelog.Dock = DockStyle.Fill;
             _changelog.Texture = contentTex;
+            _changelog.Divider = dividerImg;
             clTab.Controls.Add(_changelog);
 
             // ---- Settings tab ----
