@@ -80,6 +80,8 @@ $args = @(
     "/win32manifest:$(Join-Path $Here 'app.manifest')"
 )
 if (Test-Path $Icon) { $args += "/win32icon:$Icon" }
+$logo = Join-Path $Here "logo.png"
+if (Test-Path $logo) { $args += "/resource:$logo,RazagathWoW.logo.png" }
 $args += $refs
 $args += $work
 $args += $verPath

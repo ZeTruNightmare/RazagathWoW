@@ -262,7 +262,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 480);
+            ClientSize = new Size(720, 544);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -274,24 +274,31 @@ namespace RazagathWoW
         // ---------------------------------------------------------------- UI --
         private void BuildUi()
         {
-            var header = new Panel { Dock = DockStyle.Top, Height = 92, BackColor = Color.FromArgb(18, 15, 24) };
-            var title = new Label
+            var header = new Panel { Dock = DockStyle.Top, Height = 156, BackColor = Color.FromArgb(18, 15, 24) };
+            var logo = LoadEmbedded("RazagathWoW.logo.png");
+            if (logo != null)
             {
-                Text = "RAZAGATH  WoW",
-                ForeColor = Color.FromArgb(196, 150, 255),
-                Font = new Font("Segoe UI", 20f, FontStyle.Bold),
-                AutoSize = true,
-                Location = new Point(24, 20)
-            };
-            var sub = new Label
+                var pic = new PictureBox
+                {
+                    Dock = DockStyle.Fill,
+                    Image = logo,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Padding = new Padding(0, 10, 0, 10),
+                    BackColor = Color.Transparent
+                };
+                header.Controls.Add(pic);
+            }
+            else
             {
-                Text = "Wrath of the Lich King  -  3.3.5a",
-                ForeColor = Color.FromArgb(120, 110, 140),
-                AutoSize = true,
-                Location = new Point(27, 60)
-            };
-            header.Controls.Add(title);
-            header.Controls.Add(sub);
+                header.Controls.Add(new Label
+                {
+                    Text = "WORLD OF RAZAGATH",
+                    ForeColor = Color.FromArgb(196, 150, 255),
+                    Font = new Font("Segoe UI", 22f, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(24, 60)
+                });
+            }
 
             _tabs.Dock = DockStyle.Fill;
             _tabs.Padding = new Point(14, 6);
@@ -588,6 +595,24 @@ namespace RazagathWoW
             }
             _changelog.SelectionStart = 0;
             _changelog.ScrollToCaret();
+        }
+
+        private static Image LoadEmbedded(string name)
+        {
+            try
+            {
+                var asm = Assembly.GetExecutingAssembly();
+                using (var s = asm.GetManifestResourceStream(name))
+                {
+                    if (s == null) return null;
+                    using (var ms = new MemoryStream())
+                    {
+                        s.CopyTo(ms);
+                        return Image.FromStream(new MemoryStream(ms.ToArray()));
+                    }
+                }
+            }
+            catch { return null; }
         }
 
         private static void AppendLine(RichTextBox box, string text, Color color, float size, FontStyle style)
