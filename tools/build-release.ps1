@@ -29,7 +29,9 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $Repo    = $Repo.Trim()
-$RepoDir = Split-Path -Parent $PSScriptRoot
+$Here = Split-Path -Parent $MyInvocation.MyCommand.Definition
+if (-not $Here) { $Here = $PSScriptRoot }
+$RepoDir = Split-Path -Parent $Here
 $gh      = (Get-Command gh -ErrorAction SilentlyContinue).Source
 if (-not $gh) { $gh = "C:\Program Files\GitHub CLI\gh.exe" }
 if (-not (Test-Path $gh)) { throw "gh CLI not found - install it and run 'gh auth login'." }
@@ -101,10 +103,15 @@ Write-Host "manifest.json updated -> client $Version / launcher $lv"
 
 # mirror into CHANGELOG.md
 if ($Notes.Count) {
-    $md = "## $Version — $Title`n`n" + (($Notes | ForEach-Object { "- $_" }) -join "`n") + "`n`n"
+    $md = "## $Version - $Title`r`n`r`n" + (($Notes | ForEach-Object { "- $_" }) -join "`r`n") + "`r`n`r`n"
     $cl = Get-Content "$RepoDir\CHANGELOG.md" -Raw
-    $cl = $cl -replace "(---\r?\n\r?\n)", "`$1$md"
-    Set-Content "$RepoDir\CHANGELOG.md" -Value $cl -Encoding UTF8
+    $marker = "---`r`n`r`n"
+    if (-not $cl.Contains($marker)) { $marker = "---`n`n" }
+    $i = $cl.IndexOf($marker)
+    if ($i -ge 0) {
+        $cl = $cl.Substring(0, $i + $marker.Length) + $md + $cl.Substring($i + $marker.Length)
+        Set-Content "$RepoDir\CHANGELOG.md" -Value $cl -Encoding UTF8
+    }
 }
 
 if ($DryRun) { Write-Host "DryRun: skipping gh release + git push"; return }
@@ -113,7 +120,12 @@ if ($DryRun) { Write-Host "DryRun: skipping gh release + git push"; return }
 $assets = @($mpq, $launcherOut, $lua, $toc)
 
 $relNotes = "RazagathWoW client patch $Version`n`n" + (($Notes | ForEach-Object { "- $_" }) -join "`n")
-$exists = (& $gh release view $Tag --repo $Repo 2>$null; $LASTEXITCODE -eq 0)
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = 'SilentlyContinue'
+& $gh release view $Tag --repo $Repo 2>&1 | Out-Null
+$exists = ($LASTEXITCODE -eq 0)
+$ErrorActionPreference = $prevEAP
+
 if ($exists) {
     & $gh release upload $Tag @assets --repo $Repo --clobber
 } else {
