@@ -272,10 +272,6 @@ namespace RazagathWoW
                 using (var b = new SolidBrush(Color.FromArgb(ScrimAlpha, 12, 9, 18)))
                     g.FillRectangle(b, r);
 
-            // thin divider along the bottom edge
-            using (var p = new Pen(Color.FromArgb(150, 96, 40, 168), 2f))
-                g.DrawLine(p, r.Left, r.Bottom - 1, r.Right, r.Bottom - 1);
-
             if (Logo != null)
             {
                 int aw = r.Width - LogoPad.Horizontal;
@@ -289,6 +285,71 @@ namespace RazagathWoW
         }
     }
 
+    // ---- a borderless image button (image carries its own label) -----------
+    internal sealed class ImageButton : Control
+    {
+        private Image _img;
+        private bool _hover, _down;
+
+        public ImageButton()
+        {
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer
+                   | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            BackColor = Color.Transparent;
+        }
+
+        public Image NormalImage { get { return _img; } set { _img = value; Invalidate(); } }
+
+        protected override void OnMouseEnter(EventArgs e) { _hover = true; Cursor = Enabled ? Cursors.Hand : Cursors.Default; Invalidate(); base.OnMouseEnter(e); }
+        protected override void OnMouseLeave(EventArgs e) { _hover = false; _down = false; Invalidate(); base.OnMouseLeave(e); }
+        protected override void OnMouseDown(MouseEventArgs e) { if (Enabled) { _down = true; Invalidate(); } base.OnMouseDown(e); }
+        protected override void OnMouseUp(MouseEventArgs e) { _down = false; Invalidate(); base.OnMouseUp(e); }
+        protected override void OnEnabledChanged(EventArgs e) { Invalidate(); base.OnEnabledChanged(e); }
+        protected override void OnClick(EventArgs e) { if (Enabled) base.OnClick(e); }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (_img == null) return;
+            var g = e.Graphics;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+            var r = ClientRectangle;
+            float s = Math.Min((float)r.Width / _img.Width, (float)r.Height / _img.Height);
+            if (_down && Enabled) s *= 0.96f;
+            int w = (int)(_img.Width * s), h = (int)(_img.Height * s);
+            var dest = new Rectangle((r.Width - w) / 2, (r.Height - h) / 2, w, h);
+
+            if (!Enabled)
+                DrawMatrixed(g, dest, new float[] {
+                    0.28f, 0.28f, 0.28f, 0, 0,
+                    0.28f, 0.28f, 0.28f, 0, 0,
+                    0.28f, 0.28f, 0.28f, 0, 0,
+                    0,     0,     0,     0.5f, 0,
+                    0,     0,     0,     0,  1 });
+            else if (_hover)
+                DrawMatrixed(g, dest, new float[] {
+                    1,0,0,0,0,  0,1,0,0,0,  0,0,1,0,0,  0,0,0,1,0,  0.13f,0.13f,0.13f,0,1 });
+            else
+                g.DrawImage(_img, dest);
+        }
+
+        private void DrawMatrixed(Graphics g, Rectangle dest, float[] m)
+        {
+            var cm = new System.Drawing.Imaging.ColorMatrix(new float[][] {
+                new float[]{m[0],m[1],m[2],m[3],m[4]},
+                new float[]{m[5],m[6],m[7],m[8],m[9]},
+                new float[]{m[10],m[11],m[12],m[13],m[14]},
+                new float[]{m[15],m[16],m[17],m[18],m[19]},
+                new float[]{m[20],m[21],m[22],m[23],m[24]} });
+            using (var ia = new System.Drawing.Imaging.ImageAttributes())
+            {
+                ia.SetColorMatrix(cm);
+                g.DrawImage(_img, dest, 0, 0, _img.Width, _img.Height, GraphicsUnit.Pixel, ia);
+            }
+        }
+    }
+
     internal sealed class MainForm : Form
     {
         private readonly string _root;
@@ -296,7 +357,7 @@ namespace RazagathWoW
         private string _manifestUrl;
 
         private Manifest _manifest;
-        private readonly Button _playButton = new Button();
+        private readonly ImageButton _playButton = new ImageButton();
         private readonly Label _statusLabel = new Label();
         private readonly ProgressBar _progress = new ProgressBar();
         private readonly TabControl _tabs = new TabControl();
@@ -316,7 +377,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 544);
+            ClientSize = new Size(720, 576);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -371,24 +432,19 @@ namespace RazagathWoW
             _tabs.TabPages.Add(clTab);
             _tabs.TabPages.Add(setTab);
 
-            var footer = new Panel { Dock = DockStyle.Bottom, Height = 84, BackColor = Color.FromArgb(18, 15, 24) };
+            var footer = new Panel { Dock = DockStyle.Bottom, Height = 116, BackColor = Color.FromArgb(18, 15, 24) };
             _statusLabel.Text = "Starting...";
             _statusLabel.ForeColor = Color.Gainsboro;
             _statusLabel.AutoSize = false;
-            _statusLabel.Location = new Point(24, 12);
+            _statusLabel.Location = new Point(24, 34);
             _statusLabel.Size = new Size(430, 20);
-            _progress.Location = new Point(24, 38);
+            _progress.Location = new Point(24, 60);
             _progress.Size = new Size(430, 18);
             _progress.Style = ProgressBarStyle.Continuous;
 
-            _playButton.Text = "PLAY";
-            _playButton.Size = new Size(210, 56);
-            _playButton.Location = new Point(480, 14);
-            _playButton.FlatStyle = FlatStyle.Flat;
-            _playButton.FlatAppearance.BorderSize = 0;
-            _playButton.BackColor = Color.FromArgb(96, 40, 168);
-            _playButton.ForeColor = Color.White;
-            _playButton.Font = new Font("Segoe UI", 13f, FontStyle.Bold);
+            _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
+            _playButton.Size = new Size(238, 106);
+            _playButton.Location = new Point(720 - 24 - 238, (116 - 106) / 2);
             _playButton.Enabled = false;
             _playButton.Click += async (s, e) => await OnPlayClicked();
 
@@ -396,6 +452,8 @@ namespace RazagathWoW
             footer.Controls.Add(_progress);
             footer.Controls.Add(_playButton);
 
+            // docking is applied in reverse add-order: _tabs (Fill) added first
+            // so it docks last and takes the space left by header + footer
             Controls.Add(_tabs);
             Controls.Add(footer);
             Controls.Add(header);
@@ -540,10 +598,10 @@ namespace RazagathWoW
             }
             catch (Exception ex)
             {
-                SetStatus("Offline / update failed: " + ex.Message);
                 // still allow play so a network blip never blocks login
-                _playButton.Enabled = File.Exists(GameExePath());
-                _playButton.Text = "PLAY OFFLINE";
+                var canPlay = File.Exists(GameExePath());
+                SetStatus((canPlay ? "Offline - you can still play.  " : "") + "Update failed: " + ex.Message);
+                _playButton.Enabled = canPlay;
             }
             finally { _busy = false; }
         }
