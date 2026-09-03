@@ -767,7 +767,7 @@ namespace RazagathWoW
                     SetProgress(100);
                 }
 
-                if (!string.IsNullOrEmpty(_manifest.realmlist))
+                if (!string.IsNullOrEmpty(_manifest.realmlist) && EnforceRealmlist())
                     EnsureRealmlist(_manifest.realmlist);
 
                 // make sure the player's own Wow.exe carries the client patches
@@ -914,20 +914,35 @@ namespace RazagathWoW
         }
 
         // -------------------------------------------------------- helpers ----
-        private string ReadConfiguredManifestUrl()
+        //  launcher.cfg  (JSON, next to the exe):
+        //    { "manifestUrl": "...", "enforceRealmlist": true }
+        //  enforceRealmlist:false  ->  never rewrite realmlist.wtf (keep a
+        //  hand-set realm, e.g. 127.0.0.1 for local server testing).
+        private Dictionary<string, object> ReadCfg()
         {
             try
             {
                 if (File.Exists(_cfgPath))
-                {
-                    var j = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(File.ReadAllText(_cfgPath));
-                    object v;
-                    if (j != null && j.TryGetValue("manifestUrl", out v) && v != null && v.ToString().Length > 0)
-                        return v.ToString();
-                }
+                    return new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(File.ReadAllText(_cfgPath));
             }
             catch { }
+            return null;
+        }
+        private string ReadConfiguredManifestUrl()
+        {
+            var j = ReadCfg();
+            object v;
+            if (j != null && j.TryGetValue("manifestUrl", out v) && v != null && v.ToString().Length > 0)
+                return v.ToString();
             return Program.DefaultManifestUrl;
+        }
+        private bool EnforceRealmlist()
+        {
+            var j = ReadCfg();
+            object v;
+            if (j != null && j.TryGetValue("enforceRealmlist", out v) && v is bool)
+                return (bool)v;
+            return true;
         }
 
         private static Manifest FetchManifest(string url)
