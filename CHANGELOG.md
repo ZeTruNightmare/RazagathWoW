@@ -10,11 +10,6 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 - New Spellblade class icon (character-creation screen, /who list, party frames).
 - New icon for Spellblades' Presence.
 
-## 2026.09.05 - New Spellblade artwork
-
-- New Spellblade class icon (character-creation screen, /who list, party frames).
-- New icon for Spellblades' Presence.
-
 ## 2026.09.04 - Legendary grimoire
 
 - New legendary off-hand: Grimoire of the Ascendant Spellblade (item level 284).

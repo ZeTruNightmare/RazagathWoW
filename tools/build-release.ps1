@@ -79,8 +79,16 @@ $fileEntries = foreach ($f in $files) {
     }
 }
 
+# Notes: pass each as its own -Notes arg, OR one arg with ' || ' between them
+# (robust when PowerShell's -File invocation flattens the array).
+$noteList = @()
+foreach ($n in $Notes) { $noteList += ($n -split '\s*\|\|\s*') }
+$noteList = @($noteList | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+
 # --- 5. rewrite manifest.json ------------------------------------
-$mf = Get-Content "$RepoDir\manifest.json" -Raw | ConvertFrom-Json
+$mf = [System.IO.File]::ReadAllText("$RepoDir\manifest.json", $utf8) | ConvertFrom-Json
 $mf.clientVersion = $Version
 if ($Realmlist) { $mf.realmlist = $Realmlist }
 $mf.launcher.version = $lv
@@ -93,24 +101,22 @@ if ($mf.changelog.version -notcontains $Version) {
         version = $Version
         date    = (Get-Date -Format "yyyy-MM-dd")
         title   = $Title
-        notes   = @($Notes)
+        notes   = @($noteList)
     }
     $mf.changelog = @($entry) + @($mf.changelog)
 }
-$json = $mf | ConvertTo-Json -Depth 8
-Set-Content "$RepoDir\manifest.json" -Value $json -Encoding UTF8
-Write-Host "manifest.json updated -> client $Version / launcher $lv"
+[System.IO.File]::WriteAllText("$RepoDir\manifest.json", ($mf | ConvertTo-Json -Depth 8), $utf8)
+Write-Host "manifest.json updated -> client $Version / launcher $lv  ($($noteList.Count) notes)"
 
-# mirror into CHANGELOG.md
-if ($Notes.Count) {
-    $md = "## $Version - $Title`r`n`r`n" + (($Notes | ForEach-Object { "- $_" }) -join "`r`n") + "`r`n`r`n"
-    $cl = Get-Content "$RepoDir\CHANGELOG.md" -Raw
-    $marker = "---`r`n`r`n"
-    if (-not $cl.Contains($marker)) { $marker = "---`n`n" }
+# mirror into CHANGELOG.md (skip if this version's heading is already there)
+$cl = [System.IO.File]::ReadAllText("$RepoDir\CHANGELOG.md", $utf8)
+if ($noteList.Count -and $cl -notmatch "(?m)^##\s+$([regex]::Escape($Version))\b") {
+    $md = "## $Version - $Title`r`n`r`n" + (($noteList | ForEach-Object { "- $_" }) -join "`r`n") + "`r`n`r`n"
+    $marker = if ($cl.Contains("---`r`n`r`n")) { "---`r`n`r`n" } else { "---`n`n" }
     $i = $cl.IndexOf($marker)
     if ($i -ge 0) {
         $cl = $cl.Substring(0, $i + $marker.Length) + $md + $cl.Substring($i + $marker.Length)
-        Set-Content "$RepoDir\CHANGELOG.md" -Value $cl -Encoding UTF8
+        [System.IO.File]::WriteAllText("$RepoDir\CHANGELOG.md", $cl, $utf8)
     }
 }
 

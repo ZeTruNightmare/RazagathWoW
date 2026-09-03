@@ -64,14 +64,16 @@ Var RbPatch
 Var RbFull
 
 ; ---- per-volume download block, emitted by client-base.nsh ---------------
-!macro DL_VOLUME IDX NAME SHA
+;  Remote name has no ".7z" (host-friendly); saved locally WITH ".7z" so 7zr
+;  can join the split set.  SUF is "001".."009".
+!macro DL_VOLUME IDX SUF SHA
   IntOp $R2 ${IDX} + 1
-  DetailPrint "Downloading client part $R2 of ${CLIENT_VOLUMES}  (${NAME})"
-  NScurl::http GET "${CLIENT_BASEURL}/${NAME}" "$INSTDIR\_dl\${NAME}" \
+  DetailPrint "Downloading client part $R2 of ${CLIENT_VOLUMES}"
+  NScurl::http GET "${CLIENT_BASEURL}/${CLIENT_STEM}.${SUF}" "$INSTDIR\_dl\${CLIENT_STEM}.7z.${SUF}" \
       /CANCEL /RESUME /INSIST /TIMEOUT 0 /HASH SHA256 "${SHA}" /END
   Pop $0
   ${If} $0 != "OK"
-    MessageBox MB_ICONSTOP "Download failed on part $R2 (${NAME}):$\r$\n$0$\r$\n$\r$\nRun Setup again - it resumes where it stopped."
+    MessageBox MB_ICONSTOP "Download failed on client part $R2:$\r$\n$0$\r$\n$\r$\nRun Setup again - it resumes where it stopped."
     Abort
   ${EndIf}
 !macroend
@@ -267,7 +269,7 @@ Function DownloadFullClient
   !insertmacro DOWNLOAD_CLIENT_VOLUMES
 
   DetailPrint "Extracting client (a few minutes)..."
-  nsExec::ExecToLog '"$PLUGINSDIR\7zr.exe" x "$INSTDIR\_dl\${CLIENT_VOL0}" -o"$INSTDIR" -y'
+  nsExec::ExecToLog '"$PLUGINSDIR\7zr.exe" x "$INSTDIR\_dl\${CLIENT_STEM}.7z.001" -o"$INSTDIR" -y'
   Pop $0
   ${If} $0 != 0
     MessageBox MB_ICONSTOP "Extraction failed (7-Zip exit $0). The download is kept in $INSTDIR\_dl; re-run Setup to retry."
