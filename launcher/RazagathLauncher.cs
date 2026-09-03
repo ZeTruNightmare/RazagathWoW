@@ -464,7 +464,6 @@ namespace RazagathWoW
         private readonly string[] _labels;
         private int _hot = -1;
         public Image Texture;
-        private static readonly Color Accent = Color.FromArgb(235, 0, 0, 0);
         private const int BtnW = 118;
 
         public TabStrip(DarkTabControl tabs, params string[] labels)
@@ -496,10 +495,9 @@ namespace RazagathWoW
             {
                 var r = new Rectangle(i * BtnW, 0, BtnW, Height);
                 bool sel = i == _tabs.SelectedIndex;
-                if (sel) using (var b = new SolidBrush(Color.FromArgb(70, 255, 255, 255))) g.FillRectangle(b, r);
-                else if (i == _hot) using (var b = new SolidBrush(Color.FromArgb(32, 255, 255, 255))) g.FillRectangle(b, r);
-                if (sel) using (var b = new SolidBrush(Accent)) g.FillRectangle(b, r.Left, r.Bottom - 3, r.Width, 3);
-                TextRenderer.DrawText(g, _labels[i], Font, r, sel ? Color.White : Color.FromArgb(175, 170, 185),
+                if (sel) using (var b = new SolidBrush(Color.FromArgb(52, 255, 255, 255))) g.FillRectangle(b, r);
+                else if (i == _hot) using (var b = new SolidBrush(Color.FromArgb(22, 255, 255, 255))) g.FillRectangle(b, r);
+                TextRenderer.DrawText(g, _labels[i], Font, r, sel ? Color.White : Color.FromArgb(165, 160, 178),
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }
         }
@@ -513,6 +511,7 @@ namespace RazagathWoW
 
         private Manifest _manifest;
         private readonly ImageButton _playButton = new ImageButton();
+        private TexturePanel _footer;
         private readonly Label _statusLabel = new Label();
         private readonly ProgressBar _progress = new ProgressBar();
         private readonly DarkTabControl _tabs = new DarkTabControl();
@@ -532,7 +531,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 596);
+            ClientSize = new Size(720, 588);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -579,20 +578,22 @@ namespace RazagathWoW
             _tabs.TabPages.Add(clTab);
             _tabs.TabPages.Add(setTab);
 
-            var footer = new TexturePanel { Dock = DockStyle.Bottom, Height = 124, Texture = panelTex };
+            const int FooterH = 116;
+            _footer = new TexturePanel { Dock = DockStyle.Bottom, Height = FooterH, Texture = panelTex };
+            var footer = _footer;
             _statusLabel.Text = "Starting...";
             _statusLabel.ForeColor = Color.Gainsboro;
             _statusLabel.BackColor = Color.Transparent;
             _statusLabel.AutoSize = false;
-            _statusLabel.Location = new Point(24, 40);
-            _statusLabel.Size = new Size(350, 20);
-            _progress.Location = new Point(24, 68);
-            _progress.Size = new Size(350, 18);
+            _statusLabel.Location = new Point(26, 32);
+            _statusLabel.Size = new Size(360, 20);
+            _progress.Location = new Point(26, 58);
+            _progress.Size = new Size(360, 20);
             _progress.Style = ProgressBarStyle.Continuous;
 
             _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
-            _playButton.Size = new Size(285, 113);
-            _playButton.Location = new Point(720 - 14 - 285, (124 - 113) / 2);
+            _playButton.Size = new Size(288, 108);
+            _playButton.Location = new Point(720 - 14 - 288, (FooterH - 108) / 2);
             _playButton.Enabled = false;
             _playButton.Click += async (s, e) => await OnPlayClicked();
 
