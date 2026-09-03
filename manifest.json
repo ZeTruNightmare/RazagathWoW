@@ -1,54 +1,54 @@
-{
-  "schema": 1,
-  "clientVersion": "2026.09.04",
-  "gameExe": "Wow.exe",
-  "realmlist": "",
-  "launcher": {
-    "version": "1.0.0",
-    "url": "",
-    "sha256": ""
-  },
-  "files": [
-    {
-      "path": "Data/enUS/patch-enUS-Z.MPQ",
-      "sha256": "",
-      "size": 0,
-      "url": ""
-    },
-    {
-      "path": "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
-      "sha256": "",
-      "size": 0,
-      "url": ""
-    },
-    {
-      "path": "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
-      "sha256": "",
-      "size": 0,
-      "url": ""
-    }
-  ],
-  "changelog": [
-    {
-      "version": "2026.09.04",
-      "date": "2026-09-04",
-      "title": "Legendary grimoire",
-      "notes": [
-        "New legendary off-hand: Grimoire of the Ascendant Spellblade (ilvl 284). Bought from Instructor Vaeryn for 100 Emblems of Frost at level 80 - best-in-slot for top raids.",
-        "Spellblade starter sword now shows the correct model on the character-creation screen.",
-        "'Spell Blade' is now written 'Spellblade' everywhere.",
-        "Instructor Vaeryn's spawn no longer resets when world data is re-applied."
-      ]
-    },
-    {
-      "version": "2026.09.03",
-      "date": "2026-09-03",
-      "title": "Spellblade launch",
-      "notes": [
-        "The Spellblade class is now playable and selectable at character creation (Human, Night Elf, Draenei, Undead, Troll, Blood Elf).",
-        "Mandatory client patch: custom class tables, character-create screen, class icon, and the SpellBladeUI addon.",
-        "Client renamed to RazagathWoW; windowed mode is the default on first launch."
-      ]
-    }
-  ]
+﻿{
+    "schema":  1,
+    "clientVersion":  "2026.09.04",
+    "gameExe":  "Wow.exe",
+    "realmlist":  "",
+    "launcher":  {
+                     "version":  "1.0.0",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/RazagathWoW.exe",
+                     "sha256":  "ff8eb3b535ae1484713fd16fdfdab4728b9971cefd4278a8f74e5be3bf4481ff"
+                 },
+    "files":  [
+                  {
+                      "path":  "Data/enUS/patch-enUS-Z.MPQ",
+                      "sha256":  "343d13912de2a4f52e56f38c1e62d51785a8c1b31cc9fe36fcd4e51c0560d9af",
+                      "size":  52077461,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/patch-enUS-Z.MPQ"
+                  },
+                  {
+                      "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
+                      "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
+                      "size":  2087,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/SpellBladeUI.lua"
+                  },
+                  {
+                      "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
+                      "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
+                      "size":  286,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/SpellBladeUI.toc"
+                  }
+              ],
+    "changelog":  [
+                      {
+                          "version":  "2026.09.04",
+                          "date":  "2026-09-04",
+                          "title":  "Legendary grimoire",
+                          "notes":  [
+                                        "New legendary off-hand: Grimoire of the Ascendant Spellblade (ilvl 284). Bought from Instructor Vaeryn for 100 Emblems of Frost at level 80 - best-in-slot for top raids.",
+                                        "Spellblade starter sword now shows the correct model on the character-creation screen.",
+                                        "\u0027Spell Blade\u0027 is now written \u0027Spellblade\u0027 everywhere.",
+                                        "Instructor Vaeryn\u0027s spawn no longer resets when world data is re-applied."
+                                    ]
+                      },
+                      {
+                          "version":  "2026.09.03",
+                          "date":  "2026-09-03",
+                          "title":  "Spellblade launch",
+                          "notes":  [
+                                        "The Spellblade class is now playable and selectable at character creation (Human, Night Elf, Draenei, Undead, Troll, Blood Elf).",
+                                        "Mandatory client patch: custom class tables, character-create screen, class icon, and the SpellBladeUI addon.",
+                                        "Client renamed to RazagathWoW; windowed mode is the default on first launch."
+                                    ]
+                      }
+                  ]
 }
