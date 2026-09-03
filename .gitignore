@@ -1,0 +1,12 @@
+# build output
+/dist/
+# large binaries live on GitHub Releases, not in git
+/patch/*.MPQ
+/patch/Wow.exe
+/staging/
+*.7z
+*.7z.*
+# generated
+launcher/*.g.cs
+launcher/Version.g.cs
+*.user

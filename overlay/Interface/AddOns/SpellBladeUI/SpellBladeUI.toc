@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: Spellblade UI
+## Notes: Registers the Spellblade class in the client class tables (name, colour, icon, sort order) so /who, party frames and tooltips work.
+## Author: Razagath
+## Version: 1.0.0
+## DefaultState: enabled
+## LoadOnDemand: 0
+
+SpellBladeUI.lua
