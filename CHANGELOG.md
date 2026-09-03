@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.07 - Spellblade goes live + grimoire tiers
+
+- Spellblade is now available on the main realm.
+- Each Spellblade grimoire tier now has its own icon and held model.
+
 ## 2026.09.06 - Launcher redesign
 
 - The launcher got a full visual refresh - World of Razagath banner, textured panels, custom PLAY button and trim.

@@ -1,34 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.06",
+    "clientVersion":  "2026.09.07",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.1.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/RazagathWoW.exe",
-                     "sha256":  "ebda9234da7a91d83c4f9b9b6afc88548ce581491883d9adfefba517e129cbdb"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/RazagathWoW.exe",
+                     "sha256":  "a062403cb5b15497f0b80a028cb4dd1a7721bb69c54a566fffb1ce327a4f354b"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "c62129f3fd46a79054bb7bbb86d46d5bc631238d5e7da4c0b80d312a71a5891c",
+                      "sha256":  "45e9bb1578f138a5967828259752eeafb83fd496c1ef26fe592fa2d15ef7b896",
                       "size":  52088357,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.07",
+                          "date":  "2026-09-04",
+                          "title":  "Spellblade goes live + grimoire tiers",
+                          "notes":  [
+                                        "Spellblade is now available on the main realm.",
+                                        "Each Spellblade grimoire tier now has its own icon and held model."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.06",
                           "date":  "2026-09-03",
