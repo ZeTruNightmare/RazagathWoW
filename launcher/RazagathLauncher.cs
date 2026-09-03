@@ -350,6 +350,72 @@ namespace RazagathWoW
         }
     }
 
+    // ---- TabControl with its native tab strip hidden (driven by TabStrip) ---
+    internal sealed class DarkTabControl : TabControl
+    {
+        public DarkTabControl()
+        {
+            SizeMode = TabSizeMode.Fixed;
+            ItemSize = new Size(0, 1);
+            Appearance = TabAppearance.FlatButtons;
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            // TCM_ADJUSTRECT: make the page area cover the whole control (hide the strip)
+            if (m.Msg == 0x1328 && !DesignMode) { m.Result = (IntPtr)1; return; }
+            base.WndProc(ref m);
+        }
+    }
+
+    // ---- our own dark tab buttons, wired to a DarkTabControl ----------------
+    internal sealed class TabStrip : Panel
+    {
+        private readonly DarkTabControl _tabs;
+        private readonly string[] _labels;
+        private int _hot = -1;
+        private static readonly Color Bg     = Color.FromArgb(18, 15, 24);
+        private static readonly Color Sel    = Color.FromArgb(30, 25, 40);
+        private static readonly Color Accent = Color.FromArgb(150, 96, 40, 200);
+        private const int BtnW = 118;
+
+        public TabStrip(DarkTabControl tabs, params string[] labels)
+        {
+            _tabs = tabs; _labels = labels;
+            Height = 32; BackColor = Bg;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer
+                   | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+            _tabs.SelectedIndexChanged += (s, e) => Invalidate();
+        }
+
+        private int HitTest(int x) { int i = x / BtnW; return (i >= 0 && i < _labels.Length) ? i : -1; }
+
+        protected override void OnMouseMove(MouseEventArgs e) { int h = HitTest(e.X); if (h != _hot) { _hot = h; Invalidate(); } base.OnMouseMove(e); }
+        protected override void OnMouseLeave(EventArgs e) { _hot = -1; Invalidate(); base.OnMouseLeave(e); }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            int i = HitTest(e.X);
+            if (i >= 0 && i < _tabs.TabCount) _tabs.SelectedIndex = i;
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.Clear(Bg);
+            for (int i = 0; i < _labels.Length; i++)
+            {
+                var r = new Rectangle(i * BtnW, 0, BtnW, Height);
+                bool sel = i == _tabs.SelectedIndex;
+                if (sel) using (var b = new SolidBrush(Sel)) g.FillRectangle(b, r);
+                else if (i == _hot) using (var b = new SolidBrush(Color.FromArgb(24, 20, 30))) g.FillRectangle(b, r);
+                if (sel) using (var b = new SolidBrush(Accent)) g.FillRectangle(b, r.Left, r.Bottom - 3, r.Width, 3);
+                TextRenderer.DrawText(g, _labels[i], Font, r, sel ? Color.White : Color.FromArgb(170, 165, 180),
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            }
+        }
+    }
+
     internal sealed class MainForm : Form
     {
         private readonly string _root;
@@ -360,7 +426,7 @@ namespace RazagathWoW
         private readonly ImageButton _playButton = new ImageButton();
         private readonly Label _statusLabel = new Label();
         private readonly ProgressBar _progress = new ProgressBar();
-        private readonly TabControl _tabs = new TabControl();
+        private readonly DarkTabControl _tabs = new DarkTabControl();
         private readonly RichTextBox _news = new RichTextBox();
         private readonly RichTextBox _changelog = new RichTextBox();
         private TextBox _realmBox;
@@ -452,10 +518,13 @@ namespace RazagathWoW
             footer.Controls.Add(_progress);
             footer.Controls.Add(_playButton);
 
+            var tabStrip = new TabStrip(_tabs, "Play", "Changelog", "Settings") { Dock = DockStyle.Top };
+
             // docking is applied in reverse add-order: _tabs (Fill) added first
-            // so it docks last and takes the space left by header + footer
+            // so it docks last and takes the space left by the others
             Controls.Add(_tabs);
             Controls.Add(footer);
+            Controls.Add(tabStrip);
             Controls.Add(header);
         }
 
