@@ -1,34 +1,42 @@
 ﻿{
     "schema":  1,
-    "clientVersion":  "2026.09.04",
+    "clientVersion":  "2026.09.05",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.0.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/RazagathWoW.exe",
-                     "sha256":  "ff8eb3b535ae1484713fd16fdfdab4728b9971cefd4278a8f74e5be3bf4481ff"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/RazagathWoW.exe",
+                     "sha256":  "d09bb566bba1718d42d04e3b80f8442e4d917ae2c947c0717e7bbba23767c893"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "343d13912de2a4f52e56f38c1e62d51785a8c1b31cc9fe36fcd4e51c0560d9af",
-                      "size":  52077461,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/patch-enUS-Z.MPQ"
+                      "sha256":  "c62129f3fd46a79054bb7bbb86d46d5bc631238d5e7da4c0b80d312a71a5891c",
+                      "size":  52088357,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.05",
+                          "date":  "2026-09-03",
+                          "title":  "New Spellblade artwork",
+                          "notes":  [
+                                        "New Spellblade class icon (character-creation screen, /who, party frames).,New icon for Spellblades\u0027 Presence."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.04",
                           "date":  "2026-09-04",
