@@ -1,4 +1,4 @@
-﻿{
+{
     "schema":  1,
     "clientVersion":  "2026.09.05",
     "gameExe":  "Wow.exe",
@@ -6,7 +6,7 @@
     "launcher":  {
                      "version":  "1.0.0",
                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/RazagathWoW.exe",
-                     "sha256":  "d09bb566bba1718d42d04e3b80f8442e4d917ae2c947c0717e7bbba23767c893"
+                     "sha256":  "52247aecad64f53ee6eb722845530bfad9f8a0e71535a1e7edfd5a7618aabb88"
                  },
     "files":  [
                   {
@@ -34,7 +34,8 @@
                           "date":  "2026-09-03",
                           "title":  "New Spellblade artwork",
                           "notes":  [
-                                        "New Spellblade class icon (character-creation screen, /who, party frames).,New icon for Spellblades\u0027 Presence."
+                                        "New Spellblade class icon (character-creation screen, /who list, party frames).",
+                                        "New icon for Spellblades\u0027 Presence."
                                     ]
                       },
                       {
