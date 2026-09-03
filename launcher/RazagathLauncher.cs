@@ -344,6 +344,7 @@ namespace RazagathWoW
                 var todo = new List<FileEntry>();
                 foreach (var f in _manifest.files ?? new List<FileEntry>())
                 {
+                    if (string.IsNullOrEmpty(f.url) || string.IsNullOrEmpty(f.sha256)) continue; // not published yet
                     var local = Path.Combine(_root, f.path.Replace('/', '\\'));
                     if (f.optional && !File.Exists(local)) continue;
                     if (force || !File.Exists(local) || !HashEquals(local, f.sha256))
