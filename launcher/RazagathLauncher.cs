@@ -235,6 +235,60 @@ namespace RazagathWoW
         public List<string> notes { get; set; }
     }
 
+    // ---- header: blurred photo (cover) + dark scrim + centred logo ----------
+    internal sealed class HeaderBanner : Panel
+    {
+        public Image Background;
+        public Image Logo;
+        public int ScrimAlpha = 90;
+        public Padding LogoPad = new Padding(24, 14, 24, 14);
+
+        public HeaderBanner()
+        {
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer
+                   | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            BackColor = Color.FromArgb(18, 15, 24);
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e) { }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            var r = ClientRectangle;
+            g.Clear(BackColor);
+
+            if (Background != null)
+            {
+                // cover: scale to fill, crop the overflow, keep aspect
+                float s = Math.Max((float)r.Width / Background.Width, (float)r.Height / Background.Height);
+                int dw = (int)Math.Ceiling(Background.Width * s);
+                int dh = (int)Math.Ceiling(Background.Height * s);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(Background, (r.Width - dw) / 2, (r.Height - dh) / 2, dw, dh);
+            }
+
+            if (ScrimAlpha > 0)
+                using (var b = new SolidBrush(Color.FromArgb(ScrimAlpha, 12, 9, 18)))
+                    g.FillRectangle(b, r);
+
+            // thin divider along the bottom edge
+            using (var p = new Pen(Color.FromArgb(150, 96, 40, 168), 2f))
+                g.DrawLine(p, r.Left, r.Bottom - 1, r.Right, r.Bottom - 1);
+
+            if (Logo != null)
+            {
+                int aw = r.Width - LogoPad.Horizontal;
+                int ah = r.Height - LogoPad.Vertical;
+                float s = Math.Min((float)aw / Logo.Width, (float)ah / Logo.Height);
+                int lw = (int)(Logo.Width * s);
+                int lh = (int)(Logo.Height * s);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(Logo, (r.Width - lw) / 2, LogoPad.Top + (ah - lh) / 2, lw, lh);
+            }
+        }
+    }
+
     internal sealed class MainForm : Form
     {
         private readonly string _root;
@@ -274,31 +328,14 @@ namespace RazagathWoW
         // ---------------------------------------------------------------- UI --
         private void BuildUi()
         {
-            var header = new Panel { Dock = DockStyle.Top, Height = 156, BackColor = Color.FromArgb(18, 15, 24) };
-            var logo = LoadEmbedded("RazagathWoW.logo.png");
-            if (logo != null)
+            var header = new HeaderBanner
             {
-                var pic = new PictureBox
-                {
-                    Dock = DockStyle.Fill,
-                    Image = logo,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Padding = new Padding(0, 10, 0, 10),
-                    BackColor = Color.Transparent
-                };
-                header.Controls.Add(pic);
-            }
-            else
-            {
-                header.Controls.Add(new Label
-                {
-                    Text = "WORLD OF RAZAGATH",
-                    ForeColor = Color.FromArgb(196, 150, 255),
-                    Font = new Font("Segoe UI", 22f, FontStyle.Bold),
-                    AutoSize = true,
-                    Location = new Point(24, 60)
-                });
-            }
+                Dock = DockStyle.Top,
+                Height = 156,
+                Background = LoadEmbedded("RazagathWoW.header-bg.png"),
+                Logo = LoadEmbedded("RazagathWoW.logo.png"),
+                ScrimAlpha = 90          // 0-255 dark wash over the photo
+            };
 
             _tabs.Dock = DockStyle.Fill;
             _tabs.Padding = new Point(14, 6);
