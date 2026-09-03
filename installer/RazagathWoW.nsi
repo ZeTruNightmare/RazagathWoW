@@ -90,15 +90,11 @@ Page custom ModePage ModePageLeave
 !define MUI_DIRECTORYPAGE_TEXT_TOP "Select your existing World of Warcraft 3.3.5a folder (build 12340 - the one containing Wow.exe). Your Wow.exe is backed up to Wow.exe.orig; account data and other addons are untouched."
 !define MUI_DIRECTORYPAGE_VARIABLE $INSTDIR
 !insertmacro MUI_PAGE_DIRECTORY
-!undef MUI_PAGE_CUSTOMFUNCTION_PRE
-!undef MUI_DIRECTORYPAGE_TEXT_TOP
 
 !define MUI_PAGE_CUSTOMFUNCTION_PRE DirPreFull
 !define MUI_DIRECTORYPAGE_TEXT_TOP "Choose an empty folder for the full RazagathWoW client. About 30 GB must be free on the drive during installation (~15 GB afterwards)."
 !define MUI_DIRECTORYPAGE_VARIABLE $INSTDIR
 !insertmacro MUI_PAGE_DIRECTORY
-!undef MUI_PAGE_CUSTOMFUNCTION_PRE
-!undef MUI_DIRECTORYPAGE_TEXT_TOP
 
 !insertmacro MUI_PAGE_INSTFILES
 
