@@ -3,7 +3,8 @@
     Cloudflare / torrent distribution.
 
     The output tree contains:
-      - the patched game exe (as Wow.exe)
+      - the clean game exe (Wow.exe) copied straight from -Source; the launcher
+        patches it in place on first run and keeps Wow.exe.orig
       - RazagathWoW.exe launcher + launcher.cfg
       - Data/enUS/patch-enUS-Z.MPQ
       - Interface/AddOns/SpellBladeUI/*
@@ -27,10 +28,9 @@ $RepoDir = Split-Path -Parent $PSScriptRoot
 $sevenZip = "C:\Program Files\7-Zip\7z.exe"
 
 if (-not (Test-Path "$Source\Wow.exe")) { throw "no Wow.exe under -Source ($Source)" }
-$patchedExe = "$RepoDir\patch\Wow.exe"
-$mpq        = "$RepoDir\patch\patch-enUS-Z.MPQ"
-$launcher   = "$RepoDir\dist\RazagathWoW.exe"
-foreach ($f in @($patchedExe,$mpq,$launcher)) { if (-not (Test-Path $f)) { throw "missing $f - run build-release.ps1 -IncludeExe first" } }
+$mpq      = "$RepoDir\patch\patch-enUS-Z.MPQ"
+$launcher = "$RepoDir\dist\RazagathWoW.exe"
+foreach ($f in @($mpq,$launcher)) { if (-not (Test-Path $f)) { throw "missing $f - run build-release.ps1 first" } }
 
 Write-Host "staging clean client -> $Dest"
 $exclDirs  = @("Cache","Logs","Errors","Screenshots","WTF")
@@ -41,12 +41,14 @@ foreach ($f in $exclFiles) { $rcArgs += "/XF"; $rcArgs += $f }
 robocopy @rcArgs | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
 
-# patched exe + launcher
-Copy-Item $patchedExe "$Dest\Wow.exe" -Force
-Copy-Item $launcher   "$Dest\RazagathWoW.exe" -Force
+# launcher (Wow.exe already copied clean by robocopy; launcher patches it on run)
+Copy-Item $launcher "$Dest\RazagathWoW.exe" -Force
 if ($ManifestUrl) {
     Set-Content "$Dest\launcher.cfg" -Value ('{ "manifestUrl": "' + $ManifestUrl + '" }') -Encoding UTF8
 }
+# pre-patch now so the bundle is ready to play offline
+& "$Dest\RazagathWoW.exe" --patch-exe "$Dest" | Out-Null
+Write-Host ("Wow.exe patch: " + (Get-Content "$env:TEMP\razagath_patchexe.log" -ErrorAction SilentlyContinue))
 
 # overlay (addon, Config.wtf, realmlist.wtf)
 New-Item -ItemType Directory -Force -Path "$Dest\Data\enUS","$Dest\WTF","$Dest\Interface\AddOns" | Out-Null

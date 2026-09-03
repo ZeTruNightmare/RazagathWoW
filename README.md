@@ -51,8 +51,17 @@ pwsh tools/stage-client.ps1 -Source "D:\clean-335" -Dest "D:\RazagathWoW" -Zip -
 - **Full client** (~15 GB): split `RazagathWoW-client.7z.0NN` as Release assets
   (each < 2 GB), or a mirror (Cloudflare R2 / Internet Archive / torrent).
 
-## Legal note
+## What this repo does and doesn't contain
 
-`Wow.exe` and the base client data are Blizzard-copyrighted. `patch-enUS-Z.MPQ`
-and `SpellBladeUI` are original work. Host the base client where you're
-comfortable; the small patch pipeline here is all original.
+**Contains (all original):** the launcher, `patch-enUS-Z.MPQ` (custom DBC/Lua/BLP),
+`SpellBladeUI`, and the build scripts.
+
+**Does not contain any Blizzard binary or asset.** The launcher does not ship a
+patched `Wow.exe` — it verifies the SHA-256 of the player's *own* clean 3.3.5a
+(build 12340) client, then applies five in-place byte patches (the offset table
+lives in `ExePatcher` in `RazagathLauncher.cs`), keeping the original as
+`Wow.exe.orig`. What's distributed is a list of five offsets, not Blizzard code.
+
+**The base ~15 GB client** is Blizzard data and is not hosted here. Point players
+at an existing 3.3.5a client (e.g. the ChromieCraft client) for the patcher, or
+distribute a full bundle via torrent / your own mirror.

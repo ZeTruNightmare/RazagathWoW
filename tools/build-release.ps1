@@ -25,7 +25,6 @@ param(
     [string]$Realmlist = "",                        # keep existing if empty
     [string]$Tag = "",                              # default: patch-<Version>
     [switch]$RebuildMpq,
-    [switch]$IncludeExe,                            # also ship the patched Wow.exe as an asset
     [switch]$DryRun
 )
 $ErrorActionPreference = "Stop"
@@ -48,7 +47,7 @@ if ($RebuildMpq) {
 }
 
 # --- 2. sync artifacts --------------------------------------------------
-& "$PSScriptRoot\sync-from-module.ps1" @(if ($IncludeExe) { "-IncludeExe" })
+& "$PSScriptRoot\sync-from-module.ps1"
 
 # --- 3. build launcher ------------------------------------------------
 $launcherOut = "$RepoDir\dist\RazagathWoW.exe"
@@ -112,7 +111,6 @@ if ($DryRun) { Write-Host "DryRun: skipping gh release + git push"; return }
 
 # --- 6. GitHub release ---------------------------------------------
 $assets = @($mpq, $launcherOut, $lua, $toc)
-if ($IncludeExe -and (Test-Path "$RepoDir\patch\Wow.exe")) { $assets += "$RepoDir\patch\Wow.exe" }
 
 $relNotes = "RazagathWoW client patch $Version`n`n" + (($Notes | ForEach-Object { "- $_" }) -join "`n")
 $exists = (& $gh release view $Tag --repo $Repo 2>$null; $LASTEXITCODE -eq 0)

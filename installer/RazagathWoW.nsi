@@ -6,11 +6,14 @@
 ;
 ; Build:  makensis /DVERSION=2026.09.04 /DREALM=logon.example.com installer\RazagathWoW.nsi
 ; Inputs it expects (relative to repo root):
-;   dist\RazagathWoW.exe
-;   patch\Wow.exe                 (patched game binary)
+;   dist\RazagathWoW.exe          (the launcher; also patches Wow.exe in place)
 ;   patch\patch-enUS-Z.MPQ
 ;   overlay\Interface\AddOns\SpellBladeUI\*
 ;   overlay\WTF\Config.wtf
+;
+; NOTE: no Blizzard binary is bundled. The launcher verifies the player's own
+; clean 3.3.5a (build 12340) Wow.exe and applies five byte patches in place,
+; backing the original up to Wow.exe.orig.
 ; -----------------------------------------------------------------------------
 
 Unicode true
@@ -74,16 +77,9 @@ Section "RazagathWoW" SecMain
     MessageBox MB_ICONEXCLAMATION "This folder doesn't look like a full WoW client (Data folder is tiny). Continue anyway?" IDYES +2
     Abort
 
-  ; --- back up the original exe --------------------------------------
-  IfFileExists "$INSTDIR\Wow.exe.orig" skipBackup 0
-    DetailPrint "Backing up Wow.exe -> Wow.exe.orig"
-    Rename "$INSTDIR\Wow.exe" "$INSTDIR\Wow.exe.orig"
-  skipBackup:
-
-  ; --- patched game exe + launcher ---------------------------------
+  ; --- launcher ---------------------------------------------------
   SetOutPath "$INSTDIR"
-  DetailPrint "Installing patched game client"
-  File "/oname=Wow.exe" "${REPO_ROOT}patch\Wow.exe"
+  DetailPrint "Installing launcher"
   File "${REPO_ROOT}dist\RazagathWoW.exe"
   FileOpen $0 "$INSTDIR\launcher.cfg" w
   FileWrite $0 '{ "manifestUrl": "${MANIFEST_URL}" }'
@@ -114,6 +110,14 @@ Section "RazagathWoW" SecMain
   FileOpen $0 "$INSTDIR\Data\enUS\realmlist.wtf" w
   FileWrite $0 "set realmlist ${REALM}$\r$\n"
   FileClose $0
+
+  ; --- patch the player's own Wow.exe in place ------------------
+  DetailPrint "Patching Wow.exe (original -> Wow.exe.orig)"
+  nsExec::ExecToLog '"$INSTDIR\RazagathWoW.exe" --patch-exe "$INSTDIR"'
+  Pop $0
+  ${If} $0 != 0
+    MessageBox MB_ICONEXCLAMATION "Wow.exe could not be verified as a clean 3.3.5a (build 12340) client.$\r$\nThe launcher will try again each time you start it."
+  ${EndIf}
 
   ; --- clear cache so new DBC/MPQ is read ------------------------
   RMDir /r "$INSTDIR\Cache"

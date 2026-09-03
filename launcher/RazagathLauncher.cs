@@ -49,6 +49,15 @@ namespace RazagathWoW
                 Environment.Exit(SelfTest.Run(args.Length > 1 ? args[1] : null));
                 return;
             }
+            if (args != null && args.Length > 0 &&
+                (args[0] == "--patch-exe" || args[0] == "/patch-exe"))
+            {
+                var dir = args.Length > 1 ? args[1] : AppDomain.CurrentDomain.BaseDirectory;
+                var oc = ExePatcher.Ensure(Path.Combine(dir, "Wow.exe"));
+                try { File.WriteAllText(Path.Combine(Path.GetTempPath(), "razagath_patchexe.log"), oc.Status + ": " + oc.Message); } catch { }
+                Environment.Exit((oc.Status == ExePatcher.Status.Patched || oc.Status == ExePatcher.Status.AlreadyPatched) ? 0 : 1);
+                return;
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ServicePointManager.SecurityProtocol =
@@ -104,6 +113,93 @@ namespace RazagathWoW
             }
         }
         private static string Trunc(string s) { return string.IsNullOrEmpty(s) ? "(unset)" : (s.Length > 12 ? s.Substring(0, 12) + "..." : s); }
+    }
+
+    // ---- in-place game-exe patcher -----------------------------------------
+    //  The distribution ships NO Blizzard binary - only the list of five byte
+    //  offsets we change. The launcher verifies the player's own Wow.exe is the
+    //  known-clean 3.3.5a (build 12340) ChromieCraft binary, backs it up to
+    //  Wow.exe.orig, and pokes the bytes that let a custom class + custom
+    //  GlueXML load.
+    internal static class ExePatcher
+    {
+        public const string CleanSha256   = "aa63a5750d60ef16746c686b3d5e26876d98953eab08b1c026cd0faf78e88cb8";
+        public const string PatchedSha256 = "0c540dd96d7dc749501fcb7db2de4285db8662ec035b31aabbc6e53a5dee47fa";
+        public const long   ExpectedSize  = 7704216;
+
+        private sealed class Poke
+        {
+            public readonly long Offset; public readonly byte[] Old; public readonly byte[] New;
+            public Poke(long o, string oldHex, string newHex) { Offset = o; Old = Hex(oldHex); New = Hex(newHex); }
+        }
+        // file offset = virtual address - 0x400C00  (.text: RVA 0x1000 @ raw 0x400)
+        private static readonly Poke[] Pokes =
+        {
+            new Poke(0x4159E0, "558BEC81EC1C01", "B803000000C390"), // VA 0x8165E0  sig check -> return 3 (valid)
+            new Poke(0x0D9BBD, "E8CEA51100",     "9090909090"),     // VA 0x4DA7BD  don't rename loose GlueXML/FrameXML to .old
+            new Poke(0x0D9CEB, "0F852DFFFFFF",   "909090909090"),   // VA 0x4DA8EB  no GlueXML toc-hash abort
+            new Poke(0x12A143, "740A",           "EB0A"),           // VA 0x52AD43  no FrameXML hash abort
+            new Poke(0x1F77EC, "740A",           "EB0A"),           // VA 0x5F83EC  no FrameXML manifest abort
+        };
+
+        public enum Status { AlreadyPatched, Patched, UnknownExe, NotFound, Failed }
+
+        public struct Outcome
+        {
+            public Status Status; public string Message;
+            public Outcome(Status s, string m) { Status = s; Message = m; }
+        }
+
+        public static Outcome Ensure(string exePath)
+        {
+            if (!File.Exists(exePath))
+                return new Outcome(Status.NotFound, "Wow.exe not found at " + exePath);
+
+            var hash = Sha256File(exePath);
+            if (string.Equals(hash, PatchedSha256, StringComparison.OrdinalIgnoreCase))
+                return new Outcome(Status.AlreadyPatched, "Wow.exe already patched.");
+            if (!string.Equals(hash, CleanSha256, StringComparison.OrdinalIgnoreCase))
+                return new Outcome(Status.UnknownExe,
+                    "Wow.exe is not the recognised clean 3.3.5a (build 12340) client, so it was left untouched.");
+
+            try
+            {
+                var bak = Path.Combine(Path.GetDirectoryName(exePath), "Wow.exe.orig");
+                if (!File.Exists(bak)) File.Copy(exePath, bak);
+
+                var bytes = File.ReadAllBytes(exePath);
+                if (bytes.LongLength != ExpectedSize) return new Outcome(Status.Failed, "unexpected size");
+                foreach (var p in Pokes)
+                {
+                    for (int i = 0; i < p.Old.Length; i++)
+                        if (bytes[p.Offset + i] != p.Old[i])
+                            return new Outcome(Status.Failed, "byte mismatch at 0x" + p.Offset.ToString("X"));
+                    for (int i = 0; i < p.New.Length; i++)
+                        bytes[p.Offset + i] = p.New[i];
+                }
+                var tmp = exePath + ".patched";
+                File.WriteAllBytes(tmp, bytes);
+                if (!string.Equals(Sha256File(tmp), PatchedSha256, StringComparison.OrdinalIgnoreCase))
+                { File.Delete(tmp); return new Outcome(Status.Failed, "post-patch checksum mismatch"); }
+                File.Delete(exePath);
+                File.Move(tmp, exePath);
+                return new Outcome(Status.Patched, "Wow.exe patched for RazagathWoW (original saved as Wow.exe.orig).");
+            }
+            catch (Exception ex) { return new Outcome(Status.Failed, ex.Message); }
+        }
+
+        private static byte[] Hex(string h)
+        {
+            var b = new byte[h.Length / 2];
+            for (int i = 0; i < b.Length; i++) b[i] = Convert.ToByte(h.Substring(i * 2, 2), 16);
+            return b;
+        }
+        private static string Sha256File(string f)
+        {
+            using (var sha = SHA256.Create())
+            using (var fs = new FileStream(f, FileMode.Open, FileAccess.Read, FileShare.Read))
+                return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "");
+        }
     }
 
     // ---- manifest model (JavaScriptSerializer maps JSON onto these) ----------
@@ -382,6 +478,19 @@ namespace RazagathWoW
 
                 if (!string.IsNullOrEmpty(_manifest.realmlist))
                     EnsureRealmlist(_manifest.realmlist);
+
+                // make sure the player's own Wow.exe carries the client patches
+                var exe = await Task.Run(() => ExePatcher.Ensure(GameExePath()));
+                if (exe.Status == ExePatcher.Status.Patched)
+                    SetStatus("Wow.exe patched  -  client " + _manifest.clientVersion + ".  Ready.");
+                else if (exe.Status == ExePatcher.Status.UnknownExe)
+                    SetStatus("Note: Wow.exe is not a recognised clean 3.3.5a client - launching anyway.");
+                else if (exe.Status == ExePatcher.Status.NotFound)
+                {
+                    SetStatus("Wow.exe not found - put the launcher in your WoW 3.3.5a folder.");
+                    _playButton.Enabled = false;
+                    return;
+                }
 
                 _playButton.Enabled = true;
             }
