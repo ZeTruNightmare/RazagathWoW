@@ -2,7 +2,7 @@
     "schema":  1,
     "clientVersion":  "2026.09.04",
     "gameExe":  "Wow.exe",
-    "realmlist":  "",
+    "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.0.0",
                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.04/RazagathWoW.exe",
