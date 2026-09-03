@@ -1,34 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.05",
+    "clientVersion":  "2026.09.06",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.0.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/RazagathWoW.exe",
-                     "sha256":  "52247aecad64f53ee6eb722845530bfad9f8a0e71535a1e7edfd5a7618aabb88"
+                     "version":  "1.1.0",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/RazagathWoW.exe",
+                     "sha256":  "ebda9234da7a91d83c4f9b9b6afc88548ce581491883d9adfefba517e129cbdb"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "c62129f3fd46a79054bb7bbb86d46d5bc631238d5e7da4c0b80d312a71a5891c",
                       "size":  52088357,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.06",
+                          "date":  "2026-09-03",
+                          "title":  "Launcher redesign",
+                          "notes":  [
+                                        "The launcher got a full visual refresh - World of Razagath banner, textured panels, custom PLAY button and trim.",
+                                        "Patch dates now show DD.MM.YYYY."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.05",
                           "date":  "2026-09-03",
