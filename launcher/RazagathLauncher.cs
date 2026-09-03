@@ -401,8 +401,8 @@ namespace RazagathWoW
         private readonly System.Collections.Generic.List<Run> _runs = new System.Collections.Generic.List<Run>();
         private int _scroll, _contentH, _viewH;
         public Image Divider;                 // small gold flourish at top + bottom edges
-        private const int DivH = 16;          // divider render height
-        private const int DivPad = 26;        // text inset that clears the divider
+        private const int DivH = 21;          // divider render height
+        private const int DivPad = 32;        // text inset that clears the divider
 
         public ChangelogView()
         {
