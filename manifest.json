@@ -2,7 +2,7 @@
   "schema": 1,
   "clientVersion": "2026.09.04",
   "gameExe": "Wow.exe",
-  "realmlist": "set realmlist CHANGE-ME.razagath.example",
+  "realmlist": "",
   "launcher": {
     "version": "1.0.0",
     "url": "",
