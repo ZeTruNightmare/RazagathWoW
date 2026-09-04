@@ -19,6 +19,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -580,6 +581,15 @@ namespace RazagathWoW
         private TextBox _realmBox;
         private CheckBox _windowedBox;
         private bool _busy;
+        private readonly List<RealmProbe> _realmProbes = new List<RealmProbe>();
+
+        private sealed class RealmProbe
+        {
+            public string Name;
+            public string Host;
+            public int Port;
+            public Label StatusLabel;
+        }
 
         public MainForm()
         {
@@ -598,6 +608,7 @@ namespace RazagathWoW
 
             BuildUi();
             Shown += async (s, e) => await RefreshAsync();
+            Shown += async (s, e) => await RefreshRealmStatusAsync();
         }
 
         // ---------------------------------------------------------------- UI --
@@ -626,6 +637,10 @@ namespace RazagathWoW
             _news.Divider = dividerImg;
             playTab.Controls.Add(_news);
 
+            // ---- Realms tab ----
+            var realmTab = new TabPage("  Realms  ") { BackColor = BackColor };
+            realmTab.Controls.Add(BuildRealmTab(contentTex, dividerImg));
+
             // ---- Changelog tab ----
             var clTab = new TabPage("  Changelog  ") { BackColor = BackColor };
             _changelog.Dock = DockStyle.Fill;
@@ -638,6 +653,7 @@ namespace RazagathWoW
             setTab.Controls.Add(BuildSettingsPanel(contentTex, dividerImg));
 
             _tabs.TabPages.Add(playTab);
+            _tabs.TabPages.Add(realmTab);
             _tabs.TabPages.Add(clTab);
             _tabs.TabPages.Add(setTab);
 
@@ -653,6 +669,7 @@ namespace RazagathWoW
             _progress.Location = new Point(26, 58);
             _progress.Size = new Size(360, 20);
             _progress.Style = ProgressBarStyle.Continuous;
+            TintProgressBar(_progress, HeadColor, Color.FromArgb(24, 20, 16));
 
             _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
             _playButton.Size = new Size(288, 108);
@@ -664,7 +681,7 @@ namespace RazagathWoW
             footer.Controls.Add(_progress);
             footer.Controls.Add(_playButton);
 
-            var tabStrip = new TabStrip(_tabs, "Play", "Changelog", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
+            var tabStrip = new TabStrip(_tabs, "Play", "Realms", "Changelog", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
 
             // docking is applied in reverse add-order: _tabs (Fill) added first
             // so it docks last and takes the space left by the others
@@ -763,7 +780,7 @@ namespace RazagathWoW
 
             var ver = new Label
             {
-                Text = "Launcher " + LauncherVersion() + "   -   client " + (_manifest != null ? _manifest.clientVersion : "?"),
+                Text = "Launcher " + LauncherVersion() + "   -   client " + (_manifest != null ? PatchDate(_manifest.clientVersion, null) : "?"),
                 ForeColor = SubColor,
                 BackColor = Color.Transparent,
                 AutoSize = true,
@@ -788,6 +805,83 @@ namespace RazagathWoW
         }
         private Label _versionLabel;
 
+        // ---- Realms tab: online/offline check for auth + each world realm --
+        private Control BuildRealmTab(Image contentTex, Image dividerImg)
+        {
+            var host = new DividedPanel { Dock = DockStyle.Fill, Texture = contentTex, Divider = dividerImg };
+
+            var p = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(6, 4, 6, 4),
+                ColumnCount = 2,
+                BackColor = Color.Transparent
+            };
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200));
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+            Label Head(string t) => new Label { Text = t, ForeColor = HeadColor, Font = new Font(Font, FontStyle.Bold), AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 10, 0, 10) };
+            Label Name(string t) => new Label { Text = t, ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) };
+            Label Status() => new Label { Text = "Checking...", ForeColor = SubColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) };
+
+            _realmProbes.Clear();
+            int row = 0;
+            p.Controls.Add(Head("Server Status"), 0, row); row++;
+
+            void AddRow(string name, string host2, int port)
+            {
+                var statusLbl = Status();
+                p.Controls.Add(Name(name), 0, row);
+                p.Controls.Add(statusLbl, 1, row);
+                _realmProbes.Add(new RealmProbe { Name = name, Host = host2, Port = port, StatusLabel = statusLbl });
+                row++;
+            }
+
+            AddRow("Auth Server", "ztnwow.duckdns.org", 3724);
+            AddRow("Razagath", "ztnwow.duckdns.org", 8085);
+            AddRow("Razagath [Dev]", "ztnwow.duckdns.org", 8086);
+
+            var refresh = DarkButton("Refresh");
+            refresh.Click += async (s, e) => await RefreshRealmStatusAsync();
+            p.Controls.Add(new Label { BackColor = Color.Transparent, AutoSize = true }, 0, row);
+            p.Controls.Add(refresh, 1, row);
+
+            host.Controls.Add(p);
+            return host;
+        }
+
+        private async Task RefreshRealmStatusAsync()
+        {
+            foreach (var probe in _realmProbes)
+            {
+                probe.StatusLabel.Text = "Checking...";
+                probe.StatusLabel.ForeColor = SubColor;
+            }
+            await Task.WhenAll(_realmProbes.Select(async probe =>
+            {
+                bool online = await ProbeTcpAsync(probe.Host, probe.Port, 3000);
+                if (probe.StatusLabel.IsDisposed) return;
+                probe.StatusLabel.Text = online ? "Online" : "Offline";
+                probe.StatusLabel.ForeColor = online ? HeadColor : Color.FromArgb(224, 90, 80);
+            }));
+        }
+
+        private static async Task<bool> ProbeTcpAsync(string host, int port, int timeoutMs)
+        {
+            try
+            {
+                using (var client = new TcpClient())
+                {
+                    var connectTask = client.ConnectAsync(host, port);
+                    var finished = await Task.WhenAny(connectTask, Task.Delay(timeoutMs));
+                    if (finished != connectTask) return false;   // timed out
+                    await connectTask;                            // observe fault, if any
+                    return client.Connected;
+                }
+            }
+            catch { return false; }
+        }
+
         // ----------------------------------------------------------- update --
         private async Task RefreshAsync(bool force = false)
         {
@@ -803,7 +897,7 @@ namespace RazagathWoW
                 RenderChangelog(_manifest);
                 RenderNews(_manifest);
                 if (_versionLabel != null)
-                    _versionLabel.Text = "Launcher " + LauncherVersion() + "   -   client " + _manifest.clientVersion;
+                    _versionLabel.Text = "Launcher " + LauncherVersion() + "   -   client " + PatchDate(_manifest.clientVersion, null);
 
                 // launcher self-update first
                 if (_manifest.launcher != null && IsNewer(_manifest.launcher.version, LauncherVersion())
@@ -826,7 +920,7 @@ namespace RazagathWoW
 
                 if (todo.Count == 0)
                 {
-                    SetStatus("Up to date  -  client " + _manifest.clientVersion);
+                    SetStatus("Up to date  -  client " + PatchDate(_manifest.clientVersion, null));
                     SetProgress(100);
                 }
                 else
@@ -849,7 +943,7 @@ namespace RazagathWoW
                             throw new Exception("Checksum mismatch after downloading " + f.path);
                         done += Math.Max(f.size, 1);
                     }
-                    SetStatus("Update complete  -  client " + _manifest.clientVersion);
+                    SetStatus("Update complete  -  client " + PatchDate(_manifest.clientVersion, null));
                     SetProgress(100);
                 }
 
@@ -859,7 +953,7 @@ namespace RazagathWoW
                 // make sure the player's own Wow.exe carries the client patches
                 var exe = await Task.Run(() => ExePatcher.Ensure(GameExePath()));
                 if (exe.Status == ExePatcher.Status.Patched)
-                    SetStatus("Wow.exe patched  -  client " + _manifest.clientVersion + ".  Ready.");
+                    SetStatus("Wow.exe patched  -  client " + PatchDate(_manifest.clientVersion, null) + ".  Ready.");
                 else if (exe.Status == ExePatcher.Status.UnknownExe)
                     SetStatus("Note: Wow.exe is not a recognised clean 3.3.5a client - launching anyway.");
                 else if (exe.Status == ExePatcher.Status.NotFound)
@@ -936,13 +1030,39 @@ namespace RazagathWoW
         private static readonly Color BodyColor = Color.FromArgb(228, 224, 220);
         private static readonly Color SubColor  = Color.FromArgb(182, 178, 172);
 
+        // Recolor a ProgressBar's fill/track - stock WinForms only offers the
+        // system theme's blue. Dropping the control's visual style makes it
+        // honor the classic PBM_SETBARCOLOR/PBM_SETBKCOLOR messages.
+        [System.Runtime.InteropServices.DllImport("uxtheme.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+        private static extern int SetWindowTheme(IntPtr hWnd, string subAppName, string subIdList);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+        private const int PBM_SETBARCOLOR = 0x0409;
+        private const int PBM_SETBKCOLOR  = 0x2001;
+
+        private static void TintProgressBar(ProgressBar pb, Color bar, Color back)
+        {
+            try
+            {
+                var h = pb.Handle;             // forces handle creation
+                SetWindowTheme(h, "", "");
+                SendMessage(h, PBM_SETBARCOLOR, IntPtr.Zero, (IntPtr)ColorTranslator.ToWin32(bar));
+                SendMessage(h, PBM_SETBKCOLOR, IntPtr.Zero, (IntPtr)ColorTranslator.ToWin32(back));
+            }
+            catch { /* cosmetic only - never block startup over it */ }
+        }
+
         // Show one date only, British style DD.MM.YYYY. version is usually
-        // YYYY.MM.DD (build-release default); fall back to the ISO date field.
+        // YYYY.MM.DD (build-release default), optionally with a trailing a-z
+        // letter for a second same-day patch (e.g. 2026.09.04b); fall back to
+        // the ISO date field.
         private static string PatchDate(string version, string date)
         {
-            var m = System.Text.RegularExpressions.Regex.Match(version ?? "", @"^(\d{4})\.(\d{1,2})\.(\d{1,2})$");
-            if (!m.Success)
-                m = System.Text.RegularExpressions.Regex.Match(date ?? "", @"^(\d{4})-(\d{1,2})-(\d{1,2})$");
+            var m = System.Text.RegularExpressions.Regex.Match(version ?? "", @"^(\d{4})\.(\d{1,2})\.(\d{1,2})([a-z]?)$");
+            if (m.Success)
+                return string.Format("{0:00}.{1:00}.{2}{3}", int.Parse(m.Groups[3].Value),
+                    int.Parse(m.Groups[2].Value), m.Groups[1].Value, m.Groups[4].Value);
+            m = System.Text.RegularExpressions.Regex.Match(date ?? "", @"^(\d{4})-(\d{1,2})-(\d{1,2})$");
             if (m.Success)
                 return string.Format("{0:00}.{1:00}.{2}", int.Parse(m.Groups[3].Value),
                     int.Parse(m.Groups[2].Value), m.Groups[1].Value);
