@@ -1,34 +1,42 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.07",
+    "clientVersion":  "2026.09.08",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.1.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/RazagathWoW.exe",
-                     "sha256":  "a062403cb5b15497f0b80a028cb4dd1a7721bb69c54a566fffb1ce327a4f354b"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/RazagathWoW.exe",
+                     "sha256":  "d8541e259e9464dbb5c84114c307b787e183787677fcaa5c9033b7d62fdeab14"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "45e9bb1578f138a5967828259752eeafb83fd496c1ef26fe592fa2d15ef7b896",
-                      "size":  52088357,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/patch-enUS-Z.MPQ"
+                      "sha256":  "ede0e254b25a082f9af35892f816c4001eb7498fe82f804d1478b9d8eb4207ca",
+                      "size":  52102667,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.08",
+                          "date":  "2026-09-04",
+                          "title":  "Universal cross-faction languages",
+                          "notes":  [
+                                        "Every race can now speak and understand every language, across factions, from the moment a character is created."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.07",
                           "date":  "2026-09-04",

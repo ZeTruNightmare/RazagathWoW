@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.08 - Universal cross-faction languages
+
+- Every race can now speak and understand every language, across factions, from the moment a character is created.
+
 ## 2026.09.07 - Spellblade goes live + grimoire tiers
 
 - Spellblade is now available on the main realm.
