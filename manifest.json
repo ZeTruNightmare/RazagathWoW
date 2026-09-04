@@ -4,9 +4,9 @@
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.1.0",
+                     "version":  "1.2.0",
                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/RazagathWoW.exe",
-                     "sha256":  "d8541e259e9464dbb5c84114c307b787e183787677fcaa5c9033b7d62fdeab14"
+                     "sha256":  "d7f0fb76b5ae7eba39f6e689afed6dcb1191b338990d02e1c6acadb49aa4d795"
                  },
     "files":  [
                   {
