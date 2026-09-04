@@ -394,6 +394,32 @@ namespace RazagathWoW
         }
     }
 
+    // ---- textured panel with the same top/bottom gold-flourish divider used
+    //      by ChangelogView, for non-scrolling content (e.g. Settings) -------
+    internal class DividedPanel : TexturePanel
+    {
+        public Image Divider;
+        protected const int DivH = 21;
+        public const int DivPad = 32;
+
+        public DividedPanel()
+        {
+            Padding = new Padding(22, DivPad, 16, DivPad);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            if (Divider == null) return;
+            var g = e.Graphics;
+            int dw = (int)((float)Divider.Width / Divider.Height * DivH);
+            int dh = (int)((float)Divider.Height / Divider.Width * dw);
+            int dx = (ClientSize.Width - dw) / 2;
+            g.DrawImage(Divider, dx, 5, dw, dh);
+            g.DrawImage(Divider, dx, ClientSize.Height - dh - 5, dw, dh);
+        }
+    }
+
     // ---- owner-drawn scrolling rich text on a textured panel --------------
     internal sealed class ChangelogView : TexturePanel
     {
@@ -609,7 +635,7 @@ namespace RazagathWoW
 
             // ---- Settings tab ----
             var setTab = new TabPage("  Settings  ") { BackColor = BackColor };
-            setTab.Controls.Add(BuildSettingsPanel());
+            setTab.Controls.Add(BuildSettingsPanel(contentTex, dividerImg));
 
             _tabs.TabPages.Add(playTab);
             _tabs.TabPages.Add(clTab);
@@ -648,57 +674,117 @@ namespace RazagathWoW
             Controls.Add(header);
         }
 
-        private Control BuildSettingsPanel()
+        // ---- themed control factories, matching the Play / Changelog tabs --
+        private static Button DarkButton(string text)
         {
+            var b = new Button
+            {
+                Text = text,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Anchor = AnchorStyles.Left,
+                Margin = new Padding(0, 4, 10, 4),
+                Padding = new Padding(14, 6, 14, 6),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(40, 34, 30),
+                ForeColor = BodyColor,
+                Cursor = Cursors.Hand,
+                UseVisualStyleBackColor = false
+            };
+            b.FlatAppearance.BorderSize = 1;
+            b.FlatAppearance.BorderColor = Color.FromArgb(110, 96, 62);
+            b.FlatAppearance.MouseOverBackColor = Color.FromArgb(60, 51, 38);
+            b.FlatAppearance.MouseDownBackColor = Color.FromArgb(26, 22, 18);
+            return b;
+        }
+
+        private static TextBox DarkTextBox()
+        {
+            return new TextBox
+            {
+                BackColor = Color.FromArgb(18, 15, 22),
+                ForeColor = BodyColor,
+                BorderStyle = BorderStyle.FixedSingle,
+                Anchor = AnchorStyles.Left,
+                Margin = new Padding(0, 5, 0, 5)
+            };
+        }
+
+        private static CheckBox DarkCheckBox(string text)
+        {
+            return new CheckBox
+            {
+                Text = text,
+                ForeColor = BodyColor,
+                BackColor = Color.Transparent,
+                FlatStyle = FlatStyle.Flat,
+                AutoSize = true,
+                Anchor = AnchorStyles.Left,
+                Cursor = Cursors.Hand,
+                Margin = new Padding(0, 8, 0, 8)
+            };
+        }
+
+        private Control BuildSettingsPanel(Image contentTex, Image dividerImg)
+        {
+            var host = new DividedPanel { Dock = DockStyle.Fill, Texture = contentTex, Divider = dividerImg };
+
             var p = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(24, 20, 24, 20),
+                Padding = new Padding(6, 4, 6, 4),
                 ColumnCount = 2,
-                BackColor = BackColor
+                BackColor = Color.Transparent
             };
             p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));
             p.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
-            Label L(string t) => new Label { Text = t, ForeColor = Color.Gainsboro, AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0, 8, 0, 8) };
+            Label Head(string t) => new Label { Text = t, ForeColor = HeadColor, Font = new Font(Font, FontStyle.Bold), AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 10, 0, 10) };
 
-            _realmBox = new TextBox { Width = 460, Anchor = AnchorStyles.Left, Margin = new Padding(0, 5, 0, 5) };
+            _realmBox = DarkTextBox();
+            _realmBox.Width = 460;
             _realmBox.Text = ReadRealmlist();
 
-            var saveRealm = new Button { Text = "Save realmlist", AutoSize = true, Anchor = AnchorStyles.Left };
+            var saveRealm = DarkButton("Save realmlist");
             saveRealm.Click += (s, e) => { WriteRealmlist(_realmBox.Text.Trim()); SetStatus("realmlist.wtf saved."); };
 
-            _windowedBox = new CheckBox { Text = "Launch in windowed mode", ForeColor = Color.Gainsboro, AutoSize = true, Anchor = AnchorStyles.Left, Checked = ReadWindowed() };
+            _windowedBox = DarkCheckBox("Launch in windowed mode");
+            _windowedBox.Checked = ReadWindowed();
             _windowedBox.CheckedChanged += (s, e) => WriteWindowed(_windowedBox.Checked);
 
-            var verify = new Button { Text = "Verify / repair files", AutoSize = true, Anchor = AnchorStyles.Left };
+            var verify = DarkButton("Verify / repair files");
             verify.Click += async (s, e) => await RefreshAsync(force: true);
 
-            var clearCache = new Button { Text = "Clear cache", AutoSize = true, Anchor = AnchorStyles.Left };
+            var clearCache = DarkButton("Clear cache");
             clearCache.Click += (s, e) => { ClearCache(); SetStatus("Cache folder cleared."); };
 
-            var openFolder = new Button { Text = "Open game folder", AutoSize = true, Anchor = AnchorStyles.Left };
+            var openFolder = DarkButton("Open game folder");
             openFolder.Click += (s, e) => { try { Process.Start("explorer.exe", _root); } catch { } };
 
             var ver = new Label
             {
                 Text = "Launcher " + LauncherVersion() + "   -   client " + (_manifest != null ? _manifest.clientVersion : "?"),
-                ForeColor = Color.FromArgb(135, 132, 138),
+                ForeColor = SubColor,
+                BackColor = Color.Transparent,
                 AutoSize = true,
                 Anchor = AnchorStyles.Left,
-                Margin = new Padding(0, 16, 0, 0)
+                Margin = new Padding(0, 18, 0, 0)
             };
             _versionLabel = ver;
 
-            p.Controls.Add(L("Realm"), 0, 0); p.Controls.Add(_realmBox, 1, 0);
-            p.Controls.Add(new Label(), 0, 1); p.Controls.Add(saveRealm, 1, 1);
-            p.Controls.Add(new Label(), 0, 2); p.Controls.Add(_windowedBox, 1, 2);
-            p.Controls.Add(L("Maintenance"), 0, 3);
-            var row = new FlowLayoutPanel { AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0) };
+            Label Blank() => new Label { BackColor = Color.Transparent, AutoSize = true };
+
+            p.Controls.Add(Head("Realm"), 0, 0); p.Controls.Add(_realmBox, 1, 0);
+            p.Controls.Add(Blank(), 0, 1); p.Controls.Add(saveRealm, 1, 1);
+            p.Controls.Add(Blank(), 0, 2); p.Controls.Add(_windowedBox, 1, 2);
+            p.Controls.Add(Head("Maintenance"), 0, 3);
+            var row = new FlowLayoutPanel { AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0), BackColor = Color.Transparent };
             row.Controls.Add(verify); row.Controls.Add(clearCache); row.Controls.Add(openFolder);
             p.Controls.Add(row, 1, 3);
             p.Controls.Add(ver, 1, 4);
-            return p;
+
+            host.Controls.Add(p);
+            return host;
         }
         private Label _versionLabel;
 
