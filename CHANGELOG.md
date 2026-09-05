@@ -19,11 +19,6 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 - The launcher got a full visual refresh - World of Razagath banner, textured panels, custom PLAY button and trim.
 - Patch dates now show DD.MM.YYYY.
 
-## 2026.09.05 - New Spellblade artwork
-
-- New Spellblade class icon (character-creation screen, /who list, party frames).
-- New icon for Spellblades' Presence.
-
 ## 2026.09.04 - Legendary grimoire
 
 - New legendary off-hand: Grimoire of the Ascendant Spellblade (item level 284).

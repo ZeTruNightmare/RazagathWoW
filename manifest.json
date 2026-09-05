@@ -56,15 +56,6 @@
                                     ]
                       },
                       {
-                          "version":  "2026.09.05",
-                          "date":  "2026-09-03",
-                          "title":  "New Spellblade artwork",
-                          "notes":  [
-                                        "New Spellblade class icon (character-creation screen, /who list, party frames).",
-                                        "New icon for Spellblades\u0027 Presence."
-                                    ]
-                      },
-                      {
                           "version":  "2026.09.04",
                           "date":  "2026-09-04",
                           "title":  "Legendary grimoire",
