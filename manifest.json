@@ -1,34 +1,46 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.08",
+    "clientVersion":  "2026.09.09",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.3.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/RazagathWoW.exe",
-                     "sha256":  "5cc837ff6cbc6af9976bc136a4f4744603330474f79dab3b889f9d56b46d3811"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/RazagathWoW.exe",
+                     "sha256":  "8bf9ff4366442787de78f3533a628eaa984c5c2fee40ad86414e49732c0190c4"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "ede0e254b25a082f9af35892f816c4001eb7498fe82f804d1478b9d8eb4207ca",
-                      "size":  52102667,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/patch-enUS-Z.MPQ"
+                      "sha256":  "601a3a17420e759ea6505ff6c162703a2a586b53c5582a96afcc369806d68306",
+                      "size":  52103282,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.08/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.09",
+                          "date":  "2026-09-05",
+                          "title":  "Spellblade balance pass",
+                          "notes":  [
+                                        "Touch of Light (was Light Touch): duration up to 10s, now heals every 2 seconds instead of every second - same total healing.",
+                                        "Arcane Ignition: added a burning wound that deals extra Arcane damage over 6 seconds on every rank.",
+                                        "Arcane Ignition: direct-hit damage and mana cost rebalanced across all 8 ranks.",
+                                        "Spellblade Strike: weapon-damage bonus reduced from 120% to 110%.",
+                                        "Spellblade Strike: ranks 6-8 bonus damage significantly increased, and now varies within a range instead of a fixed number."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.08",
                           "date":  "2026-09-04",
