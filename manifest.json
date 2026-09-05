@@ -1,34 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.05",
+    "clientVersion":  "2026.09.05b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.3.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/RazagathWoW.exe",
-                     "sha256":  "68d52924a16fd03e71942ace4792d681e9d044a9d0b7f42cda4afc2e465dc11d"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/RazagathWoW.exe",
+                     "sha256":  "9993929441978894efeeb8aaefdecbc4425f54f57115447aa5e86a6f60a8dc4a"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "601a3a17420e759ea6505ff6c162703a2a586b53c5582a96afcc369806d68306",
-                      "size":  52103282,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/patch-enUS-Z.MPQ"
+                      "sha256":  "e6010fba6f9258d00ca580bdc7338ad03cae3ce7530a19d6ab52ed5ab6a8ee3f",
+                      "size":  52131145,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
                       "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
                       "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.lua"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
                       "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
                       "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05/SpellBladeUI.toc"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.05b",
+                          "date":  "2026-09-05",
+                          "title":  "Blade Shatter + talent fixes",
+                          "notes":  [
+                                        "New Blade ability: Blade Shatter - a two-target cleave (weapon damage plus a bonus) that shatters the target\u0027s armor by 15% for 10 seconds. Trained from Instructor Vaeryn from level 6, 8 ranks. Recasting won\u0027t refresh the armor debuff until it wears off.",
+                                        "Spellblade talents now actually do something - Bladed Focus, Gentle Hands and Lingering Aura were being silently ignored and now correctly boost Spellblade Strike, Touch of Light and Spellblades\u0027 Presence."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.05",
                           "date":  "2026-09-05",

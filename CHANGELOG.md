@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.05b - Blade Shatter + talent fixes
+
+- New Blade ability: Blade Shatter - a two-target cleave (weapon damage plus a bonus) that shatters the target's armor by 15% for 10 seconds. Trained from Instructor Vaeryn from level 6, 8 ranks. Recasting won't refresh the armor debuff until it wears off.
+- Spellblade talents now actually do something - Bladed Focus, Gentle Hands and Lingering Aura were being silently ignored and now correctly boost Spellblade Strike, Touch of Light and Spellblades' Presence.
+
 ## 2026.09.05 - Spellblade balance pass
 
 - Touch of Light (was Light Touch): duration up to 10s, now heals every 2 seconds instead of every second - same total healing.
