@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.05 - Spellblade balance pass
+
+- Touch of Light (was Light Touch): duration up to 10s, now heals every 2 seconds instead of every second - same total healing.
+- Arcane Ignition: added a burning wound that deals extra Arcane damage over 6 seconds on every rank.
+- Arcane Ignition: direct-hit damage and mana cost rebalanced across all 8 ranks.
+- Spellblade Strike: weapon-damage bonus reduced from 120% to 110%.
+- Spellblade Strike: ranks 6-8 bonus damage significantly increased, and now varies within a range instead of a fixed number.
+
 ## 2026.09.08 - Universal cross-faction languages
 
 - Every race can now speak and understand every language, across factions, from the moment a character is created.
