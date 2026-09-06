@@ -1,34 +1,51 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.05b",
+    "clientVersion":  "2026.09.06",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.3.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/RazagathWoW.exe",
-                     "sha256":  "9993929441978894efeeb8aaefdecbc4425f54f57115447aa5e86a6f60a8dc4a"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/RazagathWoW.exe",
+                     "sha256":  "2aad709b203faa0bb352620588194139cb49527be8eeb84f413f97e6d39452c2"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "e6010fba6f9258d00ca580bdc7338ad03cae3ce7530a19d6ab52ed5ab6a8ee3f",
-                      "size":  52131145,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/patch-enUS-Z.MPQ"
+                      "sha256":  "3bce2a56892b73a230062ea257df911e77aa9c2615fb0c3ab3d8bca64c0c13c4",
+                      "size":  55162005,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
-                      "sha256":  "92dd359700d952d03f0c6742f8c4d5f45932641503209c36ecaf06df5528f259",
-                      "size":  2087,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/SpellBladeUI.lua"
+                      "sha256":  "f2f43110f201bc7c6faf992779e8377abb3471eee5ccf9fd757f85aac8c091ac",
+                      "size":  7652,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.lua"
                   },
                   {
                       "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
-                      "sha256":  "b4f9dca9c861df6bc2ab5630843e0ac6edc09ad78f590f6bb798cd52789814ba",
-                      "size":  286,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.05b/SpellBladeUI.toc"
+                      "sha256":  "ed63275905518c6d35cc80e8824cfcff98eb807f9f09486f5b8d354a02106f8e",
+                      "size":  210,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.toc"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.06",
+                          "date":  "2026-09-06",
+                          "title":  "Spellblade armour + Arcane Haste",
+                          "notes":  [
+                                        "Spellblade armour sets - Strength/Intellect/Spirit gear in leather, mail and plate. Blue sets are BoE drops; epic sets come from dungeon and raid bosses; the top plate set is heroic-raid best-in-slot and carries a 4- and 8-piece set bonus (bonus attack power and spell power).",
+                                        "Green armour can now roll \"of the Viper\" - Strength, Intellect and Spirit.",
+                                        "Spellblade armour proficiency now unlocks with level: leather from level 1, mail at 35, plate at 70.",
+                                        "Spellblades\u0027 Presence is now a party buff like Prayer of Fortitude and increases all five attributes.",
+                                        "New Arcane spell: Arcane Haste - a party cooldown granting 30% movement speed and haste for 12 seconds, on a 2 minute cooldown. New Arcane talent Temporal Rush shortens its cooldown.",
+                                        "Blade Shatter now cleaves 3 targets and its armour shatter applies to all of them.",
+                                        "Spellblades can now use the Dungeon Finder - pick your role in the LFG frame.",
+                                        "Spellblades\u0027 Presence has a new red casting animation; Spellblade Strike, Arcane Ignition and Arcane Haste have new icons.",
+                                        "Every race can speak and understand every language, cross-faction, from character creation.",
+                                        "Each Spellblade grimoire tier has its own icon and held model."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.05b",
                           "date":  "2026-09-05",
@@ -48,32 +65,6 @@
                                         "Arcane Ignition: direct-hit damage and mana cost rebalanced across all 8 ranks.",
                                         "Spellblade Strike: weapon-damage bonus reduced from 120% to 110%.",
                                         "Spellblade Strike: ranks 6-8 bonus damage significantly increased, and now varies within a range instead of a fixed number."
-                                    ]
-                      },
-                      {
-                          "version":  "2026.09.08",
-                          "date":  "2026-09-04",
-                          "title":  "Universal cross-faction languages",
-                          "notes":  [
-                                        "Every race can now speak and understand every language, across factions, from the moment a character is created."
-                                    ]
-                      },
-                      {
-                          "version":  "2026.09.07",
-                          "date":  "2026-09-04",
-                          "title":  "Spellblade goes live + grimoire tiers",
-                          "notes":  [
-                                        "Spellblade is now available on the main realm.",
-                                        "Each Spellblade grimoire tier now has its own icon and held model."
-                                    ]
-                      },
-                      {
-                          "version":  "2026.09.06",
-                          "date":  "2026-09-03",
-                          "title":  "Launcher redesign",
-                          "notes":  [
-                                        "The launcher got a full visual refresh - World of Razagath banner, textured panels, custom PLAY button and trim.",
-                                        "Patch dates now show DD.MM.YYYY."
                                     ]
                       },
                       {
