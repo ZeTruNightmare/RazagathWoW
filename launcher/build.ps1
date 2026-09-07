@@ -47,7 +47,10 @@ $refs = @(
     "$fw\System.Windows.Forms.dll",
     "$fw\System.Web.Extensions.dll",
     "$fw\System.Net.Http.dll",
-    "$fw\System.Xml.dll"
+    "$fw\System.Xml.dll",
+    "$fw\System.Security.dll",
+    "$fw\System.IO.Compression.dll",
+    "$fw\System.IO.Compression.FileSystem.dll"
 ) | ForEach-Object { "/reference:$_" }
 
 # stamp version attributes

@@ -17,8 +17,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -227,6 +229,8 @@ namespace RazagathWoW
         public long size { get; set; }
         public string url { get; set; }
         public bool optional { get; set; } // skip if the local file is absent
+        public string type { get; set; }   // null/"" = plain file; "zip" = extract into the client root
+        public List<string> members { get; set; } // zip only: top-level paths the bundle owns (wiped before extract)
     }
     public sealed class ChangeEntry
     {
@@ -578,8 +582,23 @@ namespace RazagathWoW
         private readonly DarkTabControl _tabs = new DarkTabControl();
         private readonly ChangelogView _news = new ChangelogView();
         private readonly ChangelogView _changelog = new ChangelogView();
+        private readonly ChangelogView _launcherLog = new ChangelogView();
+
+        // The launcher's own version history (separate from the client changelog).
+        // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
+        private static readonly string[][] LauncherLog =
+        {
+            new[] { "1.6.0", "2026-09-07", "Auto sign-in - set your account in Settings and the launcher takes you straight to character select." },
+            new[] { "1.5.0", "2026-09-07", "Downloads resume where they left off if the connection drops.",
+                                           "HD client patches are delivered from archive.org." },
+            new[] { "1.4.0", "2026-09-07", "Add-ons (MogIt, Bagnon, WoW Dungeon Maps) ship as one bundle." },
+            new[] { "1.3.0", "2026-09-04", "First public launcher - self-updating patcher, Wow.exe patching, realm status." },
+        };
         private TextBox _realmBox;
         private CheckBox _windowedBox;
+        private TextBox _acctBox;
+        private TextBox _passBox;
+        private CheckBox _autoLoginBox;
         private bool _busy;
         private readonly List<RealmProbe> _realmProbes = new List<RealmProbe>();
 
@@ -643,6 +662,12 @@ namespace RazagathWoW
 
             // ---- Changelog tab ----
             var clTab = new TabPage("  Changelog  ") { BackColor = BackColor };
+            _launcherLog.Dock = DockStyle.Fill;
+            _launcherLog.Texture = contentTex;
+            _launcherLog.Divider = dividerImg;
+            var launcherTab = new TabPage("  Launcher  ") { BackColor = BackColor };
+            launcherTab.Controls.Add(_launcherLog);
+            RenderLauncherLog();
             _changelog.Dock = DockStyle.Fill;
             _changelog.Texture = contentTex;
             _changelog.Divider = dividerImg;
@@ -655,6 +680,7 @@ namespace RazagathWoW
             _tabs.TabPages.Add(playTab);
             _tabs.TabPages.Add(realmTab);
             _tabs.TabPages.Add(clTab);
+            _tabs.TabPages.Add(launcherTab);
             _tabs.TabPages.Add(setTab);
 
             const int FooterH = 116;
@@ -681,7 +707,7 @@ namespace RazagathWoW
             footer.Controls.Add(_progress);
             footer.Controls.Add(_playButton);
 
-            var tabStrip = new TabStrip(_tabs, "Play", "Realms", "Changelog", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
+            var tabStrip = new TabStrip(_tabs, "Play", "Realms", "Changelog", "Launcher", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
 
             // docking is applied in reverse add-order: _tabs (Fill) added first
             // so it docks last and takes the space left by the others
@@ -790,15 +816,57 @@ namespace RazagathWoW
             _versionLabel = ver;
 
             Label Blank() => new Label { BackColor = Color.Transparent, AutoSize = true };
+            Label Sub(string t) => new Label { Text = t, ForeColor = SubColor, AutoSize = true, MaximumSize = new Size(560, 0), Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 2, 0, 6) };
+
+            // ---- account / auto sign-in ----
+            _acctBox = DarkTextBox(); _acctBox.Width = 260;
+            _passBox = DarkTextBox(); _passBox.Width = 260; _passBox.UseSystemPasswordChar = true;
+            _acctBox.Text = CfgStr("account");
+            _autoLoginBox = DarkCheckBox("Sign in automatically - skip the WoW login screen");
+            _autoLoginBox.Checked = CfgBool("autoLogin");
+            if (_autoLoginBox.Checked && Unprotect(CfgStr("password")).Length > 0)
+                _passBox.Text = new string('*', 10);   // placeholder (masked anyway) so the field isn't blank
+            var savedPw = _passBox.Text;
+            var saveLogin = DarkButton("Save sign-in");
+            saveLogin.Click += (s, e) =>
+            {
+                var acct = _acctBox.Text.Trim();
+                var pw = _passBox.Text == savedPw ? Unprotect(CfgStr("password")) : _passBox.Text;
+                WriteCfg(d =>
+                {
+                    d["account"] = acct;
+                    if (_autoLoginBox.Checked && pw.Length > 0)
+                    {
+                        d["password"] = Protect(pw);
+                        d["autoLogin"] = true;
+                    }
+                    else
+                    {
+                        d.Remove("password");
+                        d["autoLogin"] = false;
+                    }
+                });
+                SetStatus(_autoLoginBox.Checked && pw.Length > 0 ? "Auto sign-in saved." : "Account saved.");
+            };
 
             p.Controls.Add(Head("Realm"), 0, 0); p.Controls.Add(_realmBox, 1, 0);
             p.Controls.Add(Blank(), 0, 1); p.Controls.Add(saveRealm, 1, 1);
             p.Controls.Add(Blank(), 0, 2); p.Controls.Add(_windowedBox, 1, 2);
-            p.Controls.Add(Head("Maintenance"), 0, 3);
+
+            p.Controls.Add(Head("Sign in"), 0, 3);
+            p.Controls.Add(Sub("The account name goes into Config.wtf; the password (if you tick auto sign-in) is DPAPI-encrypted and stored only on this Windows account. The launcher types it at the login screen a few seconds after the game window opens - don't click away during that."), 1, 3);
+            p.Controls.Add(new Label { Text = "Account", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 4);
+            p.Controls.Add(_acctBox, 1, 4);
+            p.Controls.Add(new Label { Text = "Password", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 5);
+            p.Controls.Add(_passBox, 1, 5);
+            p.Controls.Add(Blank(), 0, 6); p.Controls.Add(_autoLoginBox, 1, 6);
+            p.Controls.Add(Blank(), 0, 7); p.Controls.Add(saveLogin, 1, 7);
+
+            p.Controls.Add(Head("Maintenance"), 0, 8);
             var row = new FlowLayoutPanel { AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0), BackColor = Color.Transparent };
             row.Controls.Add(verify); row.Controls.Add(clearCache); row.Controls.Add(openFolder);
-            p.Controls.Add(row, 1, 3);
-            p.Controls.Add(ver, 1, 4);
+            p.Controls.Add(row, 1, 8);
+            p.Controls.Add(ver, 1, 9);
 
             host.Controls.Add(p);
             return host;
@@ -912,6 +980,14 @@ namespace RazagathWoW
                 foreach (var f in _manifest.files ?? new List<FileEntry>())
                 {
                     if (string.IsNullOrEmpty(f.url) || string.IsNullOrEmpty(f.sha256)) continue; // not published yet
+                    if (IsZipBundle(f))
+                    {
+                        var marker = BundleMarker(f);
+                        var applied = File.Exists(marker) ? File.ReadAllText(marker).Trim() : "";
+                        if (force || !string.Equals(applied, f.sha256, StringComparison.OrdinalIgnoreCase))
+                            todo.Add(f);
+                        continue;
+                    }
                     var local = Path.Combine(_root, f.path.Replace('/', '\\'));
                     if (f.optional && !File.Exists(local)) continue;
                     if (force || !File.Exists(local) || !HashEquals(local, f.sha256))
@@ -930,15 +1006,34 @@ namespace RazagathWoW
                     for (int i = 0; i < todo.Count; i++)
                     {
                         var f = todo[i];
+                        long baseDone = done;
+                        Action<long, long> prog = (cur, len) =>
+                            SetProgress((int)((baseDone + cur) * 100 / Math.Max(total, 1)));
+
+                        if (IsZipBundle(f))
+                        {
+                            SetStatus(string.Format("Downloading add-ons  ({0}/{1})", i + 1, todo.Count));
+                            var zip = Path.Combine(Path.GetTempPath(), "razagath_" + Guid.NewGuid().ToString("N") + ".zip");
+                            try
+                            {
+                                await Task.Run(() => Download(f.url, zip, prog));
+                                if (!HashEquals(zip, f.sha256))
+                                    throw new Exception("Checksum mismatch after downloading " + f.path);
+                                SetStatus("Installing add-ons...");
+                                await Task.Run(() => ApplyZipBundle(zip, _root, f.members));
+                                var marker = BundleMarker(f);
+                                Directory.CreateDirectory(Path.GetDirectoryName(marker));
+                                File.WriteAllText(marker, f.sha256);
+                            }
+                            finally { try { if (File.Exists(zip)) File.Delete(zip); } catch { } }
+                            done += Math.Max(f.size, 1);
+                            continue;
+                        }
+
                         SetStatus(string.Format("Downloading {0}  ({1}/{2})", Path.GetFileName(f.path), i + 1, todo.Count));
                         var dest = Path.Combine(_root, f.path.Replace('/', '\\'));
                         Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                        long baseDone = done;
-                        await Task.Run(() => Download(f.url, dest, (cur, len) =>
-                        {
-                            long overall = baseDone + cur;
-                            SetProgress((int)(overall * 100 / Math.Max(total, 1)));
-                        }));
+                        await Task.Run(() => Download(f.url, dest, prog));
                         if (!string.IsNullOrEmpty(f.sha256) && !HashEquals(dest, f.sha256))
                             throw new Exception("Checksum mismatch after downloading " + f.path);
                         done += Math.Max(f.size, 1);
@@ -985,10 +1080,28 @@ namespace RazagathWoW
                 return;
             }
             if (_windowedBox != null) WriteWindowed(_windowedBox.Checked);
+
+            var acct = CfgStr("account");
+            var pw = CfgBool("autoLogin") && acct.Length > 0 ? Unprotect(CfgStr("password")) : "";
+
             try
             {
-                Process.Start(new ProcessStartInfo { FileName = exe, WorkingDirectory = _root, UseShellExecute = false });
-                await Task.Delay(400);
+                if (acct.Length > 0)
+                    SetConfigWtf(new Dictionary<string, string> { { "accountName", acct.Replace("\"", "") } });
+
+                var proc = Process.Start(new ProcessStartInfo { FileName = exe, WorkingDirectory = _root, UseShellExecute = false });
+
+                if (pw.Length > 0 && proc != null)
+                {
+                    SetStatus("Signing in...");
+                    int delay = 5000; int dv;
+                    if (int.TryParse(CfgStr("loginDelayMs"), out dv) && dv > 0) delay = dv;
+                    await AutoTypeLogin(proc, pw, delay);   // types into the (already-focused) password field
+                }
+                else
+                {
+                    await Task.Delay(400);
+                }
                 Close();
             }
             catch (Exception ex)
@@ -1086,6 +1199,19 @@ namespace RazagathWoW
                 _news.Add("-   " + n, BodyColor, 10f, FontStyle.Regular, 14, 8);
         }
 
+        private void RenderLauncherLog()
+        {
+            _launcherLog.Clear();
+            bool first = true;
+            foreach (var e in LauncherLog)
+            {
+                _launcherLog.Add("Launcher " + e[0] + "    " + e[1], HeadColor, 12f, FontStyle.Bold, 0, first ? 0 : 18, true);
+                first = false;
+                for (int i = 2; i < e.Length; i++)
+                    _launcherLog.Add("-   " + e[i], BodyColor, 9.5f, FontStyle.Regular, 14, 6);
+            }
+        }
+
         private void RenderChangelog(Manifest m)
         {
             _changelog.Clear();
@@ -1134,6 +1260,122 @@ namespace RazagathWoW
             catch { }
             return null;
         }
+        private void WriteCfg(Action<Dictionary<string, object>> mutate)
+        {
+            var d = ReadCfg() ?? new Dictionary<string, object>();
+            try { mutate(d); File.WriteAllText(_cfgPath, new JavaScriptSerializer().Serialize(d)); } catch { }
+        }
+        private string CfgStr(string key)
+        {
+            var d = ReadCfg(); object v;
+            return (d != null && d.TryGetValue(key, out v) && v != null) ? v.ToString() : "";
+        }
+        private bool CfgBool(string key)
+        {
+            var d = ReadCfg(); object v; bool b;
+            return d != null && d.TryGetValue(key, out v) && v != null && bool.TryParse(v.ToString(), out b) && b;
+        }
+
+        // Password at rest: DPAPI, CurrentUser scope - unreadable on another
+        // Windows account or machine, decryptable only by this launcher here.
+        private static string Protect(string s)
+        {
+            try
+            {
+                return Convert.ToBase64String(System.Security.Cryptography.ProtectedData.Protect(
+                    Encoding.UTF8.GetBytes(s ?? ""), null, System.Security.Cryptography.DataProtectionScope.CurrentUser));
+            }
+            catch { return ""; }
+        }
+        private static string Unprotect(string b64)
+        {
+            if (string.IsNullOrEmpty(b64)) return "";
+            try
+            {
+                return Encoding.UTF8.GetString(System.Security.Cryptography.ProtectedData.Unprotect(
+                    Convert.FromBase64String(b64), null, System.Security.Cryptography.DataProtectionScope.CurrentUser));
+            }
+            catch { return ""; }
+        }
+
+        // Auto sign-in: 3.3.5's login screen can't read custom CVars, so we
+        // prefill `accountName` (deterministic -> password field gets focus) and
+        // type the password into it a few seconds after the window appears.
+        [DllImport("user32.dll")] private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")] private static extern bool AllowSetForegroundWindow(int dwProcessId);
+        [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        private async Task AutoTypeLogin(Process proc, string password, int delayMs)
+        {
+            IntPtr hwnd = IntPtr.Zero;
+            for (int i = 0; i < 60; i++)
+            {
+                await Task.Delay(500);
+                try { if (proc.HasExited) return; } catch { return; }
+                try { proc.Refresh(); hwnd = proc.MainWindowHandle; } catch { }
+                if (hwnd != IntPtr.Zero && IsWindowVisible(hwnd)) break;
+                hwnd = IntPtr.Zero;
+            }
+            if (hwnd == IntPtr.Zero) return;
+
+            await Task.Delay(Math.Max(1000, delayMs));   // Blizzard/publisher logos + login screen render
+            try { if (proc.HasExited) return; proc.Refresh(); hwnd = proc.MainWindowHandle; } catch { return; }
+            if (hwnd == IntPtr.Zero) return;
+
+            var keys = EscapeSendKeys(password) + "{ENTER}";
+            var tcs = new TaskCompletionSource<bool>();
+            try
+            {
+                if (IsDisposed) return;
+                BeginInvoke(new Action(() =>
+                {
+                    try
+                    {
+                        AllowSetForegroundWindow(proc.Id);
+                        SetForegroundWindow(hwnd);
+                        System.Threading.Thread.Sleep(150);
+                        SendKeys.SendWait(keys);
+                    }
+                    catch { }
+                    finally { tcs.TrySetResult(true); }
+                }));
+                await tcs.Task;
+            }
+            catch { }
+        }
+        private static string EscapeSendKeys(string s)
+        {
+            var sb = new StringBuilder((s ?? "").Length + 8);
+            foreach (var c in s ?? "")
+            {
+                if ("+^%~(){}[]".IndexOf(c) >= 0) sb.Append('{').Append(c).Append('}');
+                else sb.Append(c);
+            }
+            return sb.ToString();
+        }
+        // merge SET <k> "<v>" into Config.wtf, preserving every other line
+        private void SetConfigWtf(Dictionary<string, string> set)
+        {
+            try
+            {
+                var p = ConfigWtfPath();
+                Directory.CreateDirectory(Path.GetDirectoryName(p));
+                var outLines = new List<string>();
+                if (File.Exists(p))
+                    foreach (var l in File.ReadAllLines(p))
+                    {
+                        var t = l.TrimStart();
+                        bool drop = false;
+                        foreach (var k in set.Keys)
+                            if (t.StartsWith("SET " + k + " ", StringComparison.OrdinalIgnoreCase)) { drop = true; break; }
+                        if (!drop) outLines.Add(l);
+                    }
+                foreach (var kv in set)
+                    outLines.Add("SET " + kv.Key + " \"" + kv.Value + "\"");
+                File.WriteAllText(p, string.Join("\r\n", outLines) + "\r\n");
+            }
+            catch { }
+        }
         private string ReadConfiguredManifestUrl()
         {
             var j = ReadCfg();
@@ -1167,26 +1409,59 @@ namespace RazagathWoW
             }
         }
 
+        // Resumable download: keeps a <dest>.part across attempts and asks the
+        // server (archive.org, GitHub) to continue from where it stopped via a
+        // Range request. Retries a handful of times on a dropped connection -
+        // matters for the multi-GB HD client patches.
         private static void Download(string url, string dest, Action<long, long> onProgress)
         {
             var tmp = dest + ".part";
-            var req = (HttpWebRequest)WebRequest.Create(url);
-            req.UserAgent = "RazagathLauncher";
-            req.AllowAutoRedirect = true;
-            req.Timeout = 30000;
-            req.ReadWriteTimeout = 120000;
-            using (var resp = (HttpWebResponse)req.GetResponse())
-            using (var src = resp.GetResponseStream())
-            using (var dst = new FileStream(tmp, FileMode.Create, FileAccess.Write, FileShare.None))
+            const int maxAttempts = 8;
+            for (int attempt = 1; ; attempt++)
             {
-                long len = resp.ContentLength;
-                var buf = new byte[131072];
-                long got = 0; int n;
-                while ((n = src.Read(buf, 0, buf.Length)) > 0)
+                long have = 0;
+                try { if (File.Exists(tmp)) have = new FileInfo(tmp).Length; } catch { have = 0; }
+
+                var req = (HttpWebRequest)WebRequest.Create(url);
+                req.UserAgent = "RazagathLauncher";
+                req.AllowAutoRedirect = true;
+                req.Timeout = 30000;
+                req.ReadWriteTimeout = 120000;
+                if (have > 0) req.AddRange(have);
+
+                try
                 {
-                    dst.Write(buf, 0, n);
-                    got += n;
-                    if (onProgress != null) onProgress(got, len);
+                    using (var resp = (HttpWebResponse)req.GetResponse())
+                    {
+                        bool partial = resp.StatusCode == HttpStatusCode.PartialContent;
+                        if (!partial) have = 0;   // server ignored Range - start over
+                        long total = resp.ContentLength + have;
+
+                        using (var src = resp.GetResponseStream())
+                        using (var dst = new FileStream(tmp, partial ? FileMode.Append : FileMode.Create,
+                                                       FileAccess.Write, FileShare.None))
+                        {
+                            var buf = new byte[131072];
+                            long got = have; int n;
+                            while ((n = src.Read(buf, 0, buf.Length)) > 0)
+                            {
+                                dst.Write(buf, 0, n);
+                                got += n;
+                                if (onProgress != null) onProgress(got, total);
+                            }
+                        }
+                    }
+                    break; // done
+                }
+                catch (WebException wex) when (
+                    wex.Response is HttpWebResponse hr && hr.StatusCode == (HttpStatusCode)416)
+                {
+                    try { File.Delete(tmp); } catch { }   // .part is stale/oversized - retry from 0
+                    if (attempt >= maxAttempts) throw;
+                }
+                catch (Exception ex) when (attempt < maxAttempts && (ex is WebException || ex is IOException))
+                {
+                    System.Threading.Thread.Sleep(2000 * attempt);   // .part kept - next attempt resumes
                 }
             }
             if (File.Exists(dest)) File.Delete(dest);
@@ -1197,6 +1472,55 @@ namespace RazagathWoW
         {
             if (string.IsNullOrEmpty(expectedHex)) return true;
             return string.Equals(Sha256(file), expectedHex.Trim(), StringComparison.OrdinalIgnoreCase);
+        }
+
+        // ---- zip bundles (e.g. the vendored MogIt add-on pack) -----------------
+        //  A manifest entry with type:"zip" is a single archive whose members are
+        //  laid out client-root-relative. We can't hash-check a folder, so an
+        //  applied-hash marker under .razagath\ records which bundle version is in
+        //  place. `members` lists the top-level paths the bundle owns; they are
+        //  wiped before extraction so a file dropped from the bundle also leaves
+        //  the client (the player's own unrelated add-ons are untouched).
+        private static bool IsZipBundle(FileEntry f)
+        {
+            return f != null && string.Equals(f.type, "zip", StringComparison.OrdinalIgnoreCase);
+        }
+        private string BundleMarker(FileEntry f)
+        {
+            var key = (f.path ?? f.url ?? "bundle");
+            var sb = new StringBuilder();
+            foreach (var ch in key) sb.Append(char.IsLetterOrDigit(ch) ? ch : '_');
+            return Path.Combine(_root, ".razagath", "bundles", sb.ToString() + ".sha256");
+        }
+        private static void ApplyZipBundle(string zipPath, string root, List<string> members)
+        {
+            if (members != null)
+            {
+                foreach (var m in members)
+                {
+                    if (string.IsNullOrWhiteSpace(m)) continue;
+                    var p = Path.Combine(root, m.Replace('/', '\\').TrimEnd('\\'));
+                    // never let a bad manifest wipe the client root itself
+                    if (p.Length <= root.Length + 1) continue;
+                    try
+                    {
+                        if (Directory.Exists(p)) Directory.Delete(p, true);
+                        else if (File.Exists(p)) File.Delete(p);
+                    }
+                    catch { }
+                }
+            }
+            using (var za = ZipFile.OpenRead(zipPath))
+            {
+                foreach (var e in za.Entries)
+                {
+                    if (string.IsNullOrEmpty(e.Name)) continue; // directory marker
+                    var dest = Path.GetFullPath(Path.Combine(root, e.FullName.Replace('/', '\\')));
+                    if (!dest.StartsWith(root, StringComparison.OrdinalIgnoreCase)) continue; // zip-slip guard
+                    Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                    e.ExtractToFile(dest, true);
+                }
+            }
         }
         private static string Sha256(string file)
         {
