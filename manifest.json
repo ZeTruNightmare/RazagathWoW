@@ -6,7 +6,7 @@
     "launcher":  {
                      "version":  "1.6.0",
                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathWoW.exe",
-                     "sha256":  "8dcbaf86b2860ea54671784266e2dbc313f9f9b30bc15c09b4fc8b3f780b52b5"
+                     "sha256":  "896fe6ab0070756aa43e1e9e10e62d2b17752e134b1f56fa10a0cc95e485efef"
                  },
     "files":  [
                   {
@@ -29,7 +29,7 @@
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "699f4f9e3114264212b822178109fba0c73b8643a08ac9a7bf8851322cfa5810",
+                      "sha256":  "29b7a0fc7779a92aae63f7fccdb6b0c94d2d0a9e85f38ecfdbf7c649afb4bbf8",
                       "size":  3070625,
                       "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathAddons.zip",
                       "type":  "zip",
