@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.07",
+    "clientVersion":  "2026.09.07b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.5.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/RazagathWoW.exe",
-                     "sha256":  "ab114c25751a6a99d81ad8847b789e9281afb54b07bcbd954373447e7ec76e95"
+                     "version":  "1.6.0",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathWoW.exe",
+                     "sha256":  "8dcbaf86b2860ea54671784266e2dbc313f9f9b30bc15c09b4fc8b3f780b52b5"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "0bf36bd0c834b2ff9bee11c00b46f12e1e1139da8742bb3fb663183495ba97f7",
                       "size":  62550040,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "2e77428aa00b8adbf2f9ce8fef084a593369ce2f7d3766f7c635a7e406b42f5d",
+                      "sha256":  "699f4f9e3114264212b822178109fba0c73b8643a08ac9a7bf8851322cfa5810",
                       "size":  3070625,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,18 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.07b",
+                          "date":  "2026-09-07",
+                          "title":  "Launcher auto sign-in + patch-notes tab",
+                          "notes":  [
+                                        "Launcher: optional auto sign-in - turn it on in Settings and the launcher signs you in and drops you at character select, no WoW login screen",
+                                        "Launcher: new Launcher tab with its own patch notes, separate from the game changelog",
+                                        "Launcher: downloads now resume and retry, so the big HD patches survive a dropped connection",
+                                        "Launcher: app icon now renders correctly at every size",
+                                        "Client patch refreshed (bundled add-ons, dungeon maps, Spellblade Sundered/Fractured armour reskin, Mental Quickness, Blade Shatter melee fix, Questie compatibility)"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.07",
                           "date":  "2026-09-07",

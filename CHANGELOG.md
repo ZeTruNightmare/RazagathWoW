@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.07b - Launcher auto sign-in + patch-notes tab
+
+- Launcher: optional auto sign-in - turn it on in Settings and the launcher signs you in and drops you at character select, no WoW login screen
+- Launcher: new Launcher tab with its own patch notes, separate from the game changelog
+- Launcher: downloads now resume and retry, so the big HD patches survive a dropped connection
+- Launcher: app icon now renders correctly at every size
+- Client patch refreshed (bundled add-ons, dungeon maps, Spellblade Sundered/Fractured armour reskin, Mental Quickness, Blade Shatter melee fix, Questie compatibility)
+
 ## 2026.09.07 - Bundled add-ons + HD patches + Spellblade update
 
 - MogIt, Bagnon and WoW Dungeon Maps are now built in - no add-on install needed. MogIt also lists every custom Spellblade item.
