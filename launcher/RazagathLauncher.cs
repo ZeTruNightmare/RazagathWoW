@@ -580,6 +580,8 @@ namespace RazagathWoW
         private readonly Label _statusLabel = new Label();
         private readonly ProgressBar _progress = new ProgressBar();
         private readonly DarkTabControl _tabs = new DarkTabControl();
+        private const int WinWidth = 880;
+        private const int WinHeight = 760;
         private readonly ChangelogView _news = new ChangelogView();
         private readonly ChangelogView _changelog = new ChangelogView();
         private readonly ChangelogView _launcherLog = new ChangelogView();
@@ -588,6 +590,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.3", "2026-09-07", "Bigger window; the Play tab now shows the latest client patch and the latest launcher change side by side." },
             new[] { "1.6.2", "2026-09-07", "Settings tab now scrolls cleanly - no more render smearing or dead space." },
             new[] { "1.6.1", "2026-09-07", "Fixed the Settings tab hiding the password field, auto sign-in checkbox and Save button." },
             new[] { "1.6.0", "2026-09-07", "Auto sign-in - set your account in Settings and the launcher takes you straight to character select." },
@@ -622,7 +625,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 700);
+            ClientSize = new Size(WinWidth, WinHeight);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -693,15 +696,15 @@ namespace RazagathWoW
             _statusLabel.BackColor = Color.Transparent;
             _statusLabel.AutoSize = false;
             _statusLabel.Location = new Point(26, 32);
-            _statusLabel.Size = new Size(360, 20);
+            _statusLabel.Size = new Size(WinWidth - 26 - 288 - 40, 20);
             _progress.Location = new Point(26, 58);
-            _progress.Size = new Size(360, 20);
+            _progress.Size = new Size(WinWidth - 26 - 288 - 40, 20);
             _progress.Style = ProgressBarStyle.Continuous;
             TintProgressBar(_progress, HeadColor, Color.FromArgb(24, 20, 16));
 
             _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
             _playButton.Size = new Size(288, 108);
-            _playButton.Location = new Point(720 - 14 - 288, (FooterH - 108) / 2);
+            _playButton.Location = new Point(WinWidth - 14 - 288, (FooterH - 108) / 2);
             _playButton.Enabled = false;
             _playButton.Click += async (s, e) => await OnPlayClicked();
 
@@ -1207,12 +1210,22 @@ namespace RazagathWoW
                 return;
             }
             var latest = m.changelog[0];
-            _news.Add("Latest patch  -  " + PatchDate(latest.version, latest.date),
+            _news.Add("Latest client patch  -  " + PatchDate(latest.version, latest.date),
                 HeadColor, 13f, FontStyle.Bold, 0, 0, true);
             if (!string.IsNullOrEmpty(latest.title))
                 _news.Add(latest.title, SubColor, 10.5f, FontStyle.Italic, 0, 2);
             foreach (var n in latest.notes ?? new List<string>())
                 _news.Add("-   " + n, BodyColor, 10f, FontStyle.Regular, 14, 8);
+
+            // ...and the newest launcher change, so the Play tab shows both at once.
+            if (LauncherLog.Length > 0)
+            {
+                var lg = LauncherLog[0];
+                _news.Add("Latest launcher  -  " + lg[0] + "    " + lg[1],
+                    HeadColor, 13f, FontStyle.Bold, 0, 22, true);
+                for (int i = 2; i < lg.Length; i++)
+                    _news.Add("-   " + lg[i], BodyColor, 10f, FontStyle.Regular, 14, 8);
+            }
         }
 
         private void RenderLauncherLog()
