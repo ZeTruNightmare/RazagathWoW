@@ -588,6 +588,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.1", "2026-09-07", "Fixed the Settings tab hiding the password field, auto sign-in checkbox and Save button." },
             new[] { "1.6.0", "2026-09-07", "Auto sign-in - set your account in Settings and the launcher takes you straight to character select." },
             new[] { "1.5.0", "2026-09-07", "Downloads resume where they left off if the connection drops.",
                                            "HD client patches are delivered from archive.org." },
