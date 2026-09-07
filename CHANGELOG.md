@@ -5,7 +5,7 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
-## 2026.09.09 - Bundled add-ons + HD patches + Spellblade update
+## 2026.09.07 - Bundled add-ons + HD patches + Spellblade update
 
 - MogIt, Bagnon and WoW Dungeon Maps are now built in - no add-on install needed. MogIt also lists every custom Spellblade item.
 - Classic and Burning Crusade dungeon interior maps now show on the world map.
