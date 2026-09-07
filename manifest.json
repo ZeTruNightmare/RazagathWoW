@@ -4,9 +4,9 @@
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.6.1",
+                     "version":  "1.6.2",
                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathWoW.exe",
-                     "sha256":  "8ba84378a0dfecfe39b52e25d66dec9217b16a72b66874d37837d926b1777968"
+                     "sha256":  "22218291bbd87a736514ce874bf845b42502135662002130461e5cab37e23fed"
                  },
     "files":  [
                   {
@@ -29,7 +29,7 @@
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "4f09aaa4200f28cd6649f2d789d051b47b9e1a7dfa7017361f98d37b42476794",
+                      "sha256":  "7115a24b4c3fd4e0aec37d77cbdd45da7e305fdc9ab99933bb68f9a122c0ef42",
                       "size":  3070625,
                       "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathAddons.zip",
                       "type":  "zip",
