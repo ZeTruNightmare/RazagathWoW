@@ -588,6 +588,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.2", "2026-09-07", "Settings tab now scrolls cleanly - no more render smearing or dead space." },
             new[] { "1.6.1", "2026-09-07", "Fixed the Settings tab hiding the password field, auto sign-in checkbox and Save button." },
             new[] { "1.6.0", "2026-09-07", "Auto sign-in - set your account in Settings and the launcher takes you straight to character select." },
             new[] { "1.5.0", "2026-09-07", "Downloads resume where they left off if the connection drops.",
@@ -621,7 +622,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 660);
+            ClientSize = new Size(720, 700);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -773,18 +774,30 @@ namespace RazagathWoW
         {
             var host = new DividedPanel { Dock = DockStyle.Fill, Texture = contentTex, Divider = dividerImg };
 
-            var p = new TableLayoutPanel
+            // Solid scroll host: the settings content is taller than the tab on small
+            // screens. A transparent scroller over the textured DividedPanel smears
+            // on scroll, so this pane paints its own flat background.
+            var scroller = new Panel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(6, 4, 6, 4),
-                ColumnCount = 2,
-                BackColor = Color.Transparent,
-                AutoScroll = true   // Sign-in section makes this taller than the fixed tab area
+                AutoScroll = true,
+                BackColor = Color.FromArgb(30, 24, 20),
+                Padding = new Padding(6, 2, 6, 8)
             };
-            p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));
-            p.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
-            Label Head(string t) => new Label { Text = t, ForeColor = HeadColor, Font = new Font(Font, FontStyle.Bold), AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 10, 0, 10) };
+            var p = new TableLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Padding = new Padding(0, 2, 14, 4),
+                ColumnCount = 2,
+                BackColor = Color.Transparent
+            };
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 540));
+
+            Label Head(string t) => new Label { Text = t, ForeColor = HeadColor, Font = new Font(Font, FontStyle.Bold), AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 6) };
 
             _realmBox = DarkTextBox();
             _realmBox.Width = 460;
@@ -818,7 +831,7 @@ namespace RazagathWoW
             _versionLabel = ver;
 
             Label Blank() => new Label { BackColor = Color.Transparent, AutoSize = true };
-            Label Sub(string t) => new Label { Text = t, ForeColor = SubColor, AutoSize = true, MaximumSize = new Size(560, 0), Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 2, 0, 6) };
+            Label Sub(string t) => new Label { Text = t, ForeColor = SubColor, AutoSize = true, MaximumSize = new Size(520, 0), Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 2, 0, 6) };
 
             // ---- account / auto sign-in ----
             _acctBox = DarkTextBox(); _acctBox.Width = 260;
@@ -870,7 +883,8 @@ namespace RazagathWoW
             p.Controls.Add(row, 1, 8);
             p.Controls.Add(ver, 1, 9);
 
-            host.Controls.Add(p);
+            scroller.Controls.Add(p);
+            host.Controls.Add(scroller);
             return host;
         }
         private Label _versionLabel;
