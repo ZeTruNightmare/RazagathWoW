@@ -1,0 +1,16 @@
+## Interface: 30300
+## Title: MogIt_Razagath
+## Notes: Razagath custom-item appearances for MogIt
+## Author: Razagath
+## Version: 1.0.1
+## RequiredDeps: MogIt
+
+Register.lua
+Chest.lua
+Feet.lua
+Hands.lua
+Head.lua
+Legs.lua
+Shoulder.lua
+Waist.lua
+Wrist.lua

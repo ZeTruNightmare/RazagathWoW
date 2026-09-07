@@ -5,6 +5,22 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.09 - Bundled add-ons + HD patches + Spellblade update
+
+- MogIt, Bagnon and WoW Dungeon Maps are now built in - no add-on install needed. MogIt also lists every custom Spellblade item.
+- Classic and Burning Crusade dungeon interior maps now show on the world map.
+- The HD graphics patches are delivered by the launcher now (large one-time download, resumable).
+- Launcher: interrupted downloads resume where they left off instead of restarting.
+- New Spellblade passive, Mental Quickness: spell power equal to 50% of your attack power, so your gear powers melee and casting both.
+- New Arcane talent, Sudden Ignition: a chance after Arcane Ignition or Spellblade Strike to make your next Arcane Ignition instant.
+- Blade Shatter is now an instant melee strike (was a next-swing ability) and shows the correct melee range.
+- Spellblade Strike damage retuned.
+- The Fractured and Sundered Sigil plate sets have a new look; Sundered pieces show the green Heroic tag.
+- 'of the Viper' gear now drops from classic and vanilla content, as a random suffix on greens and as guaranteed pieces from dungeon bosses.
+- Spellblade grimoires show the right icon and equip correctly again.
+- A max-geared level 80 sweeps through pre-WotLK dungeons and raids, while WotLK dungeons stay a real fight.
+- Questie no longer breaks on the Spellblade class.
+
 ## 2026.09.06 - Spellblade armour + Arcane Haste
 
 - Spellblade armour sets - Strength/Intellect/Spirit gear in leather, mail and plate. Blue sets are BoE drops; epic sets come from dungeon and raid bosses; the top plate set is heroic-raid best-in-slot and carries a 4- and 8-piece set bonus (bonus attack power and spell power).

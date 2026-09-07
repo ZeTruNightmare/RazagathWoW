@@ -1,8 +1,9 @@
 ## Interface: 30300
 ## Title: Spell Blade UI
-## Notes: Registers CLASS_SPELL_BLADE in the client class tables (colour, name, icon, sort).
+## Notes: Registers CLASS_SPELL_BLADE in the client class tables (colour, name, icon, sort) + LFG + Questie compat.
 ## Author: Razagath
-## Version: 1.0.4
+## Version: 1.0.5
+## OptionalDeps: Questie-335
 ## X-Realm: dev
 
 SpellBladeUI.lua

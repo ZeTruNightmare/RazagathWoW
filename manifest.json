@@ -1,34 +1,111 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.06",
+    "clientVersion":  "2026.09.09",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.3.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/RazagathWoW.exe",
-                     "sha256":  "2aad709b203faa0bb352620588194139cb49527be8eeb84f413f97e6d39452c2"
+                     "version":  "1.5.0",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/RazagathWoW.exe",
+                     "sha256":  "5e1e3a1f5f938b4acd25ae5758c99b77ff9a243af638ef57e7e8e9197b59784d"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "3bce2a56892b73a230062ea257df911e77aa9c2615fb0c3ab3d8bca64c0c13c4",
-                      "size":  55162005,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/patch-enUS-Z.MPQ"
+                      "sha256":  "0bf36bd0c834b2ff9bee11c00b46f12e1e1139da8742bb3fb663183495ba97f7",
+                      "size":  62550040,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-Z.MPQ"
                   },
                   {
-                      "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.lua",
-                      "sha256":  "f2f43110f201bc7c6faf992779e8377abb3471eee5ccf9fd757f85aac8c091ac",
-                      "size":  7652,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.lua"
+                      "path":  "Data/enUS/patch-enUS-M.MPQ",
+                      "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
+                      "size":  48767934,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-M.MPQ"
                   },
                   {
-                      "path":  "Interface/AddOns/SpellBladeUI/SpellBladeUI.toc",
-                      "sha256":  "ed63275905518c6d35cc80e8824cfcff98eb807f9f09486f5b8d354a02106f8e",
-                      "size":  210,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.06/SpellBladeUI.toc"
+                      "path":  "Data/enUS/patch-enUS-N.MPQ",
+                      "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
+                      "size":  20494466,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-N.MPQ"
+                  },
+                  {
+                      "path":  "Interface/AddOns",
+                      "sha256":  "9c17a5040b84e0c7f469af9cda6738f15a2129b9dcad9966cf9dc182d6fc95ed",
+                      "size":  3070625,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/RazagathAddons.zip",
+                      "type":  "zip",
+                      "members":  [
+                                      "Interface/AddOns/Bagnon",
+                                      "Interface/AddOns/Bagnon_Config",
+                                      "Interface/AddOns/Bagnon_Forever",
+                                      "Interface/AddOns/Bagnon_GuildBank",
+                                      "Interface/AddOns/Bagnon_Tooltips",
+                                      "Interface/AddOns/MogIt",
+                                      "Interface/AddOns/MogIt_Accessories",
+                                      "Interface/AddOns/MogIt_Cloth",
+                                      "Interface/AddOns/MogIt_Leather",
+                                      "Interface/AddOns/MogIt_Mail",
+                                      "Interface/AddOns/MogIt_OneHanded",
+                                      "Interface/AddOns/MogIt_Other",
+                                      "Interface/AddOns/MogIt_Plate",
+                                      "Interface/AddOns/MogIt_Ranged",
+                                      "Interface/AddOns/MogIt_Razagath",
+                                      "Interface/AddOns/MogIt_TwoHanded",
+                                      "Interface/AddOns/SpellBladeUI",
+                                      "Interface/AddOns/WDM"
+                                  ]
+                  },
+                  {
+                      "path":  "Data/Patch-F.MPQ",
+                      "sha256":  "03fba26b08cc35a62e8e0e06f429e450840ef0988c17d4704cec8e2dbeda8925",
+                      "size":  824714812,
+                      "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-F.MPQ"
+                  },
+                  {
+                      "path":  "Data/Patch-G.MPQ",
+                      "sha256":  "98b74d8051e0b14974f31f6aa09ef01c72bf78dd504866150d307be0e3f46bc1",
+                      "size":  10047001,
+                      "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-G.MPQ"
+                  },
+                  {
+                      "path":  "Data/Patch-H.MPQ",
+                      "sha256":  "f4825b36c2e602bbf45ed32ad0cb0f3c39e293238a4018542f2c82eb54b0bb6c",
+                      "size":  2152697454,
+                      "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-H.MPQ"
+                  },
+                  {
+                      "path":  "Data/Patch-S.MPQ",
+                      "sha256":  "e21f6367dee9663e878a3c0398651b16f92894e4f426199fc651480782802390",
+                      "size":  2146564,
+                      "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-S.MPQ"
+                  },
+                  {
+                      "path":  "Data/Patch-T.MPQ",
+                      "sha256":  "43218e7f07fdffeafc115f2401999010b46c008dbe60af11b62a3f50fa93f71e",
+                      "size":  418595462,
+                      "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-T.MPQ"
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.09",
+                          "date":  "2026-09-07",
+                          "title":  "Bundled add-ons + HD patches + Spellblade update",
+                          "notes":  [
+                                        "MogIt, Bagnon and WoW Dungeon Maps are now built in - no add-on install needed. MogIt also lists every custom Spellblade item.",
+                                        "Classic and Burning Crusade dungeon interior maps now show on the world map.",
+                                        "The HD graphics patches are delivered by the launcher now (large one-time download, resumable).",
+                                        "Launcher: interrupted downloads resume where they left off instead of restarting.",
+                                        "New Spellblade passive, Mental Quickness: spell power equal to 50% of your attack power, so your gear powers melee and casting both.",
+                                        "New Arcane talent, Sudden Ignition: a chance after Arcane Ignition or Spellblade Strike to make your next Arcane Ignition instant.",
+                                        "Blade Shatter is now an instant melee strike (was a next-swing ability) and shows the correct melee range.",
+                                        "Spellblade Strike damage retuned.",
+                                        "The Fractured and Sundered Sigil plate sets have a new look; Sundered pieces show the green Heroic tag.",
+                                        "\u0027of the Viper\u0027 gear now drops from classic and vanilla content, as a random suffix on greens and as guaranteed pieces from dungeon bosses.",
+                                        "Spellblade grimoires show the right icon and equip correctly again.",
+                                        "A max-geared level 80 sweeps through pre-WotLK dungeons and raids, while WotLK dungeons stay a real fight.",
+                                        "Questie no longer breaks on the Spellblade class."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.06",
                           "date":  "2026-09-06",

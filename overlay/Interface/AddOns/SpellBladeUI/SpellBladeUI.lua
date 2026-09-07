@@ -48,6 +48,33 @@ if not _G["CLASS_" .. TOKEN] then
     _G["CLASS_" .. TOKEN] = NAME
 end
 
+-- Questie-335 compatibility -------------------------------------------------
+--  Questie resolves a class *token* to a numeric id through its own hardcoded
+--  QuestieCompat.ChrClasses table, which has no "SPELLBLADE" row. QuestiePlayer
+--  :Initialize() then runs  2 ^ (classId - 1)  with classId == nil and the
+--  whole init chain aborts - the quest tracker never starts. Other spots key
+--  townsfolk / comms off the token string and hit nil the same way.
+--  A Spellblade is a Shaman underneath, so present it to Questie as Shaman:
+--  keep the real display name, swap the token/id to SHAMAN / 7.
+do
+    local qc = _G.QuestieCompat
+    if qc then
+        if type(qc.ChrClasses) == "table" and qc.ChrClasses[TOKEN] == nil then
+            qc.ChrClasses[TOKEN] = qc.ChrClasses.SHAMAN or 7
+        end
+        if type(qc.UnitClass) == "function" and not qc.__sbUnitClass then
+            qc.__sbUnitClass = qc.UnitClass
+            qc.UnitClass = function(unit)
+                local className, classFile, classId = qc.__sbUnitClass(unit)
+                if classFile == TOKEN then
+                    return className, "SHAMAN", 7
+                end
+                return className, classFile, classId
+            end
+        end
+    end
+end
+
 -- Dungeon Finder role buttons -------------------------------------------------
 --  The stock 3.3.5a client's GetAvailableRoles() has no case for class 10, so
 --  LFG_UpdateAvailableRoles() permanently disables every role button - and

@@ -1,0 +1,32 @@
+[
+    {
+        "path":  "Data/Patch-F.MPQ",
+        "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-F.MPQ",
+        "sha256":  "03fba26b08cc35a62e8e0e06f429e450840ef0988c17d4704cec8e2dbeda8925",
+        "size":  824714812
+    },
+    {
+        "path":  "Data/Patch-G.MPQ",
+        "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-G.MPQ",
+        "sha256":  "98b74d8051e0b14974f31f6aa09ef01c72bf78dd504866150d307be0e3f46bc1",
+        "size":  10047001
+    },
+    {
+        "path":  "Data/Patch-H.MPQ",
+        "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-H.MPQ",
+        "sha256":  "f4825b36c2e602bbf45ed32ad0cb0f3c39e293238a4018542f2c82eb54b0bb6c",
+        "size":  2152697454
+    },
+    {
+        "path":  "Data/Patch-S.MPQ",
+        "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-S.MPQ",
+        "sha256":  "e21f6367dee9663e878a3c0398651b16f92894e4f426199fc651480782802390",
+        "size":  2146564
+    },
+    {
+        "path":  "Data/Patch-T.MPQ",
+        "url":  "https://archive.org/download/razagath-hd-client-patches/Patch-T.MPQ",
+        "sha256":  "43218e7f07fdffeafc115f2401999010b46c008dbe60af11b62a3f50fa93f71e",
+        "size":  418595462
+    }
+]
