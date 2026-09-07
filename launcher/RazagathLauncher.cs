@@ -620,7 +620,7 @@ namespace RazagathWoW
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ClientSize = new Size(720, 588);
+            ClientSize = new Size(720, 660);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -777,7 +777,8 @@ namespace RazagathWoW
                 Dock = DockStyle.Fill,
                 Padding = new Padding(6, 4, 6, 4),
                 ColumnCount = 2,
-                BackColor = Color.Transparent
+                BackColor = Color.Transparent,
+                AutoScroll = true   // Sign-in section makes this taller than the fixed tab area
             };
             p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130));
             p.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -854,7 +855,7 @@ namespace RazagathWoW
             p.Controls.Add(Blank(), 0, 2); p.Controls.Add(_windowedBox, 1, 2);
 
             p.Controls.Add(Head("Sign in"), 0, 3);
-            p.Controls.Add(Sub("The account name goes into Config.wtf; the password (if you tick auto sign-in) is DPAPI-encrypted and stored only on this Windows account. The launcher types it at the login screen a few seconds after the game window opens - don't click away during that."), 1, 3);
+            p.Controls.Add(Sub("Tick auto sign-in and the launcher types your login at the WoW screen a few seconds after the game opens - don't click away during that. The password is DPAPI-encrypted and never leaves this PC."), 1, 3);
             p.Controls.Add(new Label { Text = "Account", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 4);
             p.Controls.Add(_acctBox, 1, 4);
             p.Controls.Add(new Label { Text = "Password", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 5);
