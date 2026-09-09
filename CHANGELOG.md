@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.09c - Spectral Wolf prestige reward
+
+- Prestige reward: the first time a character prestiges it now also learns the Spectral Wolf - a ghostly ground mount usable at any riding skill - alongside its first title. Characters already prestiged get it on next login.
+- The Spectral Wolf mount is ground-only now (a running wolf looked wrong in the air) and renders at normal size.
+- Removed the oversized, loud daily-dungeon boss hologram that hovered near Archmage Lan'dalock in Dalaran.
+
 ## 2026.09.09b - 4 GB client + Spectral Wolf mount
 
 - Fixes the out-of-memory crashes in Dalaran and other busy zones with the HD graphics patches - the game client can now use 4 GB of memory instead of 2 GB. Fully close and reopen WoW once after this update so the new client takes effect.
