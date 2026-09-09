@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.07b",
+    "clientVersion":  "2026.09.09",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.3",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathWoW.exe",
-                     "sha256":  "70c3bd7b70c9e3bb5f8bd8b25bb1b7d410aa06f03df15986cfd4084ace8cdf09"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/RazagathWoW.exe",
+                     "sha256":  "fc03d786b623b5465c4688bc1a6c3c63c94c36db5552b2d33e6936febeec51d0"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "0bf36bd0c834b2ff9bee11c00b46f12e1e1139da8742bb3fb663183495ba97f7",
-                      "size":  62550040,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-Z.MPQ"
+                      "sha256":  "9d24f67d302cc5c0d33ee0df0bbf4853aa7205ad8824654decb220c9a640a67a",
+                      "size":  63089024,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "8f81707f38d53fbb7ee0b0ec13bc50aceda4b510c7476e45252d19cc7822a85b",
-                      "size":  3070625,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.07b/RazagathAddons.zip",
+                      "sha256":  "8ca03afae36383118265e368aabfe066964ff0fc9f4c32f55ed640d5e621682b",
+                      "size":  3070626,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,19 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.09",
+                          "date":  "2026-09-09",
+                          "title":  "Prestige heirlooms, display badges \u0026 XP scaling",
+                          "notes":  [
+                                        "New \"Prestige\" and \"XP Rate\" buffs - other players can see your prestige tier and current XP rate at a glance.",
+                                        "The Prestige Master now sells heirlooms. Spend prestige points to unlock, then buy them from the \"Allocate prestige points\" menu.",
+                                        "New heirloom slots that never existed in 3.3.5: head, legs, cloak, neck, rings and off-hands, plus extra weapon types - retail models and icons where possible.",
+                                        "Heirlooms moved off the Assistant NPC; the Prestige Master is the only source now.",
+                                        "Your personal XP rate now steps down a little with each prestige, reaching 1x at max prestige. 1x and 0.5x Hardmode are unaffected.",
+                                        "Spellblade (test realm): expanded talent trees - 9 new passive talents, a resurrection spell (Reawaken), a combat battle-rez, an Innervate-style mana cooldown and build-defining capstone talents. All specs can now wear plate."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.07b",
                           "date":  "2026-09-07",

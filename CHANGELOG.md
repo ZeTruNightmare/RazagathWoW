@@ -5,6 +5,15 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.09 - Prestige heirlooms, display badges & XP scaling
+
+- New "Prestige" and "XP Rate" buffs - other players can see your prestige tier and current XP rate at a glance.
+- The Prestige Master now sells heirlooms. Spend prestige points to unlock, then buy them from the "Allocate prestige points" menu.
+- New heirloom slots that never existed in 3.3.5: head, legs, cloak, neck, rings and off-hands, plus extra weapon types - retail models and icons where possible.
+- Heirlooms moved off the Assistant NPC; the Prestige Master is the only source now.
+- Your personal XP rate now steps down a little with each prestige, reaching 1x at max prestige. 1x and 0.5x Hardmode are unaffected.
+- Spellblade (test realm): expanded talent trees - 9 new passive talents, a resurrection spell (Reawaken), a combat battle-rez, an Innervate-style mana cooldown and build-defining capstone talents. All specs can now wear plate.
+
 ## 2026.09.07b - Launcher auto sign-in + patch-notes tab
 
 - Launcher: optional auto sign-in - turn it on in Settings and the launcher signs you in and drops you at character select, no WoW login screen

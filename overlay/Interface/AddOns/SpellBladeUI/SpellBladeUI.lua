@@ -12,7 +12,7 @@
 
 local TOKEN = "SPELLBLADE"
 local NAME  = "Spellblade"
-local R, G, B = 126/255, 0/255, 199/255          -- #7E00C7
+local R, G, B = 55/255, 16/255, 117/255          -- #371075
 
 -- localized name (male + female)
 for _, tbl in ipairs({ LOCALIZED_CLASS_NAMES_MALE, LOCALIZED_CLASS_NAMES_FEMALE }) do
