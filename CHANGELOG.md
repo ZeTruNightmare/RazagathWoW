@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.09b - 4 GB client + Spectral Wolf mount
+
+- Fixes the out-of-memory crashes in Dalaran and other busy zones with the HD graphics patches - the game client can now use 4 GB of memory instead of 2 GB. Fully close and reopen WoW once after this update so the new client takes effect.
+- New epic mount: Reins of the Spectral Wolf. A ghostly worg usable at any riding skill (no training or gold needed) that also flies where flying is permitted - Outland always, Northrend with Cold Weather Flying.
+
 ## 2026.09.09 - Prestige heirlooms, display badges & XP scaling
 
 - New "Prestige" and "XP Rate" buffs - other players can see your prestige tier and current XP rate at a glance.

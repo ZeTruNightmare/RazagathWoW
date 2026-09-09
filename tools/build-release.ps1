@@ -55,7 +55,8 @@ if ($RebuildMpq) {
 #  1.4.0 = zip-bundle (add-on pack) support.
 #  1.5.0 = resumable/retrying downloads (for the multi-GB HD client patches).
 #  1.6.0 = optional auto sign-in (Settings tab) - skips the WoW login screen.
-$MinLauncher = [version]"1.6.3"
+#  1.6.4 = Wow.exe patched Large-Address-Aware (4 GB) + re-patch from Wow.exe.orig.
+$MinLauncher = [version]"1.6.4"
 $launcherOut = "$RepoDir\dist\RazagathWoW.exe"
 $curLv = (Get-Content "$RepoDir\manifest.json" | ConvertFrom-Json).launcher.version
 $lv = if ($LauncherVersion) { $LauncherVersion } else { $curLv }

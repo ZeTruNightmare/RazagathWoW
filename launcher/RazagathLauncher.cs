@@ -127,7 +127,7 @@ namespace RazagathWoW
     internal static class ExePatcher
     {
         public const string CleanSha256   = "aa63a5750d60ef16746c686b3d5e26876d98953eab08b1c026cd0faf78e88cb8";
-        public const string PatchedSha256 = "0c540dd96d7dc749501fcb7db2de4285db8662ec035b31aabbc6e53a5dee47fa";
+        public const string PatchedSha256 = "81010facf1f1940d92b7367d6b3b6861d772166bd3bfad58af1e7d3ae76b510e";
         public const long   ExpectedSize  = 7704216;
 
         private sealed class Poke
@@ -135,7 +135,7 @@ namespace RazagathWoW
             public readonly long Offset; public readonly byte[] Old; public readonly byte[] New;
             public Poke(long o, string oldHex, string newHex) { Offset = o; Old = Hex(oldHex); New = Hex(newHex); }
         }
-        // file offset = virtual address - 0x400C00  (.text: RVA 0x1000 @ raw 0x400)
+        // .text pokes: file offset = virtual address - 0x400C00  (.text: RVA 0x1000 @ raw 0x400)
         private static readonly Poke[] Pokes =
         {
             new Poke(0x4159E0, "558BEC81EC1C01", "B803000000C390"), // VA 0x8165E0  sig check -> return 3 (valid)
@@ -143,6 +143,10 @@ namespace RazagathWoW
             new Poke(0x0D9CEB, "0F852DFFFFFF",   "909090909090"),   // VA 0x4DA8EB  no GlueXML toc-hash abort
             new Poke(0x12A143, "740A",           "EB0A"),           // VA 0x52AD43  no FrameXML hash abort
             new Poke(0x1F77EC, "740A",           "EB0A"),           // VA 0x5F83EC  no FrameXML manifest abort
+            // PE COFF header Characteristics @ file 0x126: OR in IMAGE_FILE_LARGE_ADDRESS_AWARE
+            // (0x0020) so the 32-bit client can use up to 4 GB instead of 2 GB. Fixes the
+            // "M2Shared.cpp - not enough memory" OOM crashes in Dalaran with the HD patches.
+            new Poke(0x000126, "0301",           "2301"),
         };
 
         public enum Status { AlreadyPatched, Patched, UnknownExe, NotFound, Failed }
@@ -153,21 +157,40 @@ namespace RazagathWoW
             public Outcome(Status s, string m) { Status = s; Message = m; }
         }
 
+        // SHA-256s this launcher produced with EARLIER poke sets. If the player's
+        // Wow.exe matches one of these it was patched by an older launcher - restore
+        // the saved clean copy and re-patch with the current set.
+        private static readonly HashSet<string> PriorPatchedSha256 = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "0c540dd96d7dc749501fcb7db2de4285db8662ec035b31aabbc6e53a5dee47fa", // 5 pokes (<= launcher 1.6.3)
+        };
+
         public static Outcome Ensure(string exePath)
         {
             if (!File.Exists(exePath))
                 return new Outcome(Status.NotFound, "Wow.exe not found at " + exePath);
 
+            var bak = Path.Combine(Path.GetDirectoryName(exePath), "Wow.exe.orig");
+
             var hash = Sha256File(exePath);
             if (string.Equals(hash, PatchedSha256, StringComparison.OrdinalIgnoreCase))
                 return new Outcome(Status.AlreadyPatched, "Wow.exe already patched.");
+
+            // Patched by an older launcher: roll back to the saved clean exe, then re-patch.
+            if (PriorPatchedSha256.Contains(hash)
+                && File.Exists(bak)
+                && string.Equals(Sha256File(bak), CleanSha256, StringComparison.OrdinalIgnoreCase))
+            {
+                try { File.Copy(bak, exePath, true); hash = CleanSha256; }
+                catch (Exception ex) { return new Outcome(Status.Failed, "could not restore Wow.exe.orig: " + ex.Message); }
+            }
+
             if (!string.Equals(hash, CleanSha256, StringComparison.OrdinalIgnoreCase))
                 return new Outcome(Status.UnknownExe,
                     "Wow.exe is not the recognised clean 3.3.5a (build 12340) client, so it was left untouched.");
 
             try
             {
-                var bak = Path.Combine(Path.GetDirectoryName(exePath), "Wow.exe.orig");
                 if (!File.Exists(bak)) File.Copy(exePath, bak);
 
                 var bytes = File.ReadAllBytes(exePath);
@@ -590,6 +613,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.4", "2026-09-09", "The game client can now use up to 4 GB of memory instead of 2 GB - fixes the out-of-memory crashes in Dalaran with the HD graphics patches. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.3", "2026-09-07", "Bigger window; the Play tab now shows the latest client patch and the latest launcher change side by side." },
             new[] { "1.6.2", "2026-09-07", "Settings tab now scrolls cleanly - no more render smearing or dead space." },
             new[] { "1.6.1", "2026-09-07", "Fixed the Settings tab hiding the password field, auto sign-in checkbox and Save button." },
