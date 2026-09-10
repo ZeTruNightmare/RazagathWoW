@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.10 - Spellblade utility kit
+
+- New Spellblade trainer abilities: Dispel Magic, Cure Poison, Cure Disease and Remove Curse.
+- New Spellblade trainer abilities: Disrupting Cut (spell interrupt) and Pommel Bash (5 sec stun).
+
 ## 2026.09.09c - Spectral Wolf prestige reward
 
 - Prestige reward: the first time a character prestiges it now also learns the Spectral Wolf - a ghostly ground mount usable at any riding skill - alongside its first title. Characters already prestiged get it on next login.

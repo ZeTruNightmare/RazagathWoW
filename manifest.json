@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.09c",
+    "clientVersion":  "2026.09.10",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09c/RazagathWoW.exe",
-                     "sha256":  "acede53f331e29406a3ae84efa6e5e993d688900561d6c9e992d2d476260e944"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/RazagathWoW.exe",
+                     "sha256":  "50089990d995d68fbf4970d0d3378c8d9f09338445df27ac20bca9d229f1b412"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "876d70f5b353c6463e93fdb73d6fd1e671fff417a0e280e52dab03b9744df52c",
-                      "size":  63717281,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09c/patch-enUS-Z.MPQ"
+                      "sha256":  "fc2a85672ea6b7d97c071536565101da1fea64128956972d3360efcffa3cceb8",
+                      "size":  63723761,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09c/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09c/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "d394e5ea9487c2c4376201ef13354d390c135ed1ae107b386014c8473de221c7",
+                      "sha256":  "d8b4f475606c495dea84107b51ff70ad42a9da68ad4685acf059a9d1eb03ba96",
                       "size":  3070626,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.09c/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,15 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.10",
+                          "date":  "2026-09-10",
+                          "title":  "Spellblade utility kit",
+                          "notes":  [
+                                        "New Spellblade trainer abilities: Dispel Magic, Cure Poison, Cure Disease and Remove Curse.",
+                                        "New Spellblade trainer abilities: Disrupting Cut (spell interrupt) and Pommel Bash (5 sec stun)."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.09c",
                           "date":  "2026-09-09",
