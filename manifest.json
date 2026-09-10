@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.10",
+    "clientVersion":  "2026.09.10b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/RazagathWoW.exe",
-                     "sha256":  "50089990d995d68fbf4970d0d3378c8d9f09338445df27ac20bca9d229f1b412"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/RazagathWoW.exe",
+                     "sha256":  "d0f51d464c5f5e998eeaf09b913a5d2248ea11cbaecc23163bd9862fc0d723b3"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "fc2a85672ea6b7d97c071536565101da1fea64128956972d3360efcffa3cceb8",
-                      "size":  63723761,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-Z.MPQ"
+                      "sha256":  "98ea3d6c8258b0be0e77f2238627bb65d6d49e2a764d33595369d5837b51b58b",
+                      "size":  63724061,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "d8b4f475606c495dea84107b51ff70ad42a9da68ad4685acf059a9d1eb03ba96",
+                      "sha256":  "79b2b7f63209bb913d6a4158dc2371834e61e4da957c91a87ab085fcd0eff9c6",
                       "size":  3070626,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,15 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.10b",
+                          "date":  "2026-09-10",
+                          "title":  "Journeyman Grimoire",
+                          "notes":  [
+                                        "New Spellblade off-hand from Instructor Vaeryn: Journeyman Spellblades Grimoire (level 40), filling the gap between Adept and Apprentice.",
+                                        "Journeyman and Master grimoires now use distinct book models."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.10",
                           "date":  "2026-09-10",

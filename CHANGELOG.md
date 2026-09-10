@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.10b - Journeyman Grimoire
+
+- New Spellblade off-hand from Instructor Vaeryn: Journeyman Spellblades Grimoire (level 40), filling the gap between Adept and Apprentice.
+- Journeyman and Master grimoires now use distinct book models.
+
 ## 2026.09.10 - Spellblade utility kit
 
 - New Spellblade trainer abilities: Dispel Magic, Cure Poison, Cure Disease and Remove Curse.
