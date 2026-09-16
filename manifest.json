@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.16",
+    "clientVersion":  "2026.09.16b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/RazagathWoW.exe",
-                     "sha256":  "c604b5480575e1ce8b0a3b36d0ee67109532836b42252aadf34bd51e440fc8d6"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16b/RazagathWoW.exe",
+                     "sha256":  "8159f16bbef54010db30bc069521ded57274d2b3316ee72fb8ee888ff3f6ce87"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "7e61897f7abd13d8d85a40c4faedb17fb065380ae63085f25ab54638d1ae383d",
+                      "sha256":  "8ef4b3fbfd327f35bddb2c48e8379eca74b0cb0de4ed0d12e9a6bc263e92d113",
                       "size":  63816145,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "15d2b438718c5c9703866c365584d59a0659139dc34ff5ae39b38e59481b1ecc",
+                      "sha256":  "a3aba2c4667df00c9ab0c0945151857bbed619ac4c5f57979ad11d1855c53550",
                       "size":  3070626,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,14 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.16b",
+                          "date":  "2026-09-16",
+                          "title":  "Arcane Bloom balance fix",
+                          "notes":  [
+                                        "Arcane Bloom (ranks 1-6): damage and heal significantly increased - the original numbers were undertuned for leveling/dungeon content and felt weak below level 80. Rank 7 (level 80) is unchanged."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.16",
                           "date":  "2026-09-16",

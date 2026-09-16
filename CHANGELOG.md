@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.16b - Arcane Bloom balance fix
+
+- Arcane Bloom (ranks 1-6): damage and heal significantly increased - the original numbers were undertuned for leveling/dungeon content and felt weak below level 80. Rank 7 (level 80) is unchanged.
+
 ## 2026.09.16 - Arcane Bloom (Spellblade)
 
 - New Spellblade spell: Arcane Bloom (Arcane tree, trained from Vaeryn at level 25, 7 ranks up to level 80) - an instant, minimal-cooldown burst that deals Arcane damage to all enemies within 10 yards and heals you plus up to 3 injured allies in range.
