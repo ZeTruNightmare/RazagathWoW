@@ -256,6 +256,11 @@ FunctionEnd
 
 Function DownloadFullClient
 !ifdef HAVE_CLIENT
+  ; DriveSpace (GetDiskFreeSpaceEx) can fail on a path whose parent folders
+  ; don't exist yet - e.g. a first-time install to a brand-new folder - and
+  ; NSIS then leaves $R0 at 0, tripping a false "not enough space" abort even
+  ; with hundreds of GB free. Create the folder first so the path is real.
+  CreateDirectory "$INSTDIR"
   ${DriveSpace} "$INSTDIR\" "/D=F /S=M" $R0
   ${If} $R0 < ${CLIENT_NEED_MB}
     MessageBox MB_ICONSTOP "Not enough free space.$\r$\nNeed about ${CLIENT_NEED_MB} MB free on this drive, have $R0 MB.$\r$\nRun Setup again and choose another location."
