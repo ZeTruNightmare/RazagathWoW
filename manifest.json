@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.10b",
+    "clientVersion":  "2026.09.16",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/RazagathWoW.exe",
-                     "sha256":  "d0f51d464c5f5e998eeaf09b913a5d2248ea11cbaecc23163bd9862fc0d723b3"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/RazagathWoW.exe",
+                     "sha256":  "c604b5480575e1ce8b0a3b36d0ee67109532836b42252aadf34bd51e440fc8d6"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "98ea3d6c8258b0be0e77f2238627bb65d6d49e2a764d33595369d5837b51b58b",
-                      "size":  63724061,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-Z.MPQ"
+                      "sha256":  "7e61897f7abd13d8d85a40c4faedb17fb065380ae63085f25ab54638d1ae383d",
+                      "size":  63816145,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "79b2b7f63209bb913d6a4158dc2371834e61e4da957c91a87ab085fcd0eff9c6",
+                      "sha256":  "15d2b438718c5c9703866c365584d59a0659139dc34ff5ae39b38e59481b1ecc",
                       "size":  3070626,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.10b/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.16/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -86,6 +86,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.16",
+                          "date":  "2026-09-16",
+                          "title":  "Arcane Bloom (Spellblade)",
+                          "notes":  [
+                                        "New Spellblade spell: Arcane Bloom (Arcane tree, trained from Vaeryn at level 25, 7 ranks up to level 80) - an instant, minimal-cooldown burst that deals Arcane damage to all enemies within 10 yards and heals you plus up to 3 injured allies in range.",
+                                        "New talent: Volatile Bloom (Arcane tree) - increases Arcane Bloom\u0027s damage by up to 10% at 5/5.",
+                                        "Arcane Bloom\u0027s mana cost reduced by roughly 40% across all ranks."
+                                    ]
+                      },
                       {
                           "version":  "2026.09.10b",
                           "date":  "2026-09-10",

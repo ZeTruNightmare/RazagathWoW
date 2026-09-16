@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.16 - Arcane Bloom (Spellblade)
+
+- New Spellblade spell: Arcane Bloom (Arcane tree, trained from Vaeryn at level 25, 7 ranks up to level 80) - an instant, minimal-cooldown burst that deals Arcane damage to all enemies within 10 yards and heals you plus up to 3 injured allies in range.
+- New talent: Volatile Bloom (Arcane tree) - increases Arcane Bloom's damage by up to 10% at 5/5.
+- Arcane Bloom's mana cost reduced by roughly 40% across all ranks.
+
 ## 2026.09.10b - Journeyman Grimoire
 
 - New Spellblade off-hand from Instructor Vaeryn: Journeyman Spellblades Grimoire (level 40), filling the gap between Adept and Apprentice.
