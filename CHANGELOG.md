@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.17 - Spellblade balance + Aegis + new talents
+
+- Arcane Bloom rebalanced: damage/heal significantly increased at ranks 1-6 (rank 7/level 80 unchanged), and a hidden mana-cost bug fixed - it was silently costing 35% of your mana pool on top of the listed number. Rank 7 is now a clean 600 mana, with lower ranks scaled down from that.
+- Aegis now also grants immunity to stuns for its duration, not just a damage shield.
+- Three new talents, one per tree (Battle Focus/Serene Mind/Arcane Economy): up to 10% reduced mana cost for that tree's spells.
+- New Arcane talent: Arcane Contagion - your Arcane spells have up to a 10% chance per enemy hit to apply Arcane Wound.
+- Spellblade talent point pacing increased slightly (now averages 1.2 points per level instead of 1).
+
 ## 2026.09.16b - Arcane Bloom balance fix
 
 - Arcane Bloom (ranks 1-6): damage and heal significantly increased - the original numbers were undertuned for leveling/dungeon content and felt weak below level 80. Rank 7 (level 80) is unchanged.
