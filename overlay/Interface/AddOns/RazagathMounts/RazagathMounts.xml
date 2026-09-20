@@ -1,0 +1,56 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Frame name="RazagathMountsFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+        <Size x="580" y="480"/>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad function="RazagathMounts_OnLoad"/>
+            <OnShow function="RazagathMounts_OnShow"/>
+            <OnHide function="RazagathMounts_OnHide"/>
+            <OnDragStart>self:StartMoving()</OnDragStart>
+            <OnDragStop>self:StopMovingOrSizing()</OnDragStop>
+        </Scripts>
+    </Frame>
+
+    <Button name="RazagathMountsMinimapButton" parent="Minimap" toplevel="true" frameStrata="MEDIUM">
+        <Size x="31" y="31"/>
+        <Anchors>
+            <Anchor point="TOPLEFT" x="-6" y="-6"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+                    <Size x="53" y="53"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture name="RazagathMountsMinimapButtonIcon" file="Interface\Icons\Ability_Mount_RidingHorse">
+                    <Size x="20" y="20"/>
+                    <Anchors>
+                        <Anchor point="CENTER" x="1" y="1"/>
+                    </Anchors>
+                    <TexCoords left="0.08" right="0.92" top="0.08" bottom="0.92"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <HighlightTexture file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" alphaMode="ADD">
+            <Size x="30" y="30"/>
+            <Anchors>
+                <Anchor point="TOPLEFT" x="7" y="-5"/>
+            </Anchors>
+        </HighlightTexture>
+        <Scripts>
+            <OnLoad function="RazagathMountsMinimapButton_OnLoad"/>
+            <OnDragStart>this.isMoving = true; this:StartMoving();</OnDragStart>
+            <OnDragStop>this.isMoving = false; this:StopMovingOrSizing(); RazagathMountsMinimapButton_SavePosition();</OnDragStop>
+            <OnClick function="RazagathMountsMinimapButton_OnClick"/>
+            <OnUpdate function="RazagathMountsMinimapButton_OnUpdate"/>
+            <OnEnter function="RazagathMountsMinimapButton_OnEnter"/>
+            <OnLeave>GameTooltip:Hide()</OnLeave>
+        </Scripts>
+    </Button>
+</Ui>

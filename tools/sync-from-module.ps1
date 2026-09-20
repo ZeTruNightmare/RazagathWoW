@@ -32,6 +32,32 @@ if (Test-Path $mogitSrc) {
     Write-Warning "no MogIt_Razagath in $Module - run client-patch/mk_mogit_razagath.pl first"
 }
 
+# RazagathMounts - WotLK-native modern-styled mount browser (own addon, not
+# an MPQ override - see the module's mk_mount_data.pl for the data source).
+$mountsSrc = "$Module\addon\RazagathMounts"
+$mountsDst = "$Repo\overlay\Interface\AddOns\RazagathMounts"
+if (Test-Path $mountsSrc) {
+    if (Test-Path $mountsDst) { Remove-Item $mountsDst -Recurse -Force }
+    Copy-Item $mountsSrc $mountsDst -Recurse -Force
+    Write-Host ("synced RazagathMounts  ({0} files)" -f (Get-ChildItem $mountsDst -File).Count)
+} else {
+    Write-Warning "no RazagathMounts in $Module - run client-patch/mk_mount_data.pl first"
+}
+
+# RazagathBigBags - raises the client's hardcoded 36-slot bag display cap so
+# bigger custom bags render/function correctly, without touching FrameXML
+# (see the addon's own header comment for why - this client's anti-tamper
+# check aborts on any FrameXML/GlueXML override).
+$bagsSrc = "$Module\addon\RazagathBigBags"
+$bagsDst = "$Repo\overlay\Interface\AddOns\RazagathBigBags"
+if (Test-Path $bagsSrc) {
+    if (Test-Path $bagsDst) { Remove-Item $bagsDst -Recurse -Force }
+    Copy-Item $bagsSrc $bagsDst -Recurse -Force
+    Write-Host ("synced RazagathBigBags  ({0} files)" -f (Get-ChildItem $bagsDst -File).Count)
+} else {
+    Write-Warning "no RazagathBigBags in $Module"
+}
+
 if (Test-Path "$Module\patch-enUS-Z.MPQ") {
     Copy-Item "$Module\patch-enUS-Z.MPQ" "$Repo\patch\patch-enUS-Z.MPQ" -Force
     $m = Get-Item "$Repo\patch\patch-enUS-Z.MPQ"

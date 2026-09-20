@@ -1,0 +1,5 @@
+## Interface: 30300
+## Title: Razagath Big Bags
+## Notes: Raises the client's hardcoded 36-slot bag cap so bigger custom bags (e.g. the 50-slot Razagath Trunk) render and function correctly.
+## Author: Razagath
+RazagathBigBags.lua

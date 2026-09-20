@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.17",
+    "clientVersion":  "2026.09.20",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.17/RazagathWoW.exe",
-                     "sha256":  "13a06b1cc48067522541378f230fe63de8c794b34da8a80ab0b7b9ad0e81001b"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/RazagathWoW.exe",
+                     "sha256":  "f8e38f69b0ce6d142d8f6caecc54641675480c8976d328093a2064ae42d68d8f"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "85073ae02bcb8870e3efdae3d7cb13cd17c0eb35633deb43ebc6922ade1dffaf",
-                      "size":  63843194,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.17/patch-enUS-Z.MPQ"
+                      "sha256":  "8fb27e2e92dcc9d0b8e3526ba9eb80fe466fb959f450db306cc6494035fd6282",
+                      "size":  64271783,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.17/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.17/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "9646bb56f6813886c6358dd3089579f01ac816ffd3092008e3c37c28e9b48bf7",
-                      "size":  3070626,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.17/RazagathAddons.zip",
+                      "sha256":  "5982b42f9e8ac291d351653fef355cc2e6bd1c1a17c24e6ce6d594e782b07431",
+                      "size":  3087853,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -50,6 +50,8 @@
                                       "Interface/AddOns/MogIt_Ranged",
                                       "Interface/AddOns/MogIt_Razagath",
                                       "Interface/AddOns/MogIt_TwoHanded",
+                                      "Interface/AddOns/RazagathBigBags",
+                                      "Interface/AddOns/RazagathMounts",
                                       "Interface/AddOns/SpellBladeUI",
                                       "Interface/AddOns/WDM"
                                   ]
@@ -86,6 +88,24 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.20",
+                          "date":  "2026-09-20",
+                          "title":  "New Classes, Flying Mounts Everywhere \u0026 Prestige Overhaul",
+                          "notes":  [
+                                        "New playable race/class combos: Human Hunter; Orc Paladin, Priest, Druid, Mage; Dwarf Spellblade, Druid, Warlock; Night Elf Warlock, Mage, Paladin; Undead Hunter, Druid; Tauren Mage, Paladin, Priest, Spellblade, Warlock",
+                                        "Fixed missing starting weapon proficiency, missing Utility Page, and duplicate starter gear on several race/class combos",
+                                        "Flying mounts now work on every continent, not just Outland/Northrend - grounded to ground speed inside the 8 racial capital cities",
+                                        "Added the Razagath Members Amulet as a reward from Scott Knight\u0027s welcome quest, alongside the guidebook",
+                                        "City guards in all 8 capitals now give directions to the Spellblade trainer, same as the other classes",
+                                        "4 new oversized bags: Razagath Satchel (16 slot), Rucksack (22 slot), Pack (30 slot), and Trunk (36 slot)",
+                                        "New characters now start with Green Woolen Bags instead of Traveler\u0027s Backpacks",
+                                        "Prestige Master: new Bag Upgrade perk - 4 tiers, grants the new bags and auto-swaps out smaller empty bags",
+                                        "Prestige Master: new Global Cooldown Reduction stat",
+                                        "Prestige points per prestige increased to 15, with a one-time retroactive catch-up on \u0027Reset my allocation\u0027 for characters who prestiged before the increase",
+                                        "Prestige stat costs reworked: ranks now cost the same in pairs before stepping up in price, instead of increasing every single rank"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.17",
                           "date":  "2026-09-16",

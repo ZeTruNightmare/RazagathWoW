@@ -5,6 +5,20 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.20 - New Classes, Flying Mounts Everywhere & Prestige Overhaul
+
+- New playable race/class combos: Human Hunter; Orc Paladin, Priest, Druid, Mage; Dwarf Spellblade, Druid, Warlock; Night Elf Warlock, Mage, Paladin; Undead Hunter, Druid; Tauren Mage, Paladin, Priest, Spellblade, Warlock
+- Fixed missing starting weapon proficiency, missing Utility Page, and duplicate starter gear on several race/class combos
+- Flying mounts now work on every continent, not just Outland/Northrend - grounded to ground speed inside the 8 racial capital cities
+- Added the Razagath Members Amulet as a reward from Scott Knight's welcome quest, alongside the guidebook
+- City guards in all 8 capitals now give directions to the Spellblade trainer, same as the other classes
+- 4 new oversized bags: Razagath Satchel (16 slot), Rucksack (22 slot), Pack (30 slot), and Trunk (36 slot)
+- New characters now start with Green Woolen Bags instead of Traveler's Backpacks
+- Prestige Master: new Bag Upgrade perk - 4 tiers, grants the new bags and auto-swaps out smaller empty bags
+- Prestige Master: new Global Cooldown Reduction stat
+- Prestige points per prestige increased to 15, with a one-time retroactive catch-up on 'Reset my allocation' for characters who prestiged before the increase
+- Prestige stat costs reworked: ranks now cost the same in pairs before stepping up in price, instead of increasing every single rank
+
 ## 2026.09.17 - Spellblade balance + Aegis + new talents
 
 - Arcane Bloom rebalanced: damage/heal significantly increased at ranks 1-6 (rank 7/level 80 unchanged), and a hidden mana-cost bug fixed - it was silently costing 35% of your mana pool on top of the listed number. Rank 7 is now a clean 600 mana, with lower ranks scaled down from that.
