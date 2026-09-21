@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.20",
+    "clientVersion":  "2026.09.21",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/RazagathWoW.exe",
-                     "sha256":  "f8e38f69b0ce6d142d8f6caecc54641675480c8976d328093a2064ae42d68d8f"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/RazagathWoW.exe",
+                     "sha256":  "edcbd937513c0439f3b9bfa899ff982e50e2a658a0f569a2ec3a99ffaa3f5574"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "8fb27e2e92dcc9d0b8e3526ba9eb80fe466fb959f450db306cc6494035fd6282",
-                      "size":  64271783,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-Z.MPQ"
+                      "sha256":  "05698910ac3c55c504b2e7267fe19116d0c61d7c615a6653968b5e31a961ef31",
+                      "size":  64278203,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "5982b42f9e8ac291d351653fef355cc2e6bd1c1a17c24e6ce6d594e782b07431",
+                      "sha256":  "2931110c38712f16997b53d69a8c959436ed18b69e423b26d7a1dabb6c5d6237",
                       "size":  3087853,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.20/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -88,6 +88,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.21",
+                          "date":  "2026-09-21",
+                          "title":  "Spellblade BC-leveling fix",
+                          "notes":  [
+                                        "Fixed a flat damage/healing/absorb dead-zone at levels 57-70 across Spellblade Strike, Arcane Ignition, Spellblades\u0027 Presence, Aegis, Holy Restore, and Mending Light",
+                                        "Each of those abilities gained a new intermediate rank (levels 58-63) plus continuous scaling within every rank, so power now ramps smoothly through the BC leveling range instead of sitting flat for 8-12 levels",
+                                        "Battleplate of the Fractured Sigil (the Spellblade\u0027s top-tier armor set) now drops from working Icecrown Citadel 10-player Heroic bosses (Lord Marrowgar through the Lich King) instead of a broken boss list that had no functioning drop source"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.20",
                           "date":  "2026-09-20",

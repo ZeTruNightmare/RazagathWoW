@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.21 - Spellblade BC-leveling fix
+
+- Fixed a flat damage/healing/absorb dead-zone at levels 57-70 across Spellblade Strike, Arcane Ignition, Spellblades' Presence, Aegis, Holy Restore, and Mending Light
+- Each of those abilities gained a new intermediate rank (levels 58-63) plus continuous scaling within every rank, so power now ramps smoothly through the BC leveling range instead of sitting flat for 8-12 levels
+- Battleplate of the Fractured Sigil (the Spellblade's top-tier armor set) now drops from working Icecrown Citadel 10-player Heroic bosses (Lord Marrowgar through the Lich King) instead of a broken boss list that had no functioning drop source
+
 ## 2026.09.20 - New Classes, Flying Mounts Everywhere & Prestige Overhaul
 
 - New playable race/class combos: Human Hunter; Orc Paladin, Priest, Druid, Mage; Dwarf Spellblade, Druid, Warlock; Night Elf Warlock, Mage, Paladin; Undead Hunter, Druid; Tauren Mage, Paladin, Priest, Spellblade, Warlock
