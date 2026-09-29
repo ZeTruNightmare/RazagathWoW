@@ -5,6 +5,13 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.29b - Eternal Recipes & Mounted Gathering
+
+- New: Eternal Recipes - crafting Elixir of Lion's Strength, Minor Fortitude, Wisdom, Minor Defense, or Weak Troll's Blood Elixir has a small chance to teach you a permanent, infinite-use Eternal version with a boosted effect
+- New: once you've learned all 5 Eternal recipes, craft the Eternal Minor Buff Potion to apply all 5 buffs at once
+- New: Mounted Gathering - a Prestige Master perk that lets you gather herbs, ore, and skins while mounted
+- Change: Razagath Utility Page renamed to Razagath Utility Tome and upgraded to Heirloom quality with a new icon
+
 ## 2026.09.29 - Race unlocks, new mount, dungeon-clear autopilot
 
 - New: Celestial Dragon Wyrm flying mount (Reins of the Celestial Dragon Wyrm)

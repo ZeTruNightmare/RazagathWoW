@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.29",
+    "clientVersion":  "2026.09.29b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/RazagathWoW.exe",
-                     "sha256":  "e8626f60590b3cd49022e30877531fc788e50584112c4b3b386de6ae6b8475e0"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/RazagathWoW.exe",
+                     "sha256":  "f5cee1f56dcb3cd3460f2b927f0af52ca4a29d8f6fc06e696fe5245197150d73"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "b25124af94b361b9eef126a62e486837cca1a627809136028080abffe077aa1b",
-                      "size":  64297334,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-Z.MPQ"
+                      "sha256":  "16a113e2bb8853e13a334916abe0222d1a31b4cc4ea6cbdb4958a256f8611afc",
+                      "size":  64333532,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "321ce03efdeaf06097292a9ef94535290cf7072472636f9607a5f3660e07e892",
+                      "sha256":  "a36a95bf905234863343a2b5eccd1f16c9254b418c984b5998ba7ba9d5575d4d",
                       "size":  3072788,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -87,6 +87,17 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.29b",
+                          "date":  "2026-09-29",
+                          "title":  "Eternal Recipes \u0026 Mounted Gathering",
+                          "notes":  [
+                                        "New: Eternal Recipes - crafting Elixir of Lion\u0027s Strength, Minor Fortitude, Wisdom, Minor Defense, or Weak Troll\u0027s Blood Elixir has a small chance to teach you a permanent, infinite-use Eternal version with a boosted effect",
+                                        "New: once you\u0027ve learned all 5 Eternal recipes, craft the Eternal Minor Buff Potion to apply all 5 buffs at once",
+                                        "New: Mounted Gathering - a Prestige Master perk that lets you gather herbs, ore, and skins while mounted",
+                                        "Change: Razagath Utility Page renamed to Razagath Utility Tome and upgraded to Heirloom quality with a new icon"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.29",
                           "date":  "2026-09-29",
