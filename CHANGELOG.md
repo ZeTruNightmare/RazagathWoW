@@ -5,6 +5,22 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.29 - Race unlocks, new mount, dungeon-clear autopilot
+
+- New: Celestial Dragon Wyrm flying mount (Reins of the Celestial Dragon Wyrm)
+- New: many more race/class combos unlocked - Human/Dwarf/Night Elf Shaman, Undead Paladin, Gnome Priest, and 18 more (see the Guide NPC for the full list)
+- New: flying mounts now work on every continent, not just Outland/Northrend (grounded, not blocked, inside the 8 capital cities)
+- New: oversized bags (Razagath Satchel/Rucksack/Pack/Trunk)
+- New: Razagath Guide NPC with an intro quest covering the server's custom systems
+- New: dungeon and raid attunement quests/keys are now auto-completed for everyone, bots included - no more farming old quest chains just to zone in
+- New: dungeon-clear bots now start clearing automatically once you and a tank are both inside - no more typing .dc on
+- Fix: Horde and Alliance bots can now understand each other's open-world chat
+- Fix: Spectral Wolf mount rarity corrected to Rare (blue); Celestial Dragon Wyrm corrected to Epic (purple)
+- Fix: Shaman totems no longer show as a placeholder cube for Human, Night Elf, Undead, Gnome, or Blood Elf characters
+- Fix: every character now has full cross-faction language comprehension (previously only applied to brand-new characters)
+- Fix: Spell Blade duplicate starting gear
+- Fix: Stormwind Trade District guards now direct you to the Spell Blade trainer
+
 ## 2026.09.21 - Spellblade BC-leveling fix
 
 - Fixed a flat damage/healing/absorb dead-zone at levels 57-70 across Spellblade Strike, Arcane Ignition, Spellblades' Presence, Aegis, Holy Restore, and Mending Light

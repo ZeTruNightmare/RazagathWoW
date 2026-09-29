@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.21",
+    "clientVersion":  "2026.09.29",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.4",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/RazagathWoW.exe",
-                     "sha256":  "edcbd937513c0439f3b9bfa899ff982e50e2a658a0f569a2ec3a99ffaa3f5574"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/RazagathWoW.exe",
+                     "sha256":  "0956ad0d1e241f9bc7bf64b1268432aedf98e560c64882157e3af869e561908a"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "05698910ac3c55c504b2e7267fe19116d0c61d7c615a6653968b5e31a961ef31",
-                      "size":  64278203,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-Z.MPQ"
+                      "sha256":  "b25124af94b361b9eef126a62e486837cca1a627809136028080abffe077aa1b",
+                      "size":  64297334,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "2931110c38712f16997b53d69a8c959436ed18b69e423b26d7a1dabb6c5d6237",
-                      "size":  3087853,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.21/RazagathAddons.zip",
+                      "sha256":  "698bf23d0350186ffc18b5b71be85dda6cb0834cefad49ec898ae05395793ea0",
+                      "size":  3072788,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -51,7 +51,6 @@
                                       "Interface/AddOns/MogIt_Razagath",
                                       "Interface/AddOns/MogIt_TwoHanded",
                                       "Interface/AddOns/RazagathBigBags",
-                                      "Interface/AddOns/RazagathMounts",
                                       "Interface/AddOns/SpellBladeUI",
                                       "Interface/AddOns/WDM"
                                   ]
@@ -88,6 +87,26 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.29",
+                          "date":  "2026-09-29",
+                          "title":  "Race unlocks, new mount, dungeon-clear autopilot",
+                          "notes":  [
+                                        "New: Celestial Dragon Wyrm flying mount (Reins of the Celestial Dragon Wyrm)",
+                                        "New: many more race/class combos unlocked - Human/Dwarf/Night Elf Shaman, Undead Paladin, Gnome Priest, and 18 more (see the Guide NPC for the full list)",
+                                        "New: flying mounts now work on every continent, not just Outland/Northrend (grounded, not blocked, inside the 8 capital cities)",
+                                        "New: oversized bags (Razagath Satchel/Rucksack/Pack/Trunk)",
+                                        "New: Razagath Guide NPC with an intro quest covering the server\u0027s custom systems",
+                                        "New: dungeon and raid attunement quests/keys are now auto-completed for everyone, bots included - no more farming old quest chains just to zone in",
+                                        "New: dungeon-clear bots now start clearing automatically once you and a tank are both inside - no more typing .dc on",
+                                        "Fix: Horde and Alliance bots can now understand each other\u0027s open-world chat",
+                                        "Fix: Spectral Wolf mount rarity corrected to Rare (blue); Celestial Dragon Wyrm corrected to Epic (purple)",
+                                        "Fix: Shaman totems no longer show as a placeholder cube for Human, Night Elf, Undead, Gnome, or Blood Elf characters",
+                                        "Fix: every character now has full cross-faction language comprehension (previously only applied to brand-new characters)",
+                                        "Fix: Spell Blade duplicate starting gear",
+                                        "Fix: Stormwind Trade District guards now direct you to the Spell Blade trainer"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.21",
                           "date":  "2026-09-21",
