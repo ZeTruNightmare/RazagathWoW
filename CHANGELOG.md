@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.30b - Fix Spellblade grimoire icons
+
+- Fixed Journeyman and Master Spellblades Grimoire showing a broken/question-mark icon (custom icon records were dropped from a prior client patch pass)
+
 ## 2026.09.30 - Eternal Recipes expansion + Eternal Cooking
 
 - Eternal Recipes: expanded from 5 to 121 discoverable Alchemy recipes

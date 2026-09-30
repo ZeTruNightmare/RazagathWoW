@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.30",
+    "clientVersion":  "2026.09.30b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/RazagathWoW.exe",
-                     "sha256":  "046d29486a33ee18d40c7a4cdf58fe06c2f508e11e7b42b71e168c85aad240e8"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/RazagathWoW.exe",
+                     "sha256":  "6e28b4527388b4eb4fc53190d28d8e474958442120aaaa5ae36b3c4523d52d4f"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "85a793108c769ccd20e4c1d5d7dbf4270732fc24e8b07d50f54bc400237aec69",
-                      "size":  64720995,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-Z.MPQ"
+                      "sha256":  "5511667f18b44336b5e057da47f9ed122d4c24ade9e29d8edc7c2aab9f89f429",
+                      "size":  64721229,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "6362ee3ca5ee4e3f4886947e29def039db56a8a5b396a22686aaa16c05a0e388",
+                      "sha256":  "b04226ed60e3944a41cde7a7820a66aeca183348f04cd9aa97c197623f56a1d0",
                       "size":  3072788,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -87,6 +87,14 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.30b",
+                          "date":  "2026-09-30",
+                          "title":  "Fix Spellblade grimoire icons",
+                          "notes":  [
+                                        "Fixed Journeyman and Master Spellblades Grimoire showing a broken/question-mark icon (custom icon records were dropped from a prior client patch pass)"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.30",
                           "date":  "2026-09-30",
