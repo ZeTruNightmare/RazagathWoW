@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.29b",
+    "clientVersion":  "2026.09.30",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/RazagathWoW.exe",
-                     "sha256":  "f5cee1f56dcb3cd3460f2b927f0af52ca4a29d8f6fc06e696fe5245197150d73"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/RazagathWoW.exe",
+                     "sha256":  "046d29486a33ee18d40c7a4cdf58fe06c2f508e11e7b42b71e168c85aad240e8"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "16a113e2bb8853e13a334916abe0222d1a31b4cc4ea6cbdb4958a256f8611afc",
-                      "size":  64333532,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-Z.MPQ"
+                      "sha256":  "85a793108c769ccd20e4c1d5d7dbf4270732fc24e8b07d50f54bc400237aec69",
+                      "size":  64720995,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "a36a95bf905234863343a2b5eccd1f16c9254b418c984b5998ba7ba9d5575d4d",
+                      "sha256":  "6362ee3ca5ee4e3f4886947e29def039db56a8a5b396a22686aaa16c05a0e388",
                       "size":  3072788,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.29b/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -87,6 +87,18 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.09.30",
+                          "date":  "2026-09-30",
+                          "title":  "Eternal Recipes expansion + Eternal Cooking",
+                          "notes":  [
+                                        "Eternal Recipes: expanded from 5 to 121 discoverable Alchemy recipes",
+                                        "Eternal Minor Buff Potion now requires all 6 recipes (added Eternal Elixir of Minor Agility)",
+                                        "New: Eternal Cooking - 75 discoverable infinite-use foods (1hr Well Fed buffs)",
+                                        "All eternal recipe cooldowns dropped to 30 minutes",
+                                        "Eternal discovery rates finalized to their intended long-term value"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.29b",
                           "date":  "2026-09-29",

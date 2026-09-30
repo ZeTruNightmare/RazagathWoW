@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.09.30 - Eternal Recipes expansion + Eternal Cooking
+
+- Eternal Recipes: expanded from 5 to 121 discoverable Alchemy recipes
+- Eternal Minor Buff Potion now requires all 6 recipes (added Eternal Elixir of Minor Agility)
+- New: Eternal Cooking - 75 discoverable infinite-use foods (1hr Well Fed buffs)
+- All eternal recipe cooldowns dropped to 30 minutes
+- Eternal discovery rates finalized to their intended long-term value
+
 ## 2026.09.29b - Eternal Recipes & Mounted Gathering
 
 - New: Eternal Recipes - crafting Elixir of Lion's Strength, Minor Fortitude, Wisdom, Minor Defense, or Weak Troll's Blood Elixir has a small chance to teach you a permanent, infinite-use Eternal version with a boosted effect
