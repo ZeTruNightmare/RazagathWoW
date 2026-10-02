@@ -7,6 +7,13 @@ Players run **`RazagathWoW.exe`** — a small launcher that checks
 [`manifest.json`](manifest.json) on every start, downloads any changed patch
 files from the latest GitHub Release, shows the changelog, and starts the game.
 
+## Download (players)
+
+**[RazagathWoW-Setup.exe](https://github.com/ZeTruNightmare/RazagathWoW/releases/latest/download/RazagathWoW-Setup.exe)**
+- always the newest installer (every release carries it under this fixed name).
+Run it, point it at an existing 3.3.5a folder to patch it, or let it download the
+full client. After that the launcher keeps everything up to date automatically.
+
 ## Repo layout
 
 | Path | What |

@@ -167,8 +167,26 @@ if ($noteList.Count -and $cl -notmatch "(?m)^##\s+$([regex]::Escape($Version))\b
 
 if ($DryRun) { Write-Host "DryRun: skipping gh release + git push"; return }
 
+# --- 5b. installer -------------------------------------------------
+# Every release carries RazagathWoW-Setup.exe under a FIXED name so the permalink
+#   https://github.com/<repo>/releases/latest/download/RazagathWoW-Setup.exe
+# always resolves for players (no need to build the installer themselves).
+$installer = $null
+if (Test-Path "C:\Program Files (x86)\NSIS\makensis.exe") {
+    & "$PSScriptRoot\build-installer.ps1" -Version $Version -LauncherVersion $lv
+    if ($LASTEXITCODE) { throw "installer build failed" }
+    $builtInstaller = "$RepoDir\dist\RazagathWoW-Setup-$Version.exe"
+    if (-not (Test-Path $builtInstaller)) { throw "installer build did not produce $builtInstaller" }
+    $installer = "$RepoDir\dist\RazagathWoW-Setup.exe"
+    Copy-Item $builtInstaller $installer -Force
+    Write-Host ("installer ready: {0}  ({1:N1} MB)" -f $installer, ((Get-Item $installer).Length / 1MB))
+} else {
+    Write-Warning "NSIS not installed - this release will NOT carry RazagathWoW-Setup.exe (winget install NSIS.NSIS)"
+}
+
 # --- 6. GitHub release ---------------------------------------------
 $assets = @($mpq, $mapM, $mapN, $launcherOut, $zip)
+if ($installer) { $assets += $installer }
 
 $relNotes = "RazagathWoW client patch $Version`n`n" + (($noteList | ForEach-Object { "- $_" }) -join "`n")
 $prevEAP = $ErrorActionPreference
@@ -185,7 +203,17 @@ if ($exists) {
 if ($LASTEXITCODE) { throw "gh release failed" }
 
 # --- 7. commit + push -------------------------------------------
-git -C $RepoDir add manifest.json CHANGELOG.md overlay hd-patches.json
-git -C $RepoDir commit -m "release: client $Version (launcher $lv)"
-git -C $RepoDir push
+# git writes harmless warnings (e.g. CRLF) to stderr; under Windows PowerShell 5.1 with
+# ErrorActionPreference=Stop that surfaces as a terminating NativeCommandError and
+# aborted the script AFTER the GitHub release already existed. Run git with Continue
+# and check real exit codes instead.
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = 'Continue'
+git -C $RepoDir add manifest.json CHANGELOG.md overlay hd-patches.json 2>&1 | ForEach-Object { "$_" } | Write-Host
+if ($LASTEXITCODE) { $ErrorActionPreference = $prevEAP; throw "git add failed" }
+git -C $RepoDir commit -m "release: client $Version (launcher $lv)" 2>&1 | ForEach-Object { "$_" } | Write-Host
+if ($LASTEXITCODE) { $ErrorActionPreference = $prevEAP; throw "git commit failed" }
+git -C $RepoDir push 2>&1 | ForEach-Object { "$_" } | Write-Host
+if ($LASTEXITCODE) { $ErrorActionPreference = $prevEAP; throw "git push failed" }
+$ErrorActionPreference = $prevEAP
 Write-Host "`nDONE. Players get $Version on next launch."
