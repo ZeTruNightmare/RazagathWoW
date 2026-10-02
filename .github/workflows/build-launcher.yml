@@ -1,0 +1,38 @@
+name: Build launcher
+
+# Compiles the launcher from source on a clean GitHub-hosted Windows machine whenever its
+# source changes. This proves the public repo builds on its own (a requirement for free
+# code signing via SignPath Foundation) and keeps a downloadable build artifact per commit.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "launcher/**"
+      - ".github/workflows/build-launcher.yml"
+  pull_request:
+    paths:
+      - "launcher/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  launcher:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile RazagathWoW.exe
+        shell: pwsh
+        run: |
+          $lv = (Get-Content manifest.json -Raw | ConvertFrom-Json).launcher.version
+          ./launcher/build.ps1 -Version $lv -ManifestUrl "https://raw.githubusercontent.com/${{ github.repository }}/main/manifest.json" -Out dist/RazagathWoW.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RazagathWoW-launcher
+          path: dist/RazagathWoW.exe
+          retention-days: 14

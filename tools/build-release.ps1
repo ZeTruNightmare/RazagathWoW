@@ -25,6 +25,7 @@ param(
     [string]$Realmlist = "",                        # keep existing if empty
     [string]$Tag = "",                              # default: patch-<Version>
     [switch]$RebuildMpq,
+    [switch]$LocalInstaller,                        # build + attach the installer here instead of in GitHub Actions
     [switch]$DryRun
 )
 $ErrorActionPreference = "Stop"
@@ -168,11 +169,15 @@ if ($noteList.Count -and $cl -notmatch "(?m)^##\s+$([regex]::Escape($Version))\b
 if ($DryRun) { Write-Host "DryRun: skipping gh release + git push"; return }
 
 # --- 5b. installer -------------------------------------------------
+# (Default: the .github/workflows/release-installer.yml Action builds it after the release is
+# published, from the patch archive uploaded below + the commit pushed in step 7.)
 # Every release carries RazagathWoW-Setup.exe under a FIXED name so the permalink
 #   https://github.com/<repo>/releases/latest/download/RazagathWoW-Setup.exe
 # always resolves for players (no need to build the installer themselves).
 $installer = $null
-if (Test-Path "C:\Program Files (x86)\NSIS\makensis.exe") {
+if (-not $LocalInstaller) {
+    Write-Host "installer: built + attached by the 'Build installer' GitHub Action once this release is published (re-run it from the Actions tab if it ever fails; -LocalInstaller builds it here instead)"
+} elseif (Test-Path "C:\Program Files (x86)\NSIS\makensis.exe") {
     & "$PSScriptRoot\build-installer.ps1" -Version $Version -LauncherVersion $lv
     if ($LASTEXITCODE) { throw "installer build failed" }
     $builtInstaller = "$RepoDir\dist\RazagathWoW-Setup-$Version.exe"

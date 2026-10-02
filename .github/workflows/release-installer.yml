@@ -1,0 +1,104 @@
+name: Build installer
+
+# Builds RazagathWoW-Setup.exe on a clean GitHub-hosted Windows machine and attaches it
+# to the release under the FIXED name RazagathWoW-Setup.exe, so
+#   https://github.com/<owner>/<repo>/releases/latest/download/RazagathWoW-Setup.exe
+# always serves the newest installer. Players download it directly - nobody builds anything.
+#
+# Triggered when tools/build-release.ps1 publishes a release (it uploads the big patch files
+# first). Can also be re-run by hand: Actions -> Build installer -> Run workflow -> tag.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to build the installer for (e.g. patch-2026.10.02b)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: installer-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: true
+
+jobs:
+  installer:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # The release is created BEFORE the release commit (manifest + overlay add-ons) is pushed,
+      # so wait until main carries this release's version before building from it.
+      - name: Wait for the release commit on main
+        shell: pwsh
+        run: |
+          $ver = $env:TAG -replace '^patch-', ''
+          $v = ''
+          for ($i = 0; $i -lt 30; $i++) {
+            git fetch origin main --depth 1 -q
+            git reset --hard origin/main -q
+            $v = (Get-Content manifest.json -Raw | ConvertFrom-Json).clientVersion
+            if ($v -eq $ver) { break }
+            Write-Host "main has client $v, waiting for $ver ..."
+            Start-Sleep -Seconds 20
+          }
+          if ($v -ne $ver) { throw "manifest.json on main is $v, expected $ver" }
+          "VERSION=$ver" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          choco install nsis -y --no-progress
+          if (-not (Test-Path 'C:\Program Files (x86)\NSIS\makensis.exe')) { throw 'makensis not found after install' }
+
+      # The 76 MB patch archive is built from the server module on the maintainer's PC and is
+      # not in git; it is uploaded to the release first, so fetch it from there.
+      - name: Download the patch archive from the release
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force patch | Out-Null
+          for ($i = 0; $i -lt 20; $i++) {
+            gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern 'patch-enUS-Z.MPQ' --dir patch --clobber
+            if ($LASTEXITCODE -eq 0 -and (Test-Path patch/patch-enUS-Z.MPQ)) { break }
+            Write-Host 'asset not available yet, retrying ...'
+            Start-Sleep -Seconds 15
+          }
+          if (-not (Test-Path patch/patch-enUS-Z.MPQ)) { throw 'patch-enUS-Z.MPQ not found on the release' }
+          Get-Item patch/patch-enUS-Z.MPQ | ForEach-Object { '{0}  {1:N0} bytes' -f $_.Name, $_.Length }
+
+      # build-installer.ps1 fetches 7zr + NScurl, compiles the launcher from source
+      # (launcher/build.ps1, Roslyn csc on the runner) and runs makensis.
+      - name: Build launcher + installer
+        shell: pwsh
+        run: ./tools/build-installer.ps1 -Version $env:VERSION
+
+      # --- Code signing (SignPath Foundation) ------------------------------------------------
+      # Not enabled yet. Once the project is approved, sign BOTH dist/RazagathWoW.exe (before the
+      # installer is built, so the signed launcher is what gets embedded) and the finished
+      # installer, using signpath/github-action-submit-signing-request with an
+      # organization id / project slug / API token secret. Because the launcher hash then
+      # changes, the manifest's launcher entry must be refreshed from the signed file as well.
+
+      - name: Attach installer to the release
+        shell: pwsh
+        run: |
+          Copy-Item "dist/RazagathWoW-Setup-$env:VERSION.exe" dist/RazagathWoW-Setup.exe -Force
+          gh release upload $env:TAG dist/RazagathWoW-Setup.exe --repo $env:GITHUB_REPOSITORY --clobber
+          if ($LASTEXITCODE) { throw 'upload failed' }
+          Get-Item dist/RazagathWoW-Setup.exe | ForEach-Object { 'uploaded {0}  {1:N1} MB' -f $_.Name, ($_.Length / 1MB) }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RazagathWoW-Setup
+          path: dist/RazagathWoW-Setup.exe
+          retention-days: 14

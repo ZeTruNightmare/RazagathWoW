@@ -12,7 +12,10 @@ if (-not (Test-Path "$Here\7zr.exe")) {
 }
 if (-not (Test-Path "$Here\NScurl.dll")) {
     Write-Host "downloading NScurl.dll ..."
-    $rel = Invoke-RestMethod "https://api.github.com/repos/negrutiu/nsis-nscurl/releases/latest" -Headers @{ "User-Agent" = "razagath" }
+    $hdr = @{ "User-Agent" = "razagath" }
+    # authenticated calls avoid the shared-IP rate limit on GitHub-hosted runners
+    if ($env:GITHUB_TOKEN) { $hdr["Authorization"] = "Bearer $env:GITHUB_TOKEN" }
+    $rel = Invoke-RestMethod "https://api.github.com/repos/negrutiu/nsis-nscurl/releases/latest" -Headers $hdr
     $url = ($rel.assets | Where-Object { $_.name -eq "NScurl.zip" }).browser_download_url
     $zip = "$Here\NScurl.zip"
     Invoke-WebRequest $url -OutFile $zip
