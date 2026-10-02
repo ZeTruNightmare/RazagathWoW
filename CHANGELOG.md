@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.02c - Retail parity: character creation
+
+- Retail parity: the character creation screen now matches modern retail - round race and class icons, gender buttons, a customise page with Head, Mirror and Accessories tabs, and the name box at the top
+- Races and classes that are not implemented on this realm are shown grayed out with a Not implemented tooltip
+- New: scroll the mouse wheel on the customise page to zoom in on your characters face (each race is framed individually)
+
 ## 2026.10.02b - Hotfix: mailbox art
 
 - Fixed the mailbox showing a tall spellbook scroll over the right side of the inbox - the retail spellbook art now uses its own files so the mail window gets its normal art back

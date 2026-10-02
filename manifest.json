@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.02b",
+    "clientVersion":  "2026.10.02c",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02b/RazagathWoW.exe",
-                     "sha256":  "1c8627bdc78f6d4fd0a63c44b84dae2a320d55524965bcac032e51f911be1549"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/RazagathWoW.exe",
+                     "sha256":  "c5a6c152ff8455d060bf07bf7dc380b2ef3b6ed14b749804e4a8161e14dc2abd"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "5c791e13038943ec8bddc676fc02f05d4f4f2fe884512881202d3430e0b570e8",
-                      "size":  76358311,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02b/patch-enUS-Z.MPQ"
+                      "sha256":  "2e39dccf20ef7de7fe46b0d1122ad9b258df460183481c8ea7ab76bd5161ddb0",
+                      "size":  104445157,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "ec5879f4bfcdf3b2a5bfba4fb4719a772c511f3451b3c0e09c507de4f7abf61a",
+                      "sha256":  "94c00e71f64ba946270532799a52131aad0549525a7b48c016797e6df3a30c4b",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02b/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -89,6 +89,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.02c",
+                          "date":  "2026-10-02",
+                          "title":  "Retail parity: character creation",
+                          "notes":  [
+                                        "Retail parity: the character creation screen now matches modern retail - round race and class icons, gender buttons, a customise page with Head, Mirror and Accessories tabs, and the name box at the top",
+                                        "Races and classes that are not implemented on this realm are shown grayed out with a Not implemented tooltip",
+                                        "New: scroll the mouse wheel on the customise page to zoom in on your characters face (each race is framed individually)"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.02b",
                           "date":  "2026-10-02",
