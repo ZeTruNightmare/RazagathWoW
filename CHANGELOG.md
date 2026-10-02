@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.02b - Hotfix: mailbox art
+
+- Fixed the mailbox showing a tall spellbook scroll over the right side of the inbox - the retail spellbook art now uses its own files so the mail window gets its normal art back
+
 ## 2026.10.02 - Retail parity: Mounts and Pets window
 
 - Retail parity: new Mounts and Pets window (Collections Journal) with retail layout and art, 3D model preview with zoom and rotate, search, filter, favorites (right-click a mount), Mount/Dismount button and drag to action bars
