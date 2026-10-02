@@ -86,6 +86,22 @@ lives in `ExePatcher` in `RazagathLauncher.cs`), keeping the original as
 at an existing 3.3.5a client (e.g. the ChromieCraft client) for the patcher, or
 distribute a full bundle via torrent / your own mirror.
 
+## Automated builds
+
+Binaries are built by GitHub Actions on clean Windows runners straight from this
+repository's source:
+
+- **Build installer** (`.github/workflows/release-installer.yml`) - runs when a release is
+  published, compiles the launcher from `launcher/`, builds the installer with NSIS and
+  attaches it to the release as `RazagathWoW-Setup.exe`. It can be re-run manually from
+  the Actions tab.
+- **Build launcher** (`.github/workflows/build-launcher.yml`) - compiles the launcher on every
+  change to `launcher/` to prove the public source builds on its own.
+
+The large game-data archives (`patch-enUS-*.MPQ`) are generated from the server module and
+uploaded to the release by `tools/build-release.ps1`; the installer workflow downloads the
+patch archive from there.
+
 ## License
 
 The launcher, installer, release tooling and the `Razagath` add-on in this repo are
