@@ -33,6 +33,20 @@ function Find-Csc {
         $hit = Get-Item $c -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($hit) { return $hit.FullName }
     }
+    # any installed Visual Studio / Build Tools, any version (GitHub-hosted runners vary)
+    $globs = @(
+        "C:\Program Files\Microsoft Visual Studio\*\*\MSBuild\Current\Bin\Roslyn\csc.exe",
+        "C:\Program Files (x86)\Microsoft Visual Studio\*\*\MSBuild\Current\Bin\Roslyn\csc.exe"
+    )
+    foreach ($g in $globs) {
+        $hit = Get-Item $g -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | Select-Object -First 1
+        if ($hit) { return $hit.FullName }
+    }
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
+    if (Test-Path $vswhere) {
+        $found = & $vswhere -latest -products * -find "MSBuild\**\Bin\Roslyn\csc.exe" 2>$null | Select-Object -First 1
+        if ($found -and (Test-Path $found)) { return $found }
+    }
     throw "Roslyn csc.exe not found. Install Visual Studio 2022 (or Build Tools) with the .NET desktop workload."
 }
 
