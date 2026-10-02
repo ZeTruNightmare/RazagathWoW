@@ -85,3 +85,11 @@ lives in `ExePatcher` in `RazagathLauncher.cs`), keeping the original as
 **The base ~15 GB client** is Blizzard data and is not hosted here. Point players
 at an existing 3.3.5a client (e.g. the ChromieCraft client) for the patcher, or
 distribute a full bundle via torrent / your own mirror.
+
+## License
+
+The launcher, installer, release tooling and the `Razagath` add-on in this repo are
+released under the [MIT License](LICENSE). Third-party add-ons bundled under
+`overlay/Interface/AddOns/` (Bagnon, MogIt, WDM and their modules) keep their own
+original licenses. *World of Warcraft* is a trademark of Blizzard Entertainment;
+this project is not affiliated with Blizzard and distributes no Blizzard files.
