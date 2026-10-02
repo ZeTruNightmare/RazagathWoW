@@ -16,9 +16,21 @@ param(
 $ErrorActionPreference = "Stop"
 $Repo = Split-Path -Parent $PSScriptRoot
 
-Copy-Item "$Module\addon\SpellBladeUI\SpellBladeUI.lua" "$Repo\overlay\Interface\AddOns\SpellBladeUI\SpellBladeUI.lua" -Force
-Copy-Item "$Module\addon\SpellBladeUI\SpellBladeUI.toc" "$Repo\overlay\Interface\AddOns\SpellBladeUI\SpellBladeUI.toc" -Force
-Write-Host "synced SpellBladeUI"
+# Razagath - the single player-facing UI addon (SpellBlade class registration,
+# BigBags, Mounts & Pets window). It replaces the old SpellBladeUI,
+# RazagathBigBags and RazagathCompanions folders: those are removed from the
+# overlay here, and wiped from players' clients by build-release.ps1's legacy
+# member list. (MogIt_Razagath stays its own addon - it is a MogIt plugin.)
+$razSrc = "$Module\addon\Razagath"
+$razDst = "$Repo\overlay\Interface\AddOns\Razagath"
+if (-not (Test-Path $razSrc)) { throw "no Razagath addon in $Module" }
+foreach ($legacy in "SpellBladeUI","RazagathBigBags","RazagathCompanions") {
+    $p = "$Repo\overlay\Interface\AddOns\$legacy"
+    if (Test-Path $p) { Remove-Item $p -Recurse -Force }
+}
+if (Test-Path $razDst) { Remove-Item $razDst -Recurse -Force }
+Copy-Item $razSrc $razDst -Recurse -Force
+Write-Host ("synced Razagath  ({0} files)" -f (Get-ChildItem $razDst -Recurse -File).Count)
 
 # MogIt_Razagath - generated custom-item data module for the bundled MogIt.
 # (MogIt itself lives directly in overlay/, it is not built from the module.)
@@ -32,31 +44,13 @@ if (Test-Path $mogitSrc) {
     Write-Warning "no MogIt_Razagath in $Module - run client-patch/mk_mogit_razagath.pl first"
 }
 
-# RazagathMounts - WotLK-native modern-styled mount browser (own addon, not
-# an MPQ override - see the module's mk_mount_data.pl for the data source).
-$mountsSrc = "$Module\addon\RazagathMounts"
-$mountsDst = "$Repo\overlay\Interface\AddOns\RazagathMounts"
-if (Test-Path $mountsSrc) {
-    if (Test-Path $mountsDst) { Remove-Item $mountsDst -Recurse -Force }
-    Copy-Item $mountsSrc $mountsDst -Recurse -Force
-    Write-Host ("synced RazagathMounts  ({0} files)" -f (Get-ChildItem $mountsDst -File).Count)
-} else {
-    Write-Warning "no RazagathMounts in $Module - run client-patch/mk_mount_data.pl first"
-}
 
-# RazagathBigBags - raises the client's hardcoded 36-slot bag display cap so
-# bigger custom bags render/function correctly, without touching FrameXML
-# (see the addon's own header comment for why - this client's anti-tamper
-# check aborts on any FrameXML/GlueXML override).
-$bagsSrc = "$Module\addon\RazagathBigBags"
-$bagsDst = "$Repo\overlay\Interface\AddOns\RazagathBigBags"
-if (Test-Path $bagsSrc) {
-    if (Test-Path $bagsDst) { Remove-Item $bagsDst -Recurse -Force }
-    Copy-Item $bagsSrc $bagsDst -Recurse -Force
-    Write-Host ("synced RazagathBigBags  ({0} files)" -f (Get-ChildItem $bagsDst -File).Count)
-} else {
-    Write-Warning "no RazagathBigBags in $Module"
-}
+# RazagathGMTools is DELIBERATELY NOT synced here - it's a personal GM dev-
+# test tool (quick commands / NPC browser / item spawner) that must never
+# reach players, even though the server-side handshake alone would make it
+# harmless for a non-GM. Source lives at $Module\addon\RazagathGMTools and
+# is deployed by hand straight into the dev client's own Interface\AddOns\ -
+# never add a sync block for it here.
 
 if (Test-Path "$Module\patch-enUS-Z.MPQ") {
     Copy-Item "$Module\patch-enUS-Z.MPQ" "$Repo\patch\patch-enUS-Z.MPQ" -Force

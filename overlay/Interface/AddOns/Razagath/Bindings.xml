@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="RAZAGATHCOMPANIONS_TOGGLE" header="RAZAGATHCOMPANIONS">
+		RazagathCompanions_Toggle();
+	</Binding>
+</Bindings>

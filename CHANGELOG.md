@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.02 - Retail parity: Mounts and Pets window
+
+- Retail parity: new Mounts and Pets window (Collections Journal) with retail layout and art, 3D model preview with zoom and rotate, search, filter, favorites (right-click a mount), Mount/Dismount button and drag to action bars
+- Retail parity: open it from the new micro menu button at the bottom right of the screen, the N key, or /mounts and /pets - the old Pets tab on the Character panel is hidden
+- Change: Spell Blade UI, big bag support and the new window are now one Razagath addon - the old addon folders are removed automatically on update
+
 ## 2026.09.30b - Fix Spellblade grimoire icons
 
 - Fixed Journeyman and Master Spellblades Grimoire showing a broken/question-mark icon (custom icon records were dropped from a prior client patch pass)

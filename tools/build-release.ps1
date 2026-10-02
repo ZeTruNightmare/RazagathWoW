@@ -83,6 +83,12 @@ foreach ($f in @($mapM, $mapN)) {
 $addonsRoot = "$RepoDir\overlay\Interface\AddOns"
 $members = @(Get-ChildItem $addonsRoot -Directory | ForEach-Object { "Interface/AddOns/$($_.Name)" })
 if (-not $members) { throw "no add-on folders under $addonsRoot" }
+# Folders that earlier releases shipped but that were merged into "Razagath".
+# Listing them as members makes the launcher wipe them from players' clients on
+# update (they are not in the zip, so nothing is re-extracted) - otherwise the old
+# SpellBladeUI/BigBags/Companions would load alongside the merged addon.
+$legacyMembers = @("Interface/AddOns/SpellBladeUI","Interface/AddOns/RazagathBigBags","Interface/AddOns/RazagathCompanions")
+$members = @($members + ($legacyMembers | Where-Object { $members -notcontains $_ }))
 $zip = "$RepoDir\dist\RazagathAddons.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path "$RepoDir\overlay\Interface" -DestinationPath $zip -CompressionLevel Optimal

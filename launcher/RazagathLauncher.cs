@@ -613,6 +613,8 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.6", "2026-09-29", "Fixed the footer layout on a resized window - the progress bar no longer stretches over the Play button." },
+            new[] { "1.6.5", "2026-09-29", "The window can now be resized (and maximized) - the play button, status bar and progress bar all track the new width instead of staying pinned to their original spot." },
             new[] { "1.6.4", "2026-09-09", "The game client can now use up to 4 GB of memory instead of 2 GB - fixes the out-of-memory crashes in Dalaran with the HD graphics patches. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.3", "2026-09-07", "Bigger window; the Play tab now shows the latest client patch and the latest launcher change side by side." },
             new[] { "1.6.2", "2026-09-07", "Settings tab now scrolls cleanly - no more render smearing or dead space." },
@@ -647,9 +649,10 @@ namespace RazagathWoW
 
             Text = "RazagathWoW";
             StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.Sizable;
+            MaximizeBox = true;
             ClientSize = new Size(WinWidth, WinHeight);
+            MinimumSize = new Size(WinWidth, WinHeight) + (Size - ClientSize);
             BackColor = Color.FromArgb(24, 20, 32);
             Font = new Font("Segoe UI", 9f);
             try { this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location); } catch { }
@@ -715,26 +718,6 @@ namespace RazagathWoW
             const int FooterH = 116;
             _footer = new TexturePanel { Dock = DockStyle.Bottom, Height = FooterH, Texture = panelTex };
             var footer = _footer;
-            _statusLabel.Text = "Starting...";
-            _statusLabel.ForeColor = Color.Gainsboro;
-            _statusLabel.BackColor = Color.Transparent;
-            _statusLabel.AutoSize = false;
-            _statusLabel.Location = new Point(26, 32);
-            _statusLabel.Size = new Size(WinWidth - 26 - 288 - 40, 20);
-            _progress.Location = new Point(26, 58);
-            _progress.Size = new Size(WinWidth - 26 - 288 - 40, 20);
-            _progress.Style = ProgressBarStyle.Continuous;
-            TintProgressBar(_progress, HeadColor, Color.FromArgb(24, 20, 16));
-
-            _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
-            _playButton.Size = new Size(288, 108);
-            _playButton.Location = new Point(WinWidth - 14 - 288, (FooterH - 108) / 2);
-            _playButton.Enabled = false;
-            _playButton.Click += async (s, e) => await OnPlayClicked();
-
-            footer.Controls.Add(_statusLabel);
-            footer.Controls.Add(_progress);
-            footer.Controls.Add(_playButton);
 
             var tabStrip = new TabStrip(_tabs, "Play", "Realms", "Changelog", "Launcher", "Settings") { Dock = DockStyle.Top, Texture = panelTex };
 
@@ -744,6 +727,39 @@ namespace RazagathWoW
             Controls.Add(footer);
             Controls.Add(tabStrip);
             Controls.Add(header);
+
+            // footer must already be parented (and therefore Dock-resolved to its
+            // real, full-width bounds) BEFORE its own anchored children are added -
+            // an anchor's "distance from the right/bottom edge" baseline is captured
+            // against the PARENT's bounds at add-time, and an unparented TexturePanel
+            // still has WinForms' ~100x100 default Control size. Adding these three
+            // any earlier silently anchors them against that wrong 100px-wide
+            // baseline instead of the real ~880px-wide footer, which is what made the
+            // play button fly off past the right edge (and the progress bar stretch
+            // to fill the gap) the first time this shipped.
+            _statusLabel.Text = "Starting...";
+            _statusLabel.ForeColor = Color.Gainsboro;
+            _statusLabel.BackColor = Color.Transparent;
+            _statusLabel.AutoSize = false;
+            _statusLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _statusLabel.Location = new Point(26, 32);
+            _statusLabel.Size = new Size(WinWidth - 26 - 288 - 40, 20);
+            _progress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _progress.Location = new Point(26, 58);
+            _progress.Size = new Size(WinWidth - 26 - 288 - 40, 20);
+            _progress.Style = ProgressBarStyle.Continuous;
+            TintProgressBar(_progress, HeadColor, Color.FromArgb(24, 20, 16));
+
+            _playButton.NormalImage = LoadEmbedded("RazagathWoW.play-button.png");
+            _playButton.Size = new Size(288, 108);
+            _playButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            _playButton.Location = new Point(WinWidth - 14 - 288, (FooterH - 108) / 2);
+            _playButton.Enabled = false;
+            _playButton.Click += async (s, e) => await OnPlayClicked();
+
+            footer.Controls.Add(_statusLabel);
+            footer.Controls.Add(_progress);
+            footer.Controls.Add(_playButton);
         }
 
         // ---- themed control factories, matching the Play / Changelog tabs --

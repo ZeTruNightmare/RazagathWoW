@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: Razagath
+## Notes: The Razagath server UI pack - Spell Blade class registration (+LFG/Questie compat), big-bag support (50-slot Trunk), and the retail-style Mounts & Pets window.
+## Author: Razagath
+## Version: 2.0.0
+## OptionalDeps: Questie-335
+## X-Realm: dev
+## SavedVariables: RazagathCompanionsDB
+
+SpellBlade\SpellBladeUI.lua
+BigBags\RazagathBigBags.lua
+Companions\Atlas_Data.lua
+Companions\RazagathCompanions.lua

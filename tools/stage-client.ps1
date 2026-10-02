@@ -7,7 +7,7 @@
       - Wow.exe  (clean from -Source, then patched in place; Wow.exe.orig kept)
       - RazagathWoW.exe launcher + launcher.cfg
       - Data/enUS/patch-enUS-Z.MPQ
-      - Interface/AddOns/SpellBladeUI/*
+      - Interface/AddOns/Razagath/*
       - WTF/Config.wtf  (windowed by default)   +   realmlist.wtf
     and NOT: account data, cache, logs, screenshots, other addons.
 
@@ -61,7 +61,7 @@ New-Item -ItemType Directory -Force -Path "$stage\Data\enUS","$stage\WTF","$stag
 Copy-Item $launcher "$stage\RazagathWoW.exe" -Force
 Set-Content "$stage\launcher.cfg" -Value ('{ "manifestUrl": "' + $ManifestUrl + '" }') -Encoding UTF8
 Copy-Item $mpq "$stage\Data\enUS\patch-enUS-Z.MPQ" -Force
-Copy-Item "$RepoDir\overlay\Interface\AddOns\SpellBladeUI" "$stage\Interface\AddOns\" -Recurse -Force
+Copy-Item "$RepoDir\overlay\Interface\AddOns\Razagath" "$stage\Interface\AddOns\" -Recurse -Force
 Copy-Item "$RepoDir\overlay\WTF\Config.wtf"  "$stage\WTF\Config.wtf" -Force
 Copy-Item "$RepoDir\overlay\realmlist.wtf"   "$stage\realmlist.wtf" -Force
 Copy-Item "$RepoDir\overlay\realmlist.wtf"   "$stage\Data\enUS\realmlist.wtf" -Force

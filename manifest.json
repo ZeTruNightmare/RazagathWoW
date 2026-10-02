@@ -1,37 +1,37 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.09.30b",
+    "clientVersion":  "2026.10.02",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/RazagathWoW.exe",
-                     "sha256":  "6e28b4527388b4eb4fc53190d28d8e474958442120aaaa5ae36b3c4523d52d4f"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02/RazagathWoW.exe",
+                     "sha256":  "f0801dd29370785d85e03e7e65acebc8d59db68946bd8e6fad31943e63415725"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "5511667f18b44336b5e057da47f9ed122d4c24ade9e29d8edc7c2aab9f89f429",
-                      "size":  64721229,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-Z.MPQ"
+                      "sha256":  "04e8da079819a6271aa98f58975ab3e26d757a0f06762d2691409ae24540f2cc",
+                      "size":  76359366,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "b04226ed60e3944a41cde7a7820a66aeca183348f04cd9aa97c197623f56a1d0",
-                      "size":  3072788,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.09.30b/RazagathAddons.zip",
+                      "sha256":  "ccd6b81a25b1f8494379329d5771aa4804077ab24e948f78012661f0bbad54b0",
+                      "size":  3822316,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -50,9 +50,11 @@
                                       "Interface/AddOns/MogIt_Ranged",
                                       "Interface/AddOns/MogIt_Razagath",
                                       "Interface/AddOns/MogIt_TwoHanded",
-                                      "Interface/AddOns/RazagathBigBags",
+                                      "Interface/AddOns/Razagath",
+                                      "Interface/AddOns/WDM",
                                       "Interface/AddOns/SpellBladeUI",
-                                      "Interface/AddOns/WDM"
+                                      "Interface/AddOns/RazagathBigBags",
+                                      "Interface/AddOns/RazagathCompanions"
                                   ]
                   },
                   {
@@ -87,6 +89,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.02",
+                          "date":  "2026-10-02",
+                          "title":  "Retail parity: Mounts and Pets window",
+                          "notes":  [
+                                        "Retail parity: new Mounts and Pets window (Collections Journal) with retail layout and art, 3D model preview with zoom and rotate, search, filter, favorites (right-click a mount), Mount/Dismount button and drag to action bars",
+                                        "Retail parity: open it from the new micro menu button at the bottom right of the screen, the N key, or /mounts and /pets - the old Pets tab on the Character panel is hidden",
+                                        "Change: Spell Blade UI, big bag support and the new window are now one Razagath addon - the old addon folders are removed automatically on update"
+                                    ]
+                      },
                       {
                           "version":  "2026.09.30b",
                           "date":  "2026-09-30",
