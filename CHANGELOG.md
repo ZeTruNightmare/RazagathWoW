@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.03d - Launcher 1.6.9 and smaller installer
+
+- Launcher 1.6.9: safer self-update, a much smaller installer, and clearer download-safety help on the release page (aimed at fewer antivirus false alarms)
+
 ## 2026.10.03c - Spell Blade weapon enchants and talents
 
 - New Spell Blade weapon enchants, learned from the trainer at level 20 - Stormblade Weapon (Blade): your melee attacks can unleash Chain Lightning on up to 3 enemies
