@@ -5,6 +5,16 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.03c - Spell Blade weapon enchants and talents
+
+- New Spell Blade weapon enchants, learned from the trainer at level 20 - Stormblade Weapon (Blade): your melee attacks can unleash Chain Lightning on up to 3 enemies
+- Arcane Edge Weapon (Arcane): Arcane Ignition strikes up to 3 enemies at once
+- Radiant Weapon (Holy): your Holy heals also heal nearby injured allies for 50% of the amount
+- Only one weapon enchant can be active at a time
+- Three new Spell Blade talents that strengthen the enchants - Thunder Edge (Blade), Arcane Overflow (Arcane) and Overflowing Light (Holy)
+- Fixed Arcane Haste and Arcane Brilliance removing each other
+- Fixed Spell Blade Holy talents (Gentle Hands, Restorative Light, Lightweaver and Holy Restore spirit bonus) only working when healing yourself
+
 ## 2026.10.03b - Race limit, Goblin gear fix, racial action bars
 
 - Raised the playable race limit so more races can be added in future - launcher 1.6.8 re-patches Wow.exe, run the launcher once before playing

@@ -1,43 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.03b",
+    "clientVersion":  "2026.10.03c",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.8",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/RazagathWoW.exe",
-                     "sha256":  "c1d0534598eec9b51c5056a9279a3653d07aaff69f757af0b480543c313dad41"
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/RazagathWoW.exe",
+                     "sha256":  "39b2c974a349bb55f4dfc8cb4acbe80f6c66a36e33a868124dd2dfd5568622d9"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "0ff8850df78313c43d6067ca88a8b68ce536a931e78f0b511f219571578b7ed5",
-                      "size":  79511267,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-Z.MPQ"
+                      "sha256":  "3c11dab363bbd9239cd508a25c3482356f66cc137bdd7be077a0cf73a54d5db2",
+                      "size":  79516035,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
                       "sha256":  "6a47d2209f9edb6717feabd26821fd1db5df5457f36bce2fd73c2b8e83f9a318",
                       "size":  488922,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/Patch-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "0d6efde2c12f6afbed42f0d78258951fb2cf7dd27fd112b816b5aeb4534c631e",
+                      "sha256":  "53715cde62234af4b864173f273903fc8609b1ac55c174bba036cebc9a9b792f",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03c/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -95,6 +95,20 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.03c",
+                          "date":  "2026-10-03",
+                          "title":  "Spell Blade weapon enchants and talents",
+                          "notes":  [
+                                        "New Spell Blade weapon enchants, learned from the trainer at level 20 - Stormblade Weapon (Blade): your melee attacks can unleash Chain Lightning on up to 3 enemies",
+                                        "Arcane Edge Weapon (Arcane): Arcane Ignition strikes up to 3 enemies at once",
+                                        "Radiant Weapon (Holy): your Holy heals also heal nearby injured allies for 50% of the amount",
+                                        "Only one weapon enchant can be active at a time",
+                                        "Three new Spell Blade talents that strengthen the enchants - Thunder Edge (Blade), Arcane Overflow (Arcane) and Overflowing Light (Holy)",
+                                        "Fixed Arcane Haste and Arcane Brilliance removing each other",
+                                        "Fixed Spell Blade Holy talents (Gentle Hands, Restorative Light, Lightweaver and Holy Restore spirit bonus) only working when healing yourself"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.03b",
                           "date":  "2026-10-03",
