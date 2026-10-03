@@ -5,9 +5,10 @@
 ;   1. Patch an existing WoW 3.3.5a (build 12340) client  (e.g. ChromieCraft)
 ;   2. Download the full RazagathWoW client (~15 GB) and install it here
 ;
-; Both end with: patched Wow.exe (+ Wow.exe.orig backup), patch-enUS-Z.MPQ,
-; the SpellBladeUI addon, realmlist.wtf, windowed-by-default config, the
-; self-updating RazagathWoW.exe launcher, and shortcuts.
+; Both end with: patched Wow.exe (+ Wow.exe.orig backup), realmlist.wtf,
+; windowed-by-default config, the self-updating RazagathWoW.exe launcher, and
+; shortcuts. The patch archives and add-ons are downloaded by the launcher on
+; its first start (they are not bundled, so the installer rarely changes).
 ;
 ; No Blizzard binary is bundled. Mode 1 patches the player's own Wow.exe in
 ; place. Mode 2 downloads a pre-staged bundle whose Wow.exe was produced the
@@ -195,11 +196,11 @@ Section "RazagathWoW" SecMain
   FileWrite $0 '{ "manifestUrl": "${MANIFEST_URL}" }'
   FileClose $0
 
+  ; The patch archives and add-ons are NOT bundled any more: the launcher downloads every file in manifest.json (patch-enUS-Z,
+  ; Patch-Z, the add-on bundle, ...) on its first start. Keeping them out makes this installer small and - more importantly -
+  ; byte-identical from release to release unless the launcher itself changes, so antivirus / SmartScreen reputation and any
+  ; false-positive allow-listing stick to ONE file instead of resetting with every client patch.
   SetOutPath "$INSTDIR\Data\enUS"
-  DetailPrint "Installing patch-enUS-Z.MPQ"
-  File "..\patch\patch-enUS-Z.MPQ"
-  SetOutPath "$INSTDIR\Interface\AddOns\Razagath"
-  File /r "..\overlay\Interface\AddOns\Razagath\*.*"
 
   IfFileExists "$INSTDIR\WTF\Config.wtf" +3 0
     SetOutPath "$INSTDIR\WTF"

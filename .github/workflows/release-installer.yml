@@ -61,20 +61,9 @@ jobs:
           choco install nsis -y --no-progress
           if (-not (Test-Path 'C:\Program Files (x86)\NSIS\makensis.exe')) { throw 'makensis not found after install' }
 
-      # The 76 MB patch archive is built from the server module on the maintainer's PC and is
-      # not in git; it is uploaded to the release first, so fetch it from there.
-      - name: Download the patch archive from the release
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force patch | Out-Null
-          for ($i = 0; $i -lt 20; $i++) {
-            gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern 'patch-enUS-Z.MPQ' --dir patch --clobber
-            if ($LASTEXITCODE -eq 0 -and (Test-Path patch/patch-enUS-Z.MPQ)) { break }
-            Write-Host 'asset not available yet, retrying ...'
-            Start-Sleep -Seconds 15
-          }
-          if (-not (Test-Path patch/patch-enUS-Z.MPQ)) { throw 'patch-enUS-Z.MPQ not found on the release' }
-          Get-Item patch/patch-enUS-Z.MPQ | ForEach-Object { '{0}  {1:N0} bytes' -f $_.Name, $_.Length }
+      # The patch archives are no longer bundled into the installer (the launcher downloads them from manifest.json on its
+      # first start), so there is nothing to fetch from the release here any more. That keeps the installer small and
+      # identical between releases unless the launcher changes - good for antivirus / SmartScreen reputation.
 
       # build-installer.ps1 fetches 7zr + NScurl, compiles the launcher from source
       # (launcher/build.ps1, Roslyn csc on the runner) and runs makensis.
@@ -96,6 +85,28 @@ jobs:
           gh release upload $env:TAG dist/RazagathWoW-Setup.exe --repo $env:GITHUB_REPOSITORY --clobber
           if ($LASTEXITCODE) { throw 'upload failed' }
           Get-Item dist/RazagathWoW-Setup.exe | ForEach-Object { 'uploaded {0}  {1:N1} MB' -f $_.Name, ($_.Length / 1MB) }
+
+      # Put the installer's SHA-256 and the "if Windows warns you" help on the release page (idempotent: the block after the
+      # marker is replaced on a re-run).
+      - name: Add the installer hash and download-safety notes to the release page
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash dist/RazagathWoW-Setup.exe -Algorithm SHA256).Hash.ToLower()
+          $body = gh release view $env:TAG --repo $env:GITHUB_REPOSITORY --json body --jq .body
+          $marker = '<!-- download-safety -->'
+          if ($body -and $body.Contains($marker)) { $body = $body.Substring(0, $body.IndexOf($marker)).TrimEnd() }
+          $footer = @'
+          <!-- download-safety -->
+          ---
+          ### Downloading safely
+          - **Installer:** `RazagathWoW-Setup.exe`, SHA-256 `@@HASH@@`. It is built automatically by GitHub Actions from the public source code in this repository (see the Actions tab); nothing is built on a private machine.
+          - **If Windows warns you:** the installer is not code-signed yet, so Windows SmartScreen or your antivirus may warn about a new open-source launcher. On the blue "Windows protected your PC" screen click **More info**, then **Run anyway**. Or right-click the downloaded file, choose **Properties**, tick **Unblock**, then OK.
+          - **Check it yourself:** in PowerShell run `Get-FileHash .\RazagathWoW-Setup.exe` and compare it with the hash above. Antivirus engines sometimes give unsigned launchers a generic "machine learning" detection; these are not detections of any specific malware.
+          '@
+          $footer = $footer.Replace('@@HASH@@', $hash)
+          Set-Content -Path release_notes.md -Value ($body + "`n`n" + $footer) -Encoding utf8
+          gh release edit $env:TAG --repo $env:GITHUB_REPOSITORY --notes-file release_notes.md
+          if ($LASTEXITCODE) { throw 'could not update the release notes' }
 
       - uses: actions/upload-artifact@v4
         with:

@@ -12,7 +12,28 @@ files from the latest GitHub Release, shows the changelog, and starts the game.
 **[RazagathWoW-Setup.exe](https://github.com/ZeTruNightmare/RazagathWoW/releases/latest/download/RazagathWoW-Setup.exe)**
 - always the newest installer (every release carries it under this fixed name).
 Run it, point it at an existing 3.3.5a folder to patch it, or let it download the
-full client. After that the launcher keeps everything up to date automatically.
+full client. After that the launcher keeps everything up to date automatically
+(the first start downloads the patch files).
+
+### If Windows or your antivirus warns you
+
+The installer and launcher are **not code-signed yet**, which is normal for a new
+open-source project, so Windows SmartScreen or an antivirus may warn about them.
+
+- **Blue "Windows protected your PC" screen:** click **More info**, then **Run anyway**.
+  Or right-click the downloaded file → **Properties** → tick **Unblock** → OK, then run it.
+- **Antivirus "machine learning" / "Trojan:Win32/Wacatac.C!ml" style detections:** these
+  are generic guesses, not detections of any specific malware. Every release's installer
+  is built automatically by [GitHub Actions](../../actions) from the source in this
+  repository, and its SHA-256 is printed on the release page so you can check it with
+  PowerShell: `Get-FileHash .\RazagathWoW-Setup.exe`.
+- If your antivirus quarantines the file, add the game folder to its exclusions and
+  re-run the installer. The launcher only talks to this repository's releases and the
+  realm server, and only changes the game's own `Wow.exe` (a backup is kept as
+  `Wow.exe.orig`).
+- Auto sign-in (Settings tab) is **off by default**. When switched on it stores your
+  password encrypted with Windows' per-user protection and types it into the WoW login
+  screen; leave it off if you'd rather not use it.
 
 ## Repo layout
 

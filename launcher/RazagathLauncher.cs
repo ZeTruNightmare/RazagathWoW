@@ -66,6 +66,7 @@ namespace RazagathWoW
             ServicePointManager.SecurityProtocol =
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             ServicePointManager.DefaultConnectionLimit = 8;
+            MainForm.CleanupOldLauncher();
             Application.Run(new MainForm());
         }
     }
@@ -640,6 +641,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.9", "2026-10-03", "Safer launcher self-update: it now swaps its own file in place instead of writing a temporary script, which antivirus programs dislike. Nothing changes for you." },
             new[] { "1.6.8", "2026-10-03", "Wow.exe patch raises the playable-race limit to 31 so more races can be added. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.7", "2026-10-03", "Wow.exe patch for the new playable races (Goblin and Worgen) - the character screen no longer crashes with more than 10 races. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.6", "2026-09-29", "Fixed the footer layout on a resized window - the progress bar no longer stretches over the Play button." },
@@ -1204,26 +1206,48 @@ namespace RazagathWoW
             return Path.Combine(_root, name);
         }
 
-        // ---- self update: write new exe beside, swap via cmd on exit --------
+        // ---- self update: park the running exe as .old, put the new one in its place ----
+        // Windows won't let a running exe be overwritten or deleted, but it CAN be renamed. So: download the new exe beside it,
+        // verify its checksum, rename the running file to <exe>.old, move the new file into the original name and start it.
+        // The new instance removes the leftover .old (see CleanupOldLauncher). No script is written to disk - an earlier version
+        // dropped a hidden .bat in %TEMP%, which is exactly what antivirus heuristics flag as dropper behaviour.
         private async Task SelfUpdate(LauncherInfo li)
         {
             var me = Assembly.GetExecutingAssembly().Location;
             var stage = me + ".new";
+            var old = me + ".old";
             await Task.Run(() => Download(li.url, stage, (c, l) => SetProgress(l > 0 ? (int)(c * 100 / l) : 0)));
             if (!string.IsNullOrEmpty(li.sha256) && !HashEquals(stage, li.sha256))
             {
                 File.Delete(stage);
                 throw new Exception("launcher checksum mismatch");
             }
-            var bat = Path.Combine(Path.GetTempPath(), "razagath_selfupdate.bat");
-            File.WriteAllText(bat,
-                "@echo off\r\n" +
-                "ping 127.0.0.1 -n 2 >nul\r\n" +
-                "move /y \"" + stage + "\" \"" + me + "\" >nul\r\n" +
-                "start \"\" \"" + me + "\"\r\n" +
-                "del \"%~f0\"\r\n");
-            Process.Start(new ProcessStartInfo { FileName = bat, WindowStyle = ProcessWindowStyle.Hidden, UseShellExecute = true });
+            try { if (File.Exists(old)) File.Delete(old); } catch { }
+            File.Move(me, old);                                   // allowed while running
+            try { File.Move(stage, me); }
+            catch { try { File.Move(old, me); } catch { } throw; } // roll back so the launcher is never left missing
+            Process.Start(new ProcessStartInfo { FileName = me, WorkingDirectory = Path.GetDirectoryName(me), UseShellExecute = false });
             Application.Exit();
+        }
+
+        // Remove the previous launcher left behind by SelfUpdate. The old process may still be shutting down, so retry for a while.
+        internal static void CleanupOldLauncher()
+        {
+            var me = Assembly.GetExecutingAssembly().Location;
+            Task.Run(async () =>
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    try
+                    {
+                        if (File.Exists(me + ".old")) File.Delete(me + ".old");
+                        if (File.Exists(me + ".new")) File.Delete(me + ".new");
+                        if (!File.Exists(me + ".old") && !File.Exists(me + ".new")) return;
+                    }
+                    catch { }
+                    await Task.Delay(2000);
+                }
+            });
         }
 
         // ------------------------------------------------------- rendering --
