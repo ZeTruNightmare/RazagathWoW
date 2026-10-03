@@ -1,37 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.02c",
+    "clientVersion":  "2026.10.03",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.6.6",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/RazagathWoW.exe",
-                     "sha256":  "c5a6c152ff8455d060bf07bf7dc380b2ef3b6ed14b749804e4a8161e14dc2abd"
+                     "version":  "1.6.7",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/RazagathWoW.exe",
+                     "sha256":  "28f0e11f25cb059cf62555f66acb382535f24e7ac9aca01fe90cc15dedeb5113"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "2e39dccf20ef7de7fe46b0d1122ad9b258df460183481c8ea7ab76bd5161ddb0",
-                      "size":  104445157,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-Z.MPQ"
+                      "sha256":  "0ff8850df78313c43d6067ca88a8b68ce536a931e78f0b511f219571578b7ed5",
+                      "size":  79511267,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-Z.MPQ"
+                  },
+                  {
+                      "path":  "Data/Patch-Z.MPQ",
+                      "sha256":  "6a47d2209f9edb6717feabd26821fd1db5df5457f36bce2fd73c2b8e83f9a318",
+                      "size":  488922,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "94c00e71f64ba946270532799a52131aad0549525a7b48c016797e6df3a30c4b",
+                      "sha256":  "b8feb5c796c1c0ffdea6f18053a4fb04cf7e4a49a1b8a350ed99126289d55c49",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.02c/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -89,6 +95,18 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.03",
+                          "date":  "2026-10-03",
+                          "title":  "Goblins and Worgen",
+                          "notes":  [
+                                        "New playable race: Goblin (Horde) - Rocket Barrage, Rocket Jump, Time is Money, Best Deals Anywhere, Better Living Through Chemistry and Pack Hobgoblin racials, with retail voices, names and customisation",
+                                        "New playable race: Worgen (Alliance, worgen form) - Viciousness, Aberration, Flayer, Darkflight and Running Wild racials, with retail names and customisation",
+                                        "Every Horde race is now friendly with every Horde starting zone and every Alliance race with every Alliance starting zone, and racial starter quests are open to all races of your faction - level wherever you like",
+                                        "Launcher 1.6.7 re-patches Wow.exe for the extra races - run the launcher once before playing",
+                                        "Not yet available: the Worgen human form (Two Forms)"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.02c",
                           "date":  "2026-10-02",

@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.03 - Goblins and Worgen
+
+- New playable race: Goblin (Horde) - Rocket Barrage, Rocket Jump, Time is Money, Best Deals Anywhere, Better Living Through Chemistry and Pack Hobgoblin racials, with retail voices, names and customisation
+- New playable race: Worgen (Alliance, worgen form) - Viciousness, Aberration, Flayer, Darkflight and Running Wild racials, with retail names and customisation
+- Every Horde race is now friendly with every Horde starting zone and every Alliance race with every Alliance starting zone, and racial starter quests are open to all races of your faction - level wherever you like
+- Launcher 1.6.7 re-patches Wow.exe for the extra races - run the launcher once before playing
+- Not yet available: the Worgen human form (Two Forms)
+
 ## 2026.10.02c - Retail parity: character creation
 
 - Retail parity: the character creation screen now matches modern retail - round race and class icons, gender buttons, a customise page with Head, Mirror and Accessories tabs, and the name box at the top
