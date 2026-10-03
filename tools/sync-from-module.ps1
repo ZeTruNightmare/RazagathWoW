@@ -59,3 +59,12 @@ if (Test-Path "$Module\patch-enUS-Z.MPQ") {
 } else {
     Write-Warning "no patch-enUS-Z.MPQ in $Module - run the module's build_final.pl first"
 }
+
+# Root-level Data\Patch-Z.MPQ (CharSections / CreatureModelData / EmotesTextSound ... that the stock root Patch-F/G/H would otherwise override)
+if (Test-Path "$Module\.build\Patch-Z.MPQ") {
+    Copy-Item "$Module\.build\Patch-Z.MPQ" "$Repo\patch\Patch-Z.MPQ" -Force
+    $m = Get-Item "$Repo\patch\Patch-Z.MPQ"
+    Write-Host ("synced Patch-Z.MPQ  ({0:N0} bytes)" -f $m.Length)
+} else {
+    Write-Warning "no .build\Patch-Z.MPQ in $Module - run the module's build_mpq.pl first"
+}

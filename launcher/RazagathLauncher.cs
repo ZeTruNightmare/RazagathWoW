@@ -127,7 +127,7 @@ namespace RazagathWoW
     internal static class ExePatcher
     {
         public const string CleanSha256   = "aa63a5750d60ef16746c686b3d5e26876d98953eab08b1c026cd0faf78e88cb8";
-        public const string PatchedSha256 = "81010facf1f1940d92b7367d6b3b6861d772166bd3bfad58af1e7d3ae76b510e";
+        public const string PatchedSha256 = "655414533ea90d58c381c0ed0c4603f0e24a6dc7b18d9e8c8702f2f9a9a86f9f";
         public const long   ExpectedSize  = 7704216;
 
         private sealed class Poke
@@ -147,6 +147,31 @@ namespace RazagathWoW
             // (0x0020) so the 32-bit client can use up to 4 GB instead of 2 GB. Fixes the
             // "M2Shared.cpp - not enough memory" OOM crashes in Dalaran with the HD patches.
             new Poke(0x000126, "0301",           "2301"),
+            // More than 10 playable races (up to 31). The character-create "pick a random starting race" function
+            // (VA 0x4E0F50) collects the playable race ids into a 10-slot stack array: enlarge it to 31 slots
+            // (sub esp,0x28 -> 0x7C and the three [ebp+esi*4-0x28] accesses -> -0x7C) or the 11th race overflows into the saved EBP.
+            new Poke(0x0E0355, "28",             "7C"),             // VA 0x4E0F55  sub esp, 0x28 -> 0x7C
+            new Poke(0x0E038E, "D8",             "84"),             // VA 0x4E0F8E  [ebp+esi*4-0x28] -> -0x7C
+            new Poke(0x0E03A3, "D8",             "84"),             // VA 0x4E0FA3
+            new Poke(0x0E03C3, "D8",             "84"),             // VA 0x4E0FC3
+            // The per-(race,sex) static table at VA 0xB6B0D0 only had room for race ids 0..21 (44 dwords). Move it to the
+            // zero-filled tail of .data (VA 0xDD0600, 0x200 bytes = ids 0..63): the 8 code references, its memset size
+            // (VA 0x4E1C34) and the free-loop outer count (VA 0x4E1E9B).
+            new Poke(0x0E097D, "D0B0B600",       "0006DD00"),       // VA 0x4E157D
+            new Poke(0x0E09B5, "D0B0B600",       "0006DD00"),       // VA 0x4E15B5
+            new Poke(0x0E0AA3, "D0B0B600",       "0006DD00"),       // VA 0x4E16A3
+            new Poke(0x0E103A, "D0B0B600",       "0006DD00"),       // VA 0x4E1C3A
+            new Poke(0x0E1294, "D0B0B600",       "0006DD00"),       // VA 0x4E1E94
+            new Poke(0x0E14EE, "D0B0B600",       "0006DD00"),       // VA 0x4E20EE
+            new Poke(0x0E1527, "D0B0B600",       "0006DD00"),       // VA 0x4E2127
+            new Poke(0x0E162A, "D0B0B600",       "0006DD00"),       // VA 0x4E222A
+            new Poke(0x0E1034, "B0000000",       "00020000"),       // VA 0x4E1C34  memset size 0xB0 -> 0x200
+            new Poke(0x0E129B, "16000000",       "40000000"),       // VA 0x4E1E9B  free-loop count 22 -> 64
+            // Character texture compositor (VA 0x4F0864 / 0x4F0940): the loop that right-shifts a texture's width until it matches
+            // its body region spins forever when the texture is NARROWER than the region (MoP hair/scalp textures are 128 wide);
+            // turn the "jne" back-edge into "jg" so it exits instead.
+            new Poke(0x0EFC6B, "75",             "7F"),             // VA 0x4F086B
+            new Poke(0x0EFD47, "75",             "7F"),             // VA 0x4F0947
         };
 
         public enum Status { AlreadyPatched, Patched, UnknownExe, NotFound, Failed }
@@ -163,6 +188,8 @@ namespace RazagathWoW
         private static readonly HashSet<string> PriorPatchedSha256 = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "0c540dd96d7dc749501fcb7db2de4285db8662ec035b31aabbc6e53a5dee47fa", // 5 pokes (<= launcher 1.6.3)
+            "81010facf1f1940d92b7367d6b3b6861d772166bd3bfad58af1e7d3ae76b510e", // 6 pokes (launcher 1.6.4 - 1.6.6)
+            "3256f11b9c264abbc1a9dfd37b99889256dc7dd14fba314eec2b22650fb35f64", // 12-race set (launcher 1.6.7)
         };
 
         public static Outcome Ensure(string exePath)
@@ -613,6 +640,8 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.8", "2026-10-03", "Wow.exe patch raises the playable-race limit to 31 so more races can be added. Re-run the launcher once to re-patch Wow.exe." },
+            new[] { "1.6.7", "2026-10-03", "Wow.exe patch for the new playable races (Goblin and Worgen) - the character screen no longer crashes with more than 10 races. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.6", "2026-09-29", "Fixed the footer layout on a resized window - the progress bar no longer stretches over the Play button." },
             new[] { "1.6.5", "2026-09-29", "The window can now be resized (and maximized) - the play button, status bar and progress bar all track the new width instead of staying pinned to their original spot." },
             new[] { "1.6.4", "2026-09-09", "The game client can now use up to 4 GB of memory instead of 2 GB - fixes the out-of-memory crashes in Dalaran with the HD graphics patches. Re-run the launcher once to re-patch Wow.exe." },

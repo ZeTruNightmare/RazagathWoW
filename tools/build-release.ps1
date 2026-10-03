@@ -57,7 +57,9 @@ if ($RebuildMpq) {
 #  1.5.0 = resumable/retrying downloads (for the multi-GB HD client patches).
 #  1.6.0 = optional auto sign-in (Settings tab) - skips the WoW login screen.
 #  1.6.4 = Wow.exe patched Large-Address-Aware (4 GB) + re-patch from Wow.exe.orig.
-$MinLauncher = [version]"1.6.4"
+#  1.6.7 = Wow.exe pokes for 12 playable races (Goblin + Worgen): race-array size + compositor loops.
+#  1.6.8 = Wow.exe pokes raise the playable-race cap to 31 (random-race array + relocated per-race table).
+$MinLauncher = [version]"1.6.8"
 $launcherOut = "$RepoDir\dist\RazagathWoW.exe"
 $curLv = (Get-Content "$RepoDir\manifest.json" | ConvertFrom-Json).launcher.version
 $lv = if ($LauncherVersion) { $LauncherVersion } else { $curLv }
@@ -68,6 +70,10 @@ if ($LASTEXITCODE) { throw "launcher build failed" }
 # --- 4. hash managed files -----------------------------------------
 $mpq   = "$RepoDir\patch\patch-enUS-Z.MPQ"
 if (-not (Test-Path $mpq)) { throw "missing $mpq" }
+# Root-level patch: the stock Patch-F/G/H.MPQ override CharSections / CreatureModelData / EmotesTextSound ... and load AFTER the enUS
+# patches, so the goblin/worgen versions of those tables must ship as Data\Patch-Z.MPQ (loads after Patch-H).
+$mpqRoot = "$RepoDir\patch\Patch-Z.MPQ"
+if (-not (Test-Path $mpqRoot)) { throw "missing $mpqRoot  (run tools\sync-from-module.ps1)" }
 
 # Static community map patches - classic/BC dungeon interior maps (DungeonMap.dbc
 # + Interface\WorldMap art). Not generated; drop them in patch\ once. The WDM
@@ -97,6 +103,7 @@ Write-Host ("RazagathAddons.zip  ({0:N0} bytes, {1} add-ons)" -f (Get-Item $zip)
 
 $files = @(
     @{ path="Data/enUS/patch-enUS-Z.MPQ"; local=$mpq;  asset="patch-enUS-Z.MPQ" },
+    @{ path="Data/Patch-Z.MPQ";           local=$mpqRoot; asset="Patch-Z.MPQ" },
     @{ path="Data/enUS/patch-enUS-M.MPQ"; local=$mapM; asset="patch-enUS-M.MPQ" },
     @{ path="Data/enUS/patch-enUS-N.MPQ"; local=$mapN; asset="patch-enUS-N.MPQ" },
     @{ path="Interface/AddOns"; local=$zip; asset="RazagathAddons.zip"; type="zip"; members=$members }
@@ -190,7 +197,7 @@ if (-not $LocalInstaller) {
 }
 
 # --- 6. GitHub release ---------------------------------------------
-$assets = @($mpq, $mapM, $mapN, $launcherOut, $zip)
+$assets = @($mpq, $mpqRoot, $mapM, $mapN, $launcherOut, $zip)
 if ($installer) { $assets += $installer }
 
 $relNotes = "RazagathWoW client patch $Version`n`n" + (($noteList | ForEach-Object { "- $_" }) -join "`n")
@@ -203,7 +210,10 @@ $ErrorActionPreference = $prevEAP
 if ($exists) {
     & $gh release upload $Tag @assets --repo $Repo --clobber
 } else {
-    & $gh release create $Tag @assets --repo $Repo --title "Patch $Version" --notes $relNotes
+    # Windows PowerShell 5.1 mangles multi-line / quoted native args: pass the body as a file instead
+    $notesFile = Join-Path $env:TEMP "razagath_relnotes_$Version.md"
+    [System.IO.File]::WriteAllText($notesFile, $relNotes, (New-Object System.Text.UTF8Encoding($false)))
+    & $gh release create $Tag @assets --repo $Repo --title "Patch $Version" --notes-file $notesFile
 }
 if ($LASTEXITCODE) { throw "gh release failed" }
 
