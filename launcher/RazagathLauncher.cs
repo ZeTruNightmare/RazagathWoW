@@ -641,6 +641,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.6.10", "2026-10-03", "Internal build change: the launcher and installer are now built reproducibly so they stay identical between patches, which helps antivirus programs learn to trust them. Nothing changes for you." },
             new[] { "1.6.9", "2026-10-03", "Safer launcher self-update: it now swaps its own file in place instead of writing a temporary script, which antivirus programs dislike. Nothing changes for you." },
             new[] { "1.6.8", "2026-10-03", "Wow.exe patch raises the playable-race limit to 31 so more races can be added. Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.6.7", "2026-10-03", "Wow.exe patch for the new playable races (Goblin and Worgen) - the character screen no longer crashes with more than 10 races. Re-run the launcher once to re-patch Wow.exe." },

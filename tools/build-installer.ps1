@@ -11,7 +11,10 @@ param(
     [string]$Version = "",
     [string]$Realm = "ztnwow.duckdns.org",
     [string]$ManifestUrl = "https://raw.githubusercontent.com/ZeTruNightmare/RazagathWoW/main/manifest.json",
-    [string]$LauncherVersion = ""
+    [string]$LauncherVersion = "",
+    # Embed THIS already-built launcher (e.g. the one published on the release) instead of compiling one. Using the released file
+    # means the installer contains exactly the launcher the manifest points at, so there is one file for antivirus to learn.
+    [string]$LauncherExe = ""
 )
 $ErrorActionPreference = "Stop"
 $Here = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -27,8 +30,14 @@ if (-not $Version) {
 $lv = if ($LauncherVersion) { $LauncherVersion } else {
     (Get-Content "$Repo\manifest.json" -Raw | ConvertFrom-Json).launcher.version
 }
-& "$Repo\launcher\build.ps1" -Version $lv -ManifestUrl $ManifestUrl -Out "$Repo\dist\RazagathWoW.exe"
-if ($LASTEXITCODE) { throw "launcher build failed" }
+if ($LauncherExe) {
+    New-Item -ItemType Directory -Force -Path "$Repo\dist" | Out-Null
+    Copy-Item $LauncherExe "$Repo\dist\RazagathWoW.exe" -Force
+    Write-Host "using the supplied launcher: $LauncherExe"
+} else {
+    & "$Repo\launcher\build.ps1" -Version $lv -ManifestUrl $ManifestUrl -Out "$Repo\dist\RazagathWoW.exe"
+    if ($LASTEXITCODE) { throw "launcher build failed" }
+}
 
 if (Test-Path "$Repo\installer\client-base.nsh") {
     Write-Host "client-base.nsh present -> full-client download option INCLUDED"

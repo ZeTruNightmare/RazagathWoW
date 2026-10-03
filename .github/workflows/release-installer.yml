@@ -65,11 +65,28 @@ jobs:
       # first start), so there is nothing to fetch from the release here any more. That keeps the installer small and
       # identical between releases unless the launcher changes - good for antivirus / SmartScreen reputation.
 
-      # build-installer.ps1 fetches 7zr + NScurl, compiles the launcher from source
-      # (launcher/build.ps1, Roslyn csc on the runner) and runs makensis.
-      - name: Build launcher + installer
+      # The installer embeds the launcher that was PUBLISHED with this release (the exact file manifest.json points at) instead of
+      # compiling a second copy on the runner. The launcher build is reproducible (launcher/build.ps1 /deterministic+) and the
+      # installer is named/stamped with the LAUNCHER version, so RazagathWoW-Setup.exe is byte-identical from one client release to the
+      # next until the launcher or installer source actually changes. That is what lets antivirus reputation and false-positive
+      # allow-listing stick to one file.
+      - name: Build the installer around the released launcher
         shell: pwsh
-        run: ./tools/build-installer.ps1 -Version $env:VERSION
+        run: |
+          $m = Get-Content manifest.json -Raw | ConvertFrom-Json
+          $lv = $m.launcher.version
+          New-Item -ItemType Directory -Force dist-launcher | Out-Null
+          for ($i = 0; $i -lt 20; $i++) {
+            gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern 'RazagathWoW.exe' --dir dist-launcher --clobber
+            if ($LASTEXITCODE -eq 0 -and (Test-Path dist-launcher/RazagathWoW.exe)) { break }
+            Write-Host 'launcher asset not available yet, retrying ...'
+            Start-Sleep -Seconds 15
+          }
+          if (-not (Test-Path dist-launcher/RazagathWoW.exe)) { throw 'RazagathWoW.exe not found on the release' }
+          $got = (Get-FileHash dist-launcher/RazagathWoW.exe -Algorithm SHA256).Hash.ToLower()
+          if ($got -ne $m.launcher.sha256.ToLower()) { throw "released launcher $got does not match manifest launcher $($m.launcher.sha256)" }
+          "LV=$lv" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          ./tools/build-installer.ps1 -Version $lv -LauncherExe dist-launcher/RazagathWoW.exe
 
       # --- Code signing (SignPath Foundation) ------------------------------------------------
       # Not enabled yet. Once the project is approved, sign BOTH dist/RazagathWoW.exe (before the
@@ -81,7 +98,7 @@ jobs:
       - name: Attach installer to the release
         shell: pwsh
         run: |
-          Copy-Item "dist/RazagathWoW-Setup-$env:VERSION.exe" dist/RazagathWoW-Setup.exe -Force
+          Copy-Item "dist/RazagathWoW-Setup-$env:LV.exe" dist/RazagathWoW-Setup.exe -Force
           gh release upload $env:TAG dist/RazagathWoW-Setup.exe --repo $env:GITHUB_REPOSITORY --clobber
           if ($LASTEXITCODE) { throw 'upload failed' }
           Get-Item dist/RazagathWoW-Setup.exe | ForEach-Object { 'uploaded {0}  {1:N1} MB' -f $_.Name, ($_.Length / 1MB) }

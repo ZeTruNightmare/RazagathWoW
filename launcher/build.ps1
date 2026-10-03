@@ -93,6 +93,11 @@ New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
 $args = @(
     "/nologo","/target:winexe","/platform:anycpu","/optimize+","/langversion:7.3",
+    # Reproducible output: the same source + version + compiler always gives byte-identical RazagathWoW.exe (no random module id /
+    # build timestamp). A new hash on every rebuild resets antivirus + SmartScreen reputation and any false-positive allow-listing,
+    # so we only want the hash to change when the launcher really changes. (Keep the OUTPUT FILE NAME RazagathWoW.exe: the file name
+    # becomes the assembly name, so a different name gives a different hash.)
+    "/deterministic+", "/pathmap:$Here=C:\RazagathWoW\launcher",
     "/out:$Out",
     "/win32manifest:$(Join-Path $Here 'app.manifest')"
 )
