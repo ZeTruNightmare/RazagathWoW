@@ -1,43 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.03d",
+    "clientVersion":  "2026.10.03e",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.6.9",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/RazagathWoW.exe",
-                     "sha256":  "3eb19f631d0e73981f0fffa21977480ca2feac7873e3e4549040f43131e254e6"
+                     "version":  "1.6.10",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/RazagathWoW.exe",
+                     "sha256":  "c4a28f8a8ce40375a99c5d6123db7c95af94422d5a6b75c1de48726e888c3d6a"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "3c11dab363bbd9239cd508a25c3482356f66cc137bdd7be077a0cf73a54d5db2",
                       "size":  79516035,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
                       "sha256":  "6a47d2209f9edb6717feabd26821fd1db5df5457f36bce2fd73c2b8e83f9a318",
                       "size":  488922,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/Patch-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "f7802516717b694ae12a267de71c83e08836df558ed412911bbcf8eaabb6ef3c",
+                      "sha256":  "a4bed8a7ded1a4107d2dd547a77c030639095101475b4a25bb62458a00924834",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03d/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -95,6 +95,14 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.03e",
+                          "date":  "2026-10-03",
+                          "title":  "Launcher 1.6.10 reproducible build",
+                          "notes":  [
+                                        "Launcher 1.6.10: internal build change so the launcher and installer stay identical between patches (helps antivirus programs trust them). Nothing changes for you"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.03d",
                           "date":  "2026-10-03",

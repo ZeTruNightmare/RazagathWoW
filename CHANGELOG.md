@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.03e - Launcher 1.6.10 reproducible build
+
+- Launcher 1.6.10: internal build change so the launcher and installer stay identical between patches (helps antivirus programs trust them). Nothing changes for you
+
 ## 2026.10.03d - Launcher 1.6.9 and smaller installer
 
 - Launcher 1.6.9: safer self-update, a much smaller installer, and clearer download-safety help on the release page (aimed at fewer antivirus false alarms)
