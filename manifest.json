@@ -1,43 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.03",
+    "clientVersion":  "2026.10.03b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.6.7",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/RazagathWoW.exe",
-                     "sha256":  "28f0e11f25cb059cf62555f66acb382535f24e7ac9aca01fe90cc15dedeb5113"
+                     "version":  "1.6.8",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/RazagathWoW.exe",
+                     "sha256":  "c1d0534598eec9b51c5056a9279a3653d07aaff69f757af0b480543c313dad41"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "0ff8850df78313c43d6067ca88a8b68ce536a931e78f0b511f219571578b7ed5",
                       "size":  79511267,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
                       "sha256":  "6a47d2209f9edb6717feabd26821fd1db5df5457f36bce2fd73c2b8e83f9a318",
                       "size":  488922,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/Patch-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "b8feb5c796c1c0ffdea6f18053a4fb04cf7e4a49a1b8a350ed99126289d55c49",
+                      "sha256":  "0d6efde2c12f6afbed42f0d78258951fb2cf7dd27fd112b816b5aeb4534c631e",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -95,6 +95,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.03b",
+                          "date":  "2026-10-03",
+                          "title":  "Race limit, Goblin gear fix, racial action bars",
+                          "notes":  [
+                                        "Raised the playable race limit so more races can be added in future - launcher 1.6.8 re-patches Wow.exe, run the launcher once before playing",
+                                        "New Goblin and Worgen characters now start with their active racials on the action bar",
+                                        "Fixed new Goblin characters not receiving their starting weapons and armour"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.03",
                           "date":  "2026-10-03",

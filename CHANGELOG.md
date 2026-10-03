@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.03b - Race limit, Goblin gear fix, racial action bars
+
+- Raised the playable race limit so more races can be added in future - launcher 1.6.8 re-patches Wow.exe, run the launcher once before playing
+- New Goblin and Worgen characters now start with their active racials on the action bar
+- Fixed new Goblin characters not receiving their starting weapons and armour
+
 ## 2026.10.03 - Goblins and Worgen
 
 - New playable race: Goblin (Horde) - Rocket Barrage, Rocket Jump, Time is Money, Best Deals Anywhere, Better Living Through Chemistry and Pack Hobgoblin racials, with retail voices, names and customisation
