@@ -45,6 +45,13 @@ if (Test-Path "$Repo\installer\client-base.nsh") {
     Write-Host "no client-base.nsh -> patch-only installer (run stage-client.ps1 to add the full-client option)"
 }
 
+# NSIS stores every embedded file's modification time inside the installer, and a CI runner re-downloads them with a fresh time
+# on every run - so the same inputs gave a different installer hash each build. Pin the times so the installer is reproducible.
+$pin = [datetime]::SpecifyKind([datetime]"2026-01-01T00:00:00", [DateTimeKind]::Utc)
+foreach ($f in @("$Repo\dist\RazagathWoW.exe", "$Repo\overlay\WTF\Config.wtf", "$Repo\installer\tools\7zr.exe", "$Repo\installer\tools\NScurl.dll", "$Repo\installer\client-base.nsh")) {
+    if (Test-Path $f) { (Get-Item $f).LastWriteTimeUtc = $pin }
+}
+
 & $makensis "/DVERSION=$Version" "/DREALM=$Realm" "/DMANIFEST_URL=$ManifestUrl" "$Repo\installer\RazagathWoW.nsi"
 if ($LASTEXITCODE) { throw "makensis failed" }
 
