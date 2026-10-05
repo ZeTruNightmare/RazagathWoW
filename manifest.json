@@ -1,43 +1,43 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.03e",
+    "clientVersion":  "2026.10.05",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.10",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/RazagathWoW.exe",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/RazagathWoW.exe",
                      "sha256":  "c4a28f8a8ce40375a99c5d6123db7c95af94422d5a6b75c1de48726e888c3d6a"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "3c11dab363bbd9239cd508a25c3482356f66cc137bdd7be077a0cf73a54d5db2",
-                      "size":  79516035,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-Z.MPQ"
+                      "sha256":  "b98790e6d5c406fa950db835bad0bbb9273c3b4ee784d2b6c32304bf5d6e986c",
+                      "size":  79635156,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
-                      "sha256":  "6a47d2209f9edb6717feabd26821fd1db5df5457f36bce2fd73c2b8e83f9a318",
-                      "size":  488922,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/Patch-Z.MPQ"
+                      "sha256":  "3cc60ba3a3bf6ac29b543e8f20e8e017ff09492df6ff32ae228ea3d350da2a6f",
+                      "size":  488967,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "a4bed8a7ded1a4107d2dd547a77c030639095101475b4a25bb62458a00924834",
+                      "sha256":  "cfd2a5d615ba71e7eac89be604590eaa6128e55108143ce44f7ae61de02c60b7",
                       "size":  3822316,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.03e/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.05/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Bagnon",
@@ -95,6 +95,14 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.05",
+                          "date":  "2026-10-05",
+                          "title":  "Spike the companion pet",
+                          "notes":  [
+                                        "New companion pet: Spike, awarded for reaching third prestige"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.03e",
                           "date":  "2026-10-03",

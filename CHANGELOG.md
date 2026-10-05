@@ -5,6 +5,10 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.05 - Spike the companion pet
+
+- New companion pet: Spike, awarded for reaching third prestige
+
 ## 2026.10.03e - Launcher 1.6.10 reproducible build
 
 - Launcher 1.6.10: internal build change so the launcher and installer stay identical between patches (helps antivirus programs trust them). Nothing changes for you
