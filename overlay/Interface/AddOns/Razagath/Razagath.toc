@@ -11,3 +11,4 @@ SpellBlade\SpellBladeUI.lua
 BigBags\RazagathBigBags.lua
 Companions\Atlas_Data.lua
 Companions\RazagathCompanions.lua
+GilneasMap\GilneasMap.lua

@@ -5,6 +5,17 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.06 - Gilneas - the Worgen starting zone
+
+- NEW ZONE - Gilneas, the Worgen starting zone: Gilneas City, Duskhaven, Greymane Manor, Stormglen, Tempest's Reach and Keel Harbor, with about 100 quests, story phasing, trainers for every class, and the quest vehicles (horse rides, Rebel Cannons, Glaive Throwers and the Captured Riding Bat)
+- New Worgen characters now start in Gilneas City, and any Alliance character can pick Gilneas City (Worgen) from the Start Zone Selector
+- The Gilneas story ends with a quest from Scott Knight at Keel Harbor that sends you to the gates of Stormwind
+- Fixed: Worgen characters now have their class talent trees
+- Fixed: Spellblades now keep Lockpicking learned from the Utility Tome after relogging
+- New: Questie is now bundled and shows Gilneas quests, objectives and maps (RazagathQuestie add-on)
+- Fixed: Questie no longer fails to start on Worgen characters
+- Gilneas weather added
+
 ## 2026.10.05 - Spike the companion pet
 
 - New companion pet: Spike, awarded for reaching third prestige

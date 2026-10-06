@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: RazagathQuestie
+## Notes: Adds the imported Gilneas quests, NPCs and maps to Questie.
+## Author: Razagath
+## Dependencies: Questie-335
+## SavedVariables: RazagathQuestieDB
+Data.lua
+Main.lua
