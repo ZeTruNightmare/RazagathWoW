@@ -1,11 +1,11 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.06",
+    "clientVersion":  "2026.10.06b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.6.10",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/RazagathWoW.exe",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/RazagathWoW.exe",
                      "sha256":  "c4a28f8a8ce40375a99c5d6123db7c95af94422d5a6b75c1de48726e888c3d6a"
                  },
     "files":  [
@@ -13,39 +13,40 @@
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "b98790e6d5c406fa950db835bad0bbb9273c3b4ee784d2b6c32304bf5d6e986c",
                       "size":  79635156,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
                       "sha256":  "e539fa995291571d584040e6c1680403b8f175d544a483061969e947cee1f934",
                       "size":  489602,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/Patch-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Y.MPQ",
                       "sha256":  "48d3213f8fd06e3797ce64fb0508fdfcb15df1b592187978825ee27389c8afca",
                       "size":  87387021,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/Patch-Y.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/Patch-Y.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "24b3e0fb333be2e09bc27b9ca5f40000ca18b103e0661f2f1b1bd3e0cead52a4",
-                      "size":  3847534,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/RazagathAddons.zip",
+                      "sha256":  "50342950645dc621b252d5a56b16332762b361d7aa56e4e32cf9aeba90fead20",
+                      "size":  3892697,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
+                                      "Interface/AddOns/!RazagathGilneasShield",
                                       "Interface/AddOns/Bagnon",
                                       "Interface/AddOns/Bagnon_Config",
                                       "Interface/AddOns/Bagnon_Forever",
@@ -72,9 +73,9 @@
                   },
                   {
                       "path":  "Interface/AddOns/Questie-335",
-                      "sha256":  "0bcc7d1d4a8bdbf8d574761da506d77375ffe01d776c42cfa3ade4be8e9b5bc9",
+                      "sha256":  "5e267639614a425a2bd5566a43145a3a8bb1257aa4218b8e57f614980810d64a",
                       "size":  33520533,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06/Questie-335.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.06b/Questie-335.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Questie-335"
@@ -112,6 +113,17 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.06b",
+                          "date":  "2026-10-06",
+                          "title":  "Gilneas hotfix - map zone info, Gilnean Taxi and fishing",
+                          "notes":  [
+                                        "NEW: The world map now shows zone levels, factions, instances and fishing levels when you hover a zone, built into the game (no extra add-on needed). Gilneas shows as a level 1-10 starter zone",
+                                        "Fixed: Gilneas no longer has two stray clickable areas on the world map",
+                                        "NEW: Gilnean Taxi - a traveller at the Greymane Wall in Silverpine Forest will take you back into Gilneas once you have finished the Gilneas story, and another inside Gilneas brings you back out (both ask you to confirm first)",
+                                        "NEW: You can now fish in Gilneas - Gilneas fishes like Elwynn Forest and Gilneas City like Stormwind City"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.06",
                           "date":  "2026-10-06",

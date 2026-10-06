@@ -5,6 +5,13 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.06b - Gilneas hotfix - map zone info, Gilnean Taxi and fishing
+
+- NEW: The world map now shows zone levels, factions, instances and fishing levels when you hover a zone, built into the game (no extra add-on needed). Gilneas shows as a level 1-10 starter zone
+- Fixed: Gilneas no longer has two stray clickable areas on the world map
+- NEW: Gilnean Taxi - a traveller at the Greymane Wall in Silverpine Forest will take you back into Gilneas once you have finished the Gilneas story, and another inside Gilneas brings you back out (both ask you to confirm first)
+- NEW: You can now fish in Gilneas - Gilneas fishes like Elwynn Forest and Gilneas City like Stormwind City
+
 ## 2026.10.06 - Gilneas - the Worgen starting zone
 
 - NEW ZONE - Gilneas, the Worgen starting zone: Gilneas City, Duskhaven, Greymane Manor, Stormglen, Tempest's Reach and Keel Harbor, with about 100 quests, story phasing, trainers for every class, and the quest vehicles (horse rides, Rebel Cannons, Glaive Throwers and the Captured Riding Bat)

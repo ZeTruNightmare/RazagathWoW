@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: Razagath Gilneas Shield
+## Notes: Keeps older map add-ons (Cromulent / LibTourist) working now that the world map lists Gilneas as an extra continent. Loads first, does nothing after login.
+## Author: Razagath
+## Version: 1.0
+
+!RazagathGilneasShield.lua
