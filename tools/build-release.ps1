@@ -74,6 +74,9 @@ if (-not (Test-Path $mpq)) { throw "missing $mpq" }
 # patches, so the goblin/worgen versions of those tables must ship as Data\Patch-Z.MPQ (loads after Patch-H).
 $mpqRoot = "$RepoDir\patch\Patch-Z.MPQ"
 if (-not (Test-Path $mpqRoot)) { throw "missing $mpqRoot  (run tools\sync-from-module.ps1)" }
+# Gilneas (2026.10.06): zone world data / models / DBC tables + the Worgen talent and full Item.dbc fixes. Root-level so it loads after the stock Patch-F/G/H/S/T and the enUS patches.
+$mpqY = "$RepoDir\patch\Patch-Y.MPQ"
+if (-not (Test-Path $mpqY)) { throw "missing $mpqY  (run tools\sync-from-module.ps1)" }
 
 # Static community map patches - classic/BC dungeon interior maps (DungeonMap.dbc
 # + Interface\WorldMap art). Not generated; drop them in patch\ once. The WDM
@@ -101,13 +104,23 @@ if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path "$RepoDir\overlay\Interface" -DestinationPath $zip -CompressionLevel Optimal
 Write-Host ("RazagathAddons.zip  ({0:N0} bytes, {1} add-ons)" -f (Get-Item $zip).Length, $members.Count)
 
+# Questie-335 (third-party quest add-on, ~120 MB unpacked): kept out of git in static\, shipped as its own zip bundle so the small add-on bundle above is not re-downloaded for it.
+$qSrc = "$RepoDir\static\Interface\AddOns\Questie-335"; $qZip = "$RepoDir\dist\Questie-335.zip"
+if (Test-Path $qSrc) {
+    if (Test-Path $qZip) { Remove-Item $qZip -Force }
+    Compress-Archive -Path "$RepoDir\static\Interface" -DestinationPath $qZip -CompressionLevel Optimal
+    Write-Host ("Questie-335.zip  ({0:N0} bytes)" -f (Get-Item $qZip).Length)
+}
+
 $files = @(
     @{ path="Data/enUS/patch-enUS-Z.MPQ"; local=$mpq;  asset="patch-enUS-Z.MPQ" },
     @{ path="Data/Patch-Z.MPQ";           local=$mpqRoot; asset="Patch-Z.MPQ" },
+    @{ path="Data/Patch-Y.MPQ";           local=$mpqY;    asset="Patch-Y.MPQ" },
     @{ path="Data/enUS/patch-enUS-M.MPQ"; local=$mapM; asset="patch-enUS-M.MPQ" },
     @{ path="Data/enUS/patch-enUS-N.MPQ"; local=$mapN; asset="patch-enUS-N.MPQ" },
     @{ path="Interface/AddOns"; local=$zip; asset="RazagathAddons.zip"; type="zip"; members=$members }
 )
+if (Test-Path $qZip) { $files += @{ path="Interface/AddOns/Questie-335"; local=$qZip; asset="Questie-335.zip"; type="zip"; members=@("Interface/AddOns/Questie-335") } }
 $fileEntries = foreach ($f in $files) {
     $e = [ordered]@{
         path   = $f.path
@@ -197,7 +210,8 @@ if (-not $LocalInstaller) {
 }
 
 # --- 6. GitHub release ---------------------------------------------
-$assets = @($mpq, $mpqRoot, $mapM, $mapN, $launcherOut, $zip)
+$assets = @($mpq, $mpqRoot, $mpqY, $mapM, $mapN, $launcherOut, $zip)
+if (Test-Path $qZip) { $assets += $qZip }
 if ($installer) { $assets += $installer }
 
 $relNotes = "RazagathWoW client patch $Version`n`n" + (($noteList | ForEach-Object { "- $_" }) -join "`n")
