@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.07c - New login screen
+
+- NEW: A brand-new login screen - a forest background, the World of Razagath logo and the Mists of Pandaria login music
+- The login screen no longer shows the ESRB notice or the Blizzard logo, and the dragon roars from the old Frozen Throne scene are gone
+- Note: this update downloads about 100 MB of game files the first time you start the launcher
+
 ## 2026.10.07b - Launcher 1.7.0 - auto sign-in removed
 
 - CHANGED: The launcher no longer has the optional auto sign-in feature - it was the part antivirus programs disliked most. Any account or password saved by an older launcher is deleted from your PC the first time the new launcher starts. Sign in on the WoW login screen as usual.
