@@ -5,6 +5,15 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.07 - Marks of Razagath
+
+- NEW: Marks of Razagath - exchange gold for marks at Razagath the Ascended (5,000g each) or at any banker (7,500g each)
+- NEW: Spend 25 marks for 5 prestige points at Razagath the Ascended
+- NEW: Training perks from Razagath in three tiers (10, 25 and 50 marks): free class training, class spells learned automatically as you level, and keeping your class spells when you prestige
+- NEW: A shop at Razagath selling faction commendation badges for 5 marks each
+- CHANGED: Prestiging now removes your class spells unless you own the Lasting Knowledge perk
+- CHANGED: Bankers now open a short menu first (open your bank, or exchange gold for marks)
+
 ## 2026.10.06b - Gilneas hotfix - map zone info, Gilnean Taxi and fishing
 
 - NEW: The world map now shows zone levels, factions, instances and fishing levels when you hover a zone, built into the game (no extra add-on needed). Gilneas shows as a level 1-10 starter zone
