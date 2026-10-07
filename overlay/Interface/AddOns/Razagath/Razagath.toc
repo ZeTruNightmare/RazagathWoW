@@ -6,6 +6,7 @@
 ## OptionalDeps: Questie-335, Cromulent
 ## X-Realm: dev
 ## SavedVariables: RazagathCompanionsDB
+## SavedVariablesPerCharacter: RazagathGlobalChannelsChar, RazagathWhoChar
 
 SpellBlade\SpellBladeUI.lua
 BigBags\RazagathBigBags.lua
@@ -19,3 +20,4 @@ ZoneInfo\Libs\LibTourist-3.0\LibTourist-3.0.lua
 ZoneInfo\ZoneInfo.lua
 
 GlobalChannels\GlobalChannels.lua
+WhoList\RazagathWho.lua

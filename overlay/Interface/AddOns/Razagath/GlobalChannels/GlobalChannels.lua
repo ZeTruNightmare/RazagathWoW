@@ -26,13 +26,33 @@ local function JoinMissing()
     return missing
 end
 
+-- Joining a channel does NOT tick it in the chat frame's own channel filter (Chat Settings -> Global Channels) for a character whose chat window was set up before the
+-- channel existed - its messages are then silently hidden (found on live 2026-10-07: the channels were listed and joined but nothing could be seen). So, ONCE per character
+-- and channel, add it to the main chat window ourselves. The flag is saved per character (RazagathGlobalChannelsChar), so a player who later unticks a channel keeps it unticked.
+local function EnsureChatFrame()
+    RazagathGlobalChannelsChar = RazagathGlobalChannelsChar or {}
+    local done = RazagathGlobalChannelsChar
+    for _, name in ipairs(CHANNELS) do
+        if not done[name] and GetChannelName(name) ~= 0 then
+            local present = false
+            for _, c in ipairs(DEFAULT_CHAT_FRAME.channelList or {}) do
+                if c == name then present = true break end
+            end
+            if not present and ChatFrame_AddChannel then pcall(ChatFrame_AddChannel, DEFAULT_CHAT_FRAME, name) end   -- pcall: this must never be able to throw
+            done[name] = true
+        end
+    end
+end
+
 f:SetScript("OnUpdate", function(self, elapsed)
     if not timer then return end
     timer = timer - elapsed
     if timer > 0 then return end
     tries = tries + 1
     -- the first pass joins, later passes only re-check that the join took (stops once both are listed)
-    if JoinMissing() and tries < MAX_TRIES then
+    local missing = JoinMissing()
+    EnsureChatFrame()
+    if missing and tries < MAX_TRIES then
         timer = RETRY_DELAY
     else
         timer = nil

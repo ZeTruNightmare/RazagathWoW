@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.07e - Players Online list and chat fix
+
+- NEW: The Who tab now lists every player and playerbot online instead of only the first 50 - with a search box, a Hide bots checkbox, a level filter, sortable columns, a Zone/Guild/Race column switch, paging, and Group Invite, Guild Invite and Add Friend buttons
+- FIX: The Global-All and Global-Players channels now show up in your chat window automatically (for some characters they were joined but their messages stayed hidden until ticked in Chat Settings)
+- Note: small update, about 4 MB
+
 ## 2026.10.07d - New mounts and global chat
 
 - NEW: Three new mounts, sold by Razagath the Ascended for Marks of Razagath: the Green Spectral Wolf (250 marks), the Emerald Shadow Drake - a black flying drake with a lime glow (500 marks) and the Razagath Caravan Mammoth - a lime-runed mammoth with a banker and an auctioneer riding along (1000 marks)

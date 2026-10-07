@@ -1,11 +1,11 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.07d",
+    "clientVersion":  "2026.10.07e",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.7.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/RazagathWoW.exe",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/RazagathWoW.exe",
                      "sha256":  "70575197417dad27689b4eaaa786cf9d90ca168b035185195b938646e588c436"
                  },
     "files":  [
@@ -13,43 +13,43 @@
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
                       "sha256":  "c00b86eb0500684298ec812e21c64c0e7d4551b0b1e63732e4ab7494fd6fa4c5",
                       "size":  83631536,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/patch-enUS-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
                       "sha256":  "711b2fe8925e28474bd024fcf7a5dd2379b7aa954f4d03baaa9397be19133cde",
                       "size":  761550,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/Patch-Z.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Y.MPQ",
                       "sha256":  "751c8d4e2af2461d17b46f55db9e5dc2927a3b1b47e86570ac326ee6a7cd525b",
                       "size":  87387265,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/Patch-Y.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/Patch-Y.MPQ"
                   },
                   {
                       "path":  "Data/Patch-L.MPQ",
                       "sha256":  "12a7581ee444f63434401c741cef64b59780d78c20d301a499e19913347ffda7",
                       "size":  13148663,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/Patch-L.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/Patch-L.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "4670a71a34785c2f028ffb2040e454c8826946626d18b6db3f8d628f6a555982",
-                      "size":  3893322,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/RazagathAddons.zip",
+                      "sha256":  "8aa2d92e8800e98f268fb47fbddeabe47e69d7eacb4e7d52181fe1f7ad1f3b7d",
+                      "size":  3900966,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/!RazagathGilneasShield",
@@ -81,7 +81,7 @@
                       "path":  "Interface/AddOns/Questie-335",
                       "sha256":  "31be2953cae5c0145b9ecae9d5e8466a1d756d4d6866332727669dc7f4914fb7",
                       "size":  33519683,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07d/Questie-335.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.07e/Questie-335.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Questie-335"
@@ -119,6 +119,16 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.07e",
+                          "date":  "2026-10-07",
+                          "title":  "Players Online list and chat fix",
+                          "notes":  [
+                                        "NEW: The Who tab now lists every player and playerbot online instead of only the first 50 - with a search box, a Hide bots checkbox, a level filter, sortable columns, a Zone/Guild/Race column switch, paging, and Group Invite, Guild Invite and Add Friend buttons",
+                                        "FIX: The Global-All and Global-Players channels now show up in your chat window automatically (for some characters they were joined but their messages stayed hidden until ticked in Chat Settings)",
+                                        "Note: small update, about 4 MB"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.07d",
                           "date":  "2026-10-07",
