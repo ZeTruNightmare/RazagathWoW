@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.07b - Launcher 1.7.0 - auto sign-in removed
+
+- CHANGED: The launcher no longer has the optional auto sign-in feature - it was the part antivirus programs disliked most. Any account or password saved by an older launcher is deleted from your PC the first time the new launcher starts. Sign in on the WoW login screen as usual.
+- No game files changed in this update; the launcher updates itself the next time you start it
+
 ## 2026.10.07 - Marks of Razagath
 
 - NEW: Marks of Razagath - exchange gold for marks at Razagath the Ascended (5,000g each) or at any banker (7,500g each)
