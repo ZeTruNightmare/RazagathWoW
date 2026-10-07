@@ -77,6 +77,9 @@ if (-not (Test-Path $mpqRoot)) { throw "missing $mpqRoot  (run tools\sync-from-m
 # Gilneas (2026.10.06): zone world data / models / DBC tables + the Worgen talent and full Item.dbc fixes. Root-level so it loads after the stock Patch-F/G/H/S/T and the enUS patches.
 $mpqY = "$RepoDir\patch\Patch-Y.MPQ"
 if (-not (Test-Path $mpqY)) { throw "missing $mpqY  (run tools\sync-from-module.ps1)" }
+# Login screen (2026.10.07): the background picture tiles + the Mists of Pandaria login music (mk_login_bg.py / mk_login_audio.py + build_mpq.pl). Root-level, its own archive so patch-enUS-Z does not grow by 13 MB.
+$mpqL = "$RepoDir\patch\Patch-L.MPQ"
+if (-not (Test-Path $mpqL)) { throw "missing $mpqL  (run tools\sync-from-module.ps1)" }
 
 # Static community map patches - classic/BC dungeon interior maps (DungeonMap.dbc
 # + Interface\WorldMap art). Not generated; drop them in patch\ once. The WDM
@@ -99,16 +102,40 @@ if (-not $members) { throw "no add-on folders under $addonsRoot" }
 # SpellBladeUI/BigBags/Companions would load alongside the merged addon.
 $legacyMembers = @("Interface/AddOns/SpellBladeUI","Interface/AddOns/RazagathBigBags","Interface/AddOns/RazagathCompanions")
 $members = @($members + ($legacyMembers | Where-Object { $members -notcontains $_ }))
+# DETERMINISTIC zip (added 2026.10.07): Compress-Archive stamps every entry with the file's modification time and sync-from-module.ps1 re-copies the files on every
+# release, so the zips got a NEW hash each release even when nothing inside changed - every player re-downloaded the 32 MB Questie bundle + the add-on bundle every time.
+# Here the entries are sorted (ordinal), have a fixed timestamp and forward-slash names (the launcher accepts both), so identical content => a byte-identical zip => players
+# only download a bundle when it really changed.
+function New-DeterministicZip([string]$SourceRoot, [string]$ZipPath, [string]$TopFolder) {
+    Add-Type -AssemblyName System.IO.Compression
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
+    $base  = (Resolve-Path $SourceRoot).Path.TrimEnd('\')
+    $stamp = New-Object DateTimeOffset(2020, 1, 1, 0, 0, 0, [TimeSpan]::Zero)
+    $rel   = @(Get-ChildItem $base -Recurse -File | ForEach-Object { $_.FullName.Substring($base.Length + 1).Replace('\', '/') })
+    [Array]::Sort($rel, [StringComparer]::Ordinal)
+    $fs = [IO.File]::Open($ZipPath, [IO.FileMode]::Create)
+    $za = New-Object IO.Compression.ZipArchive($fs, [IO.Compression.ZipArchiveMode]::Create)
+    try {
+        foreach ($r in $rel) {
+            $entry = $za.CreateEntry("$TopFolder/$r", [IO.Compression.CompressionLevel]::Optimal)
+            $entry.LastWriteTime = $stamp
+            $inStream = [IO.File]::OpenRead((Join-Path $base $r.Replace('/', '\')))
+            $outStream = $entry.Open()
+            try { $inStream.CopyTo($outStream) } finally { $outStream.Dispose(); $inStream.Dispose() }
+        }
+    } finally { $za.Dispose(); $fs.Dispose() }
+}
 $zip = "$RepoDir\dist\RazagathAddons.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
-Compress-Archive -Path "$RepoDir\overlay\Interface" -DestinationPath $zip -CompressionLevel Optimal
+New-DeterministicZip "$RepoDir\overlay\Interface" $zip "Interface"
 Write-Host ("RazagathAddons.zip  ({0:N0} bytes, {1} add-ons)" -f (Get-Item $zip).Length, $members.Count)
 
 # Questie-335 (third-party quest add-on, ~120 MB unpacked): kept out of git in static\, shipped as its own zip bundle so the small add-on bundle above is not re-downloaded for it.
 $qSrc = "$RepoDir\static\Interface\AddOns\Questie-335"; $qZip = "$RepoDir\dist\Questie-335.zip"
 if (Test-Path $qSrc) {
     if (Test-Path $qZip) { Remove-Item $qZip -Force }
-    Compress-Archive -Path "$RepoDir\static\Interface" -DestinationPath $qZip -CompressionLevel Optimal
+    New-DeterministicZip "$RepoDir\static\Interface" $qZip "Interface"
     Write-Host ("Questie-335.zip  ({0:N0} bytes)" -f (Get-Item $qZip).Length)
 }
 
@@ -116,6 +143,7 @@ $files = @(
     @{ path="Data/enUS/patch-enUS-Z.MPQ"; local=$mpq;  asset="patch-enUS-Z.MPQ" },
     @{ path="Data/Patch-Z.MPQ";           local=$mpqRoot; asset="Patch-Z.MPQ" },
     @{ path="Data/Patch-Y.MPQ";           local=$mpqY;    asset="Patch-Y.MPQ" },
+    @{ path="Data/Patch-L.MPQ";           local=$mpqL;    asset="Patch-L.MPQ" },
     @{ path="Data/enUS/patch-enUS-M.MPQ"; local=$mapM; asset="patch-enUS-M.MPQ" },
     @{ path="Data/enUS/patch-enUS-N.MPQ"; local=$mapN; asset="patch-enUS-N.MPQ" },
     @{ path="Interface/AddOns"; local=$zip; asset="RazagathAddons.zip"; type="zip"; members=$members }
@@ -210,7 +238,7 @@ if (-not $LocalInstaller) {
 }
 
 # --- 6. GitHub release ---------------------------------------------
-$assets = @($mpq, $mpqRoot, $mpqY, $mapM, $mapN, $launcherOut, $zip)
+$assets = @($mpq, $mpqRoot, $mpqY, $mpqL, $mapM, $mapN, $launcherOut, $zip)
 if (Test-Path $qZip) { $assets += $qZip }
 if ($installer) { $assets += $installer }
 

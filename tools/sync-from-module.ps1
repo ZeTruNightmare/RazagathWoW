@@ -85,6 +85,13 @@ if (Test-Path "$Module\gilneas\.build\Patch-Y.MPQ") {
     Write-Host ("synced Patch-Y.MPQ  ({0:N0} bytes)" -f $m.Length)
 } else { Write-Warning "no gilneas\.build\Patch-Y.MPQ in $Module - run gilneas\pack.sh" }
 
+# Root-level Data\Patch-L.MPQ (login screen background tiles + login music), built by build_mpq.pl into client-patch\.build
+if (Test-Path "$Module\.build\Patch-L.MPQ") {
+    Copy-Item "$Module\.build\Patch-L.MPQ" "$Repo\patch\Patch-L.MPQ" -Force
+    $m = Get-Item "$Repo\patch\Patch-L.MPQ"
+    Write-Host ("synced Patch-L.MPQ  ({0:N0} bytes)" -f $m.Length)
+} else { Write-Warning "no .build\Patch-L.MPQ in $Module - run build_mpq.pl" }
+
 # !RazagathGilneasShield - loads first (the "!" sorts before every other add-on) and hides the extra Gilneas continent from older map add-ons (LibTourist / Cromulent) while they load.
 $shSrc = "$Module\addon\!RazagathGilneasShield"
 $shDst = "$Repo\overlay\Interface\AddOns\!RazagathGilneasShield"
