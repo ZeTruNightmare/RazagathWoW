@@ -641,6 +641,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.7.0", "2026-10-07", "Removed the optional auto sign-in feature (the saved password and the automatic typing into the WoW login screen). It was the part of the launcher antivirus programs disliked most. Any saved account or password from older versions is deleted from your PC the first time this version starts. You sign in on the WoW login screen as usual." },
             new[] { "1.6.10", "2026-10-03", "Internal build change: the launcher and installer are now built reproducibly so they stay identical between patches, which helps antivirus programs learn to trust them. Nothing changes for you." },
             new[] { "1.6.9", "2026-10-03", "Safer launcher self-update: it now swaps its own file in place instead of writing a temporary script, which antivirus programs dislike. Nothing changes for you." },
             new[] { "1.6.8", "2026-10-03", "Wow.exe patch raises the playable-race limit to 31 so more races can be added. Re-run the launcher once to re-patch Wow.exe." },
@@ -659,9 +660,6 @@ namespace RazagathWoW
         };
         private TextBox _realmBox;
         private CheckBox _windowedBox;
-        private TextBox _acctBox;
-        private TextBox _passBox;
-        private CheckBox _autoLoginBox;
         private bool _busy;
         private readonly List<RealmProbe> _realmProbes = new List<RealmProbe>();
 
@@ -677,6 +675,7 @@ namespace RazagathWoW
         {
             _root = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\', '/');
             _cfgPath = Path.Combine(_root, "launcher.cfg");
+            PurgeSavedLogin();   // 1.7.0 removed auto sign-in: delete any account / password an older version saved
             _manifestUrl = ReadConfiguredManifestUrl();
 
             Text = "RazagathWoW";
@@ -906,57 +905,16 @@ namespace RazagathWoW
             _versionLabel = ver;
 
             Label Blank() => new Label { BackColor = Color.Transparent, AutoSize = true };
-            Label Sub(string t) => new Label { Text = t, ForeColor = SubColor, AutoSize = true, MaximumSize = new Size(520, 0), Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 2, 0, 6) };
-
-            // ---- account / auto sign-in ----
-            _acctBox = DarkTextBox(); _acctBox.Width = 260;
-            _passBox = DarkTextBox(); _passBox.Width = 260; _passBox.UseSystemPasswordChar = true;
-            _acctBox.Text = CfgStr("account");
-            _autoLoginBox = DarkCheckBox("Sign in automatically - skip the WoW login screen");
-            _autoLoginBox.Checked = CfgBool("autoLogin");
-            if (_autoLoginBox.Checked && Unprotect(CfgStr("password")).Length > 0)
-                _passBox.Text = new string('*', 10);   // placeholder (masked anyway) so the field isn't blank
-            var savedPw = _passBox.Text;
-            var saveLogin = DarkButton("Save sign-in");
-            saveLogin.Click += (s, e) =>
-            {
-                var acct = _acctBox.Text.Trim();
-                var pw = _passBox.Text == savedPw ? Unprotect(CfgStr("password")) : _passBox.Text;
-                WriteCfg(d =>
-                {
-                    d["account"] = acct;
-                    if (_autoLoginBox.Checked && pw.Length > 0)
-                    {
-                        d["password"] = Protect(pw);
-                        d["autoLogin"] = true;
-                    }
-                    else
-                    {
-                        d.Remove("password");
-                        d["autoLogin"] = false;
-                    }
-                });
-                SetStatus(_autoLoginBox.Checked && pw.Length > 0 ? "Auto sign-in saved." : "Account saved.");
-            };
 
             p.Controls.Add(Head("Realm"), 0, 0); p.Controls.Add(_realmBox, 1, 0);
             p.Controls.Add(Blank(), 0, 1); p.Controls.Add(saveRealm, 1, 1);
             p.Controls.Add(Blank(), 0, 2); p.Controls.Add(_windowedBox, 1, 2);
 
-            p.Controls.Add(Head("Sign in"), 0, 3);
-            p.Controls.Add(Sub("Tick auto sign-in and the launcher types your login at the WoW screen a few seconds after the game opens - don't click away during that. The password is DPAPI-encrypted and never leaves this PC."), 1, 3);
-            p.Controls.Add(new Label { Text = "Account", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 4);
-            p.Controls.Add(_acctBox, 1, 4);
-            p.Controls.Add(new Label { Text = "Password", ForeColor = BodyColor, AutoSize = true, Anchor = AnchorStyles.Left, BackColor = Color.Transparent, Margin = new Padding(0, 8, 0, 8) }, 0, 5);
-            p.Controls.Add(_passBox, 1, 5);
-            p.Controls.Add(Blank(), 0, 6); p.Controls.Add(_autoLoginBox, 1, 6);
-            p.Controls.Add(Blank(), 0, 7); p.Controls.Add(saveLogin, 1, 7);
-
-            p.Controls.Add(Head("Maintenance"), 0, 8);
+            p.Controls.Add(Head("Maintenance"), 0, 3);
             var row = new FlowLayoutPanel { AutoSize = true, Anchor = AnchorStyles.Left, Margin = new Padding(0), BackColor = Color.Transparent };
             row.Controls.Add(verify); row.Controls.Add(clearCache); row.Controls.Add(openFolder);
-            p.Controls.Add(row, 1, 8);
-            p.Controls.Add(ver, 1, 9);
+            p.Controls.Add(row, 1, 3);
+            p.Controls.Add(ver, 1, 4);
 
             scroller.Controls.Add(p);
             host.Controls.Add(scroller);
@@ -1172,27 +1130,10 @@ namespace RazagathWoW
             }
             if (_windowedBox != null) WriteWindowed(_windowedBox.Checked);
 
-            var acct = CfgStr("account");
-            var pw = CfgBool("autoLogin") && acct.Length > 0 ? Unprotect(CfgStr("password")) : "";
-
             try
             {
-                if (acct.Length > 0)
-                    SetConfigWtf(new Dictionary<string, string> { { "accountName", acct.Replace("\"", "") } });
-
-                var proc = Process.Start(new ProcessStartInfo { FileName = exe, WorkingDirectory = _root, UseShellExecute = false });
-
-                if (pw.Length > 0 && proc != null)
-                {
-                    SetStatus("Signing in...");
-                    int delay = 5000; int dv;
-                    if (int.TryParse(CfgStr("loginDelayMs"), out dv) && dv > 0) delay = dv;
-                    await AutoTypeLogin(proc, pw, delay);   // types into the (already-focused) password field
-                }
-                else
-                {
-                    await Task.Delay(400);
-                }
+                Process.Start(new ProcessStartInfo { FileName = exe, WorkingDirectory = _root, UseShellExecute = false });
+                await Task.Delay(400);
                 Close();
             }
             catch (Exception ex)
@@ -1399,105 +1340,15 @@ namespace RazagathWoW
             return d != null && d.TryGetValue(key, out v) && v != null && bool.TryParse(v.ToString(), out b) && b;
         }
 
-        // Password at rest: DPAPI, CurrentUser scope - unreadable on another
-        // Windows account or machine, decryptable only by this launcher here.
-        private static string Protect(string s)
+        // The optional auto sign-in feature (saved password + typing it into the WoW window) was removed in launcher 1.7.0 - antivirus heuristics
+        // treat "types into another process" as the single most suspicious behaviour. Older versions saved the account name, an encrypted
+        // password and the on-switch in this launcher's settings file; wipe them so nothing is left on disk.
+        private void PurgeSavedLogin()
         {
-            try
-            {
-                return Convert.ToBase64String(System.Security.Cryptography.ProtectedData.Protect(
-                    Encoding.UTF8.GetBytes(s ?? ""), null, System.Security.Cryptography.DataProtectionScope.CurrentUser));
-            }
-            catch { return ""; }
-        }
-        private static string Unprotect(string b64)
-        {
-            if (string.IsNullOrEmpty(b64)) return "";
-            try
-            {
-                return Encoding.UTF8.GetString(System.Security.Cryptography.ProtectedData.Unprotect(
-                    Convert.FromBase64String(b64), null, System.Security.Cryptography.DataProtectionScope.CurrentUser));
-            }
-            catch { return ""; }
-        }
-
-        // Auto sign-in: 3.3.5's login screen can't read custom CVars, so we
-        // prefill `accountName` (deterministic -> password field gets focus) and
-        // type the password into it a few seconds after the window appears.
-        [DllImport("user32.dll")] private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [DllImport("user32.dll")] private static extern bool AllowSetForegroundWindow(int dwProcessId);
-        [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hWnd);
-
-        private async Task AutoTypeLogin(Process proc, string password, int delayMs)
-        {
-            IntPtr hwnd = IntPtr.Zero;
-            for (int i = 0; i < 60; i++)
-            {
-                await Task.Delay(500);
-                try { if (proc.HasExited) return; } catch { return; }
-                try { proc.Refresh(); hwnd = proc.MainWindowHandle; } catch { }
-                if (hwnd != IntPtr.Zero && IsWindowVisible(hwnd)) break;
-                hwnd = IntPtr.Zero;
-            }
-            if (hwnd == IntPtr.Zero) return;
-
-            await Task.Delay(Math.Max(1000, delayMs));   // Blizzard/publisher logos + login screen render
-            try { if (proc.HasExited) return; proc.Refresh(); hwnd = proc.MainWindowHandle; } catch { return; }
-            if (hwnd == IntPtr.Zero) return;
-
-            var keys = EscapeSendKeys(password) + "{ENTER}";
-            var tcs = new TaskCompletionSource<bool>();
-            try
-            {
-                if (IsDisposed) return;
-                BeginInvoke(new Action(() =>
-                {
-                    try
-                    {
-                        AllowSetForegroundWindow(proc.Id);
-                        SetForegroundWindow(hwnd);
-                        System.Threading.Thread.Sleep(150);
-                        SendKeys.SendWait(keys);
-                    }
-                    catch { }
-                    finally { tcs.TrySetResult(true); }
-                }));
-                await tcs.Task;
-            }
-            catch { }
-        }
-        private static string EscapeSendKeys(string s)
-        {
-            var sb = new StringBuilder((s ?? "").Length + 8);
-            foreach (var c in s ?? "")
-            {
-                if ("+^%~(){}[]".IndexOf(c) >= 0) sb.Append('{').Append(c).Append('}');
-                else sb.Append(c);
-            }
-            return sb.ToString();
-        }
-        // merge SET <k> "<v>" into Config.wtf, preserving every other line
-        private void SetConfigWtf(Dictionary<string, string> set)
-        {
-            try
-            {
-                var p = ConfigWtfPath();
-                Directory.CreateDirectory(Path.GetDirectoryName(p));
-                var outLines = new List<string>();
-                if (File.Exists(p))
-                    foreach (var l in File.ReadAllLines(p))
-                    {
-                        var t = l.TrimStart();
-                        bool drop = false;
-                        foreach (var k in set.Keys)
-                            if (t.StartsWith("SET " + k + " ", StringComparison.OrdinalIgnoreCase)) { drop = true; break; }
-                        if (!drop) outLines.Add(l);
-                    }
-                foreach (var kv in set)
-                    outLines.Add("SET " + kv.Key + " \"" + kv.Value + "\"");
-                File.WriteAllText(p, string.Join("\r\n", outLines) + "\r\n");
-            }
-            catch { }
+            var d = ReadCfg();
+            if (d == null || !(d.ContainsKey("password") || d.ContainsKey("autoLogin") || d.ContainsKey("account") || d.ContainsKey("loginDelayMs")))
+                return;
+            WriteCfg(c => { c.Remove("password"); c.Remove("autoLogin"); c.Remove("account"); c.Remove("loginDelayMs"); });
         }
         private string ReadConfiguredManifestUrl()
         {

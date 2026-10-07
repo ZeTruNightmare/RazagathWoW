@@ -84,3 +84,12 @@ if (Test-Path "$Module\gilneas\.build\Patch-Y.MPQ") {
     $m = Get-Item "$Repo\patch\Patch-Y.MPQ"
     Write-Host ("synced Patch-Y.MPQ  ({0:N0} bytes)" -f $m.Length)
 } else { Write-Warning "no gilneas\.build\Patch-Y.MPQ in $Module - run gilneas\pack.sh" }
+
+# !RazagathGilneasShield - loads first (the "!" sorts before every other add-on) and hides the extra Gilneas continent from older map add-ons (LibTourist / Cromulent) while they load.
+$shSrc = "$Module\addon\!RazagathGilneasShield"
+$shDst = "$Repo\overlay\Interface\AddOns\!RazagathGilneasShield"
+if (Test-Path $shSrc) {
+    if (Test-Path $shDst) { Remove-Item $shDst -Recurse -Force }
+    Copy-Item $shSrc $shDst -Recurse -Force
+    Write-Host ("synced !RazagathGilneasShield  ({0} files)" -f (Get-ChildItem $shDst -File).Count)
+} else { Write-Warning "no !RazagathGilneasShield in $Module" }

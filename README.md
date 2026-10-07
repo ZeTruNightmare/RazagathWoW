@@ -31,9 +31,9 @@ open-source project, so Windows SmartScreen or an antivirus may warn about them.
   re-run the installer. The launcher only talks to this repository's releases and the
   realm server, and only changes the game's own `Wow.exe` (a backup is kept as
   `Wow.exe.orig`).
-- Auto sign-in (Settings tab) is **off by default**. When switched on it stores your
-  password encrypted with Windows' per-user protection and types it into the WoW login
-  screen; leave it off if you'd rather not use it.
+- The launcher never asks for, stores or types your password. An optional auto sign-in
+  feature existed in launcher 1.6.x; it was removed in 1.7.0 and any saved login it left
+  behind is deleted the first time 1.7.0 starts.
 
 ## Repo layout
 
