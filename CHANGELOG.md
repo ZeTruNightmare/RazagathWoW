@@ -5,6 +5,12 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.07d - New mounts and global chat
+
+- NEW: Three new mounts, sold by Razagath the Ascended for Marks of Razagath: the Green Spectral Wolf (250 marks), the Emerald Shadow Drake - a black flying drake with a lime glow (500 marks) and the Razagath Caravan Mammoth - a lime-runed mammoth with a banker and an auctioneer riding along (1000 marks)
+- NEW: Two realm-wide chat channels, Global-All (everyone, Horde, Alliance and playerbots) and Global-Players (real players only). You join both automatically a few seconds after logging in
+- Note: this update downloads about 170 MB of game files the first time you start the launcher
+
 ## 2026.10.07c - New login screen
 
 - NEW: A brand-new login screen - a forest background, the World of Razagath logo and the Mists of Pandaria login music

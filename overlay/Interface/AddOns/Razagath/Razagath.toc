@@ -17,3 +17,5 @@ ZoneInfo\Libs\LibBabble-Zone-3.0\LibBabble-3.0.lua
 ZoneInfo\Libs\LibBabble-Zone-3.0\LibBabble-Zone-3.0.lua
 ZoneInfo\Libs\LibTourist-3.0\LibTourist-3.0.lua
 ZoneInfo\ZoneInfo.lua
+
+GlobalChannels\GlobalChannels.lua
