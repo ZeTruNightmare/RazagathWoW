@@ -496,6 +496,12 @@ function Frame:PlaceMenuButtons()
 		table.insert(menuButtons, toggle)
 	end
 
+	--Razagath: sort button
+	if self:HasSortButton() then
+		local sort = self:GetSortButton() or self:CreateSortButton()
+		table.insert(menuButtons, sort)
+	end
+
 	for i, button in ipairs(menuButtons) do
 		button:ClearAllPoints()
 		if i == 1 then
@@ -602,6 +608,64 @@ end
 
 function Frame:HasSearchToggle()
 	return self:GetSettings():HasSearchToggle()
+end
+
+
+--[[ sort button (Razagath) ]]--
+
+function Frame:CreateSortButton()
+	local b = Bagnon.SortButton:New(self:GetFrameID(), self)
+	self.sortButton = b
+	return b
+end
+
+function Frame:GetSortButton()
+	return self.sortButton
+end
+
+--only the inventory and bank windows get one (the guild bank and keyring can't be sorted this way)
+function Frame:HasSortButton()
+	local id = self:GetFrameID()
+	return id == 'inventory' or id == 'bank'
+end
+
+
+--[[ currency frame (Razagath) ]]--
+
+function Frame:CreateCurrencyFrame()
+	local f = Bagnon.CurrencyFrame:New(self:GetFrameID(), self)
+	self.currencyFrame = f
+	return f
+end
+
+function Frame:GetCurrencyFrame()
+	return self.currencyFrame
+end
+
+--watched currencies are shown in the inventory window only
+function Frame:HasCurrencyFrame()
+	return self:GetFrameID() == 'inventory'
+end
+
+--sits to the left of the money display; returns the width it needs
+function Frame:PlaceCurrencyFrame()
+	if self:HasCurrencyFrame() then
+		local frame = self:GetCurrencyFrame() or self:CreateCurrencyFrame()
+		frame:ClearAllPoints()
+		if self:HasMoneyFrame() then
+			frame:SetPoint('RIGHT', self:GetMoneyFrame(), 'LEFT', -12, 0)
+		else
+			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -8, 14)
+		end
+		frame:Show()
+		return frame:GetReservedWidth()
+	end
+
+	local frame = self:GetCurrencyFrame()
+	if frame then
+		frame:Hide()
+	end
+	return 0
 end
 
 
@@ -784,12 +848,17 @@ function Frame:PlaceMoneyFrame()
 		frame:ClearAllPoints()
 		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', 0, 10)
 		frame:Show()
-		return frame:GetWidth(), 24
+		local extra = self:PlaceCurrencyFrame()		--Razagath: watched currencies
+		return frame:GetWidth() + extra, 24
 	end
 
 	local frame = self:GetMoneyFrame()
 	if frame then
 		frame:Hide()
+	end
+	local extra = self:PlaceCurrencyFrame()
+	if extra > 0 then
+		return extra, 24
 	end
 	return 0, 0
 end
@@ -819,7 +888,9 @@ function Frame:PlaceBrokerDisplayFrame()
 		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', 8, 10)
 
 		if self:HasMoneyFrame() then
-			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(self:GetMoneyFrame():GetWidth() + 4), 10)
+			local currency = self:GetCurrencyFrame()
+			local extra = currency and currency:IsShown() and currency:GetReservedWidth() or 0
+			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(self:GetMoneyFrame():GetWidth() + 4 + extra), 10)
 		else
 			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -8, 10)
 		end

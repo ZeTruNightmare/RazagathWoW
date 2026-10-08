@@ -5,6 +5,14 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.08 - Bag sorting, currencies, guild bank tabs
+
+- NEW: Bagnon bags now have a Sort button on the inventory and bank windows - it stacks items together and orders them by type, quality and name
+- NEW: currencies you tick Show on Backpack in the Currency tab now appear in your bag window next to your gold
+- NEW: guild leaders get a Buy Tab button and a plus tab in the Bagnon guild bank window to buy new guild bank tabs
+- CHANGE: Marks of Razagath are now a currency - they no longer take up bag space and are listed in the Currency tab
+- Note: small update, about 1 MB
+
 ## 2026.10.07e - Players Online list and chat fix
 
 - NEW: The Who tab now lists every player and playerbot online instead of only the first 50 - with a search box, a Hide bots checkbox, a level filter, sortable columns, a Zone/Guild/Race column switch, paging, and Group Invite, Guild Invite and Add Friend buttons

@@ -129,6 +129,13 @@ function GuildTab:OnHide()
 end
 
 function GuildTab:OnClick()
+	--Razagath: the next tab in line is the "buy a tab" button, like in the stock guild bank
+	if self:IsPurchasable() then
+		PlaySound('igMainMenuOption')
+		StaticPopup_Show('CONFIRM_BUY_GUILDBANK_TAB')
+		return
+	end
+
 	SetCurrentGuildBankTab(self:GetID())
 	QueryGuildBankTab(self:GetID())
 	self:SendMessage('GUILD_BANK_TAB_CHANGE', self:GetID())
@@ -163,12 +170,25 @@ function GuildTab:UpdateEverything()
 	self:UpdateChecked()
 end
 
+--Razagath: true for the one tab the guild leader can buy next (tabs have to be bought in order)
+function GuildTab:IsPurchasable()
+	return self:GetID() == (GetNumGuildBankTabs() + 1) and IsGuildLeader() and GetGuildBankTabCost() and true or false
+end
+
 function GuildTab:Update()
 	local name, icon, isViewable, canDeposit, numWithdrawals, remainingWithdrawals = GetGuildBankTabInfo(self:GetID())
+
+	if self:IsPurchasable() then
+		SetItemButtonTexture(self, [[Interface\GuildBankFrame\UI-GuildBankFrame-NewTab]])
+		SetItemButtonTextureVertexColor(self, 1, 1, 1)
+		self:SetCount(0)
+		return
+	end
+
 	SetItemButtonTexture(self, icon or [[Interface\PaperDoll\UI-PaperDoll-Slot-Bag]])
-	
+
 	self:UpdateCount(remainingWithdrawals)
-	
+
 	--color red if the bag can be purchased
 	if not isViewable then
 		SetItemButtonTextureVertexColor(self, 1, 0.1, 0.1)
@@ -220,6 +240,23 @@ end
 
 function GuildTab:UpdateTooltip()
 	local name, icon, isViewable, canDeposit, numWithdrawals, remainingWithdrawals = GetGuildBankTabInfo(self:GetID())
+
+	--Razagath: purchase hints instead of a bare "Unavailable"
+	if self:IsPurchasable() then
+		GameTooltip:SetText(BUY_GUILDBANK_TAB)
+		SetTooltipMoney(GameTooltip, GetGuildBankTabCost())
+		GameTooltip:Show()
+		return
+	elseif not name and self:GetID() > GetNumGuildBankTabs() then
+		GameTooltip:SetText('Not purchased yet')
+		if IsGuildLeader() and GetGuildBankTabCost() then
+			GameTooltip:AddLine('Buy the tabs before this one first.', 1, 1, 1)
+		else
+			GameTooltip:AddLine('Only the guild leader can buy bank tabs.', 1, 1, 1)
+		end
+		GameTooltip:Show()
+		return
+	end
 
 	if name then
 		GameTooltip:SetText(name)
