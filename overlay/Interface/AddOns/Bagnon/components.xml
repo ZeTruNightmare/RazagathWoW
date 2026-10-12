@@ -5,6 +5,7 @@
 	<Script file="components\brokerDisplay.lua"/>
 	<Script file="components\currencyFrame.lua"/>
 	<Script file="components\sortButton.lua"/>
+	<Script file="components\slotLocks.lua"/>
 	<Script file="components\frame.lua"/>
 	<Script file="components\frameSettings.lua"/>
 	<Script file="components\item.lua"/>

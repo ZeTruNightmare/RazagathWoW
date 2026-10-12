@@ -3,7 +3,7 @@
 ## Author: Tuller
 ## Notes: Single window displays for your inventory, bank, and keys
 ## SavedVariables: BagnonGlobalSettings
-## SavedVariablesPerCharacter: BagnonFrameSettings
+## SavedVariablesPerCharacter: BagnonFrameSettings, BagnonLockedSlots
 ## Version: 2.13.3
 ## OptionalDeps: Ace3, Bagnon_Forever, Bagnon_Armory, LibItemSearch
 embeds.xml

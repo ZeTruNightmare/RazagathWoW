@@ -107,7 +107,10 @@ local function BuildGroups(frameID)
 				table.insert(groups, group)
 			end
 			for slot = 1, size do
-				table.insert(group, {bag, slot})
+				--slots the player locked (slotLocks.lua) are left out entirely: nothing moves out of or into them
+				if not Bagnon.SlotLocks:IsLocked(bag, slot) then
+					table.insert(group, {bag, slot})
+				end
 			end
 		end
 	end

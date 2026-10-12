@@ -2,4 +2,7 @@
 	<Binding name="RAZAGATHCOMPANIONS_TOGGLE" header="RAZAGATHCOMPANIONS">
 		RazagathCompanions_Toggle();
 	</Binding>
+	<Binding name="RAZAGATHCOLLECTION_TOGGLE" header="RAZAGATHCOLLECTION">
+		RazagathCollection_Toggle();
+	</Binding>
 </Bindings>

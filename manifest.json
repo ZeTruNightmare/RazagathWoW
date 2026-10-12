@@ -1,55 +1,55 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.08",
+    "clientVersion":  "2026.10.12",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
                      "version":  "1.7.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/RazagathWoW.exe",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/RazagathWoW.exe",
                      "sha256":  "70575197417dad27689b4eaaa786cf9d90ca168b035185195b938646e588c436"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "c00b86eb0500684298ec812e21c64c0e7d4551b0b1e63732e4ab7494fd6fa4c5",
-                      "size":  83631536,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/patch-enUS-Z.MPQ"
+                      "sha256":  "6d10a24d57479ea4b1bf226439f39b1d254e6ccf91f666d0cf7a2a196f7ed906",
+                      "size":  83806432,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
-                      "sha256":  "c4a50c87c8dd6207c3f54e14814dac4ab5d154ce015006fc59156cbb15183194",
-                      "size":  761816,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/Patch-Z.MPQ"
+                      "sha256":  "e9395f780c3be3c7a78672a5656e76671425d06a2039fdd8b8b1a55ab30aa6b5",
+                      "size":  3704228,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Y.MPQ",
-                      "sha256":  "751c8d4e2af2461d17b46f55db9e5dc2927a3b1b47e86570ac326ee6a7cd525b",
-                      "size":  87387265,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/Patch-Y.MPQ"
+                      "sha256":  "677545068ad78bb11dea30c4c88157f116cc7cc7ca87d12cbf20bc416e15c0f6",
+                      "size":  87389823,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/Patch-Y.MPQ"
                   },
                   {
                       "path":  "Data/Patch-L.MPQ",
                       "sha256":  "12a7581ee444f63434401c741cef64b59780d78c20d301a499e19913347ffda7",
                       "size":  13148663,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/Patch-L.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/Patch-L.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "6f6987a6907c6fe5dbd7d8376af131275918561cb15d6ae511f533dabffc0438",
-                      "size":  3908065,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/RazagathAddons.zip",
+                      "sha256":  "8a620df73cf3a19e0ae8f73efe6adeba59ff9964d6756430242e742596517ac0",
+                      "size":  4776962,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/!RazagathGilneasShield",
@@ -81,7 +81,7 @@
                       "path":  "Interface/AddOns/Questie-335",
                       "sha256":  "31be2953cae5c0145b9ecae9d5e8466a1d756d4d6866332727669dc7f4914fb7",
                       "size":  33519683,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.08/Questie-335.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.12/Questie-335.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Questie-335"
@@ -119,6 +119,26 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.12",
+                          "date":  "2026-10-12",
+                          "title":  "Collection Log, Wardrobe and the Gathering Island",
+                          "notes":  [
+                                        "MAJOR: Collection Log - a new account-wide log (minimap button or keybind) with tabs for Mounts, Pets, Achievements, Recipes, Eternals, Appearances and Unobtainable. Every section and tab pays out Marks of Razagath when you complete it, and anything that can no longer be earned sits in the Unobtainable tab so the other tabs can always be finished",
+                                        "MAJOR: Wardrobe - appearances now unlock the moment you pick an item up, and there is a new retail-style Wardrobe window for transmog, with saveable Outfits you can load and delete",
+                                        "MAJOR: Gathering Island (Crafting Areas, Tier 1) - open your Utility Tome and pick Crafting Areas, no Prestige needed. A sunny island of endless ore, stone, gem, herb, leather and fishing nodes that never run out and can be shared with any number of players, plus neutral trainers, a mailbox and Scott Knight. Nodes ask for the same profession level as the normal versions (tin and gems Mining 65, light leather Skinning 45), but gathering there does not raise your skill. More tiers will open as you Prestige",
+                                        "MAJOR: Spell Blade - new talent Kindled Light (Arcane Ignition can now be cast on allies to heal them and leave a heal over time), new Stormblade and Arcane Edge weapon enchants with the Thunder Edge and Arcane Overflow talents, and new set bonuses for every armour set. Armour sets were regenerated, so the stats on existing Spell Blade gear (hybrid sets, of the Viper greens and Sundered pieces) have changed",
+                                        "MAJOR: Every mount can now be used by both factions (class restrictions are kept)",
+                                        "MINOR: All 3D previews (Wardrobe, Collection Log, Companions) now use a free camera - left-drag to rotate and zoom, right-drag to pan, mouse wheel to zoom",
+                                        "MINOR: Spell Blade wands and the Shoot ability now work properly, and the spell book flipbook pages are fixed",
+                                        "MINOR: New Marks of Razagath icon, and equipment slot locks in your bags",
+                                        "MINOR: AtlasLoot now has a Razagath Loot panel showing the custom Spell Blade drops",
+                                        "MINOR: Bagnon - Sort button, watched currencies next to your gold, and a guild bank Buy Tab button",
+                                        "MINOR: Gilneas spells were updated",
+                                        "MINOR: Scott Knight has a new talk option, Tell me about the Gathering Island",
+                                        "Note: this update downloads about 175 MB of game files the first time you start the launcher"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.08",
                           "date":  "2026-10-08",

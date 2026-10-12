@@ -3,15 +3,22 @@
 ## Notes: The Razagath server UI pack - Spell Blade class registration (+LFG/Questie compat), big-bag support (50-slot Trunk), and the retail-style Mounts & Pets window.
 ## Author: Razagath
 ## Version: 2.0.0
-## OptionalDeps: Questie-335, Cromulent
+## OptionalDeps: Questie-335, Cromulent, AtlasLoot
 ## X-Realm: dev
 ## SavedVariables: RazagathCompanionsDB
 ## SavedVariablesPerCharacter: RazagathGlobalChannelsChar, RazagathWhoChar
 
 SpellBlade\SpellBladeUI.lua
 BigBags\RazagathBigBags.lua
+Common\FreeCam.lua
 Companions\Atlas_Data.lua
 Companions\RazagathCompanions.lua
+CollectionLog\Atlas_Data.lua
+CollectionLog\Data.lua
+CollectionLog\DataRecipes.lua
+CollectionLog\DataAppearances.lua
+CollectionLog\CollectionLog.lua
+Wardrobe\Wardrobe.lua
 GilneasMap\GilneasMap.lua
 ZoneInfo\Libs\LibStub\LibStub.lua
 ZoneInfo\Libs\LibBabble-Zone-3.0\LibBabble-3.0.lua
@@ -21,3 +28,5 @@ ZoneInfo\ZoneInfo.lua
 
 GlobalChannels\GlobalChannels.lua
 WhoList\RazagathWho.lua
+AtlasLootHook\Data.lua
+AtlasLootHook\AtlasLootHook.lua

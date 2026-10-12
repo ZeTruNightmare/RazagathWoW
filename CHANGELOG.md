@@ -5,6 +5,22 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.12 - Collection Log, Wardrobe and the Gathering Island
+
+- MAJOR: Collection Log - a new account-wide log (minimap button or keybind) with tabs for Mounts, Pets, Achievements, Recipes, Eternals, Appearances and Unobtainable. Every section and tab pays out Marks of Razagath when you complete it, and anything that can no longer be earned sits in the Unobtainable tab so the other tabs can always be finished
+- MAJOR: Wardrobe - appearances now unlock the moment you pick an item up, and there is a new retail-style Wardrobe window for transmog, with saveable Outfits you can load and delete
+- MAJOR: Gathering Island (Crafting Areas, Tier 1) - open your Utility Tome and pick Crafting Areas, no Prestige needed. A sunny island of endless ore, stone, gem, herb, leather and fishing nodes that never run out and can be shared with any number of players, plus neutral trainers, a mailbox and Scott Knight. Nodes ask for the same profession level as the normal versions (tin and gems Mining 65, light leather Skinning 45), but gathering there does not raise your skill. More tiers will open as you Prestige
+- MAJOR: Spell Blade - new talent Kindled Light (Arcane Ignition can now be cast on allies to heal them and leave a heal over time), new Stormblade and Arcane Edge weapon enchants with the Thunder Edge and Arcane Overflow talents, and new set bonuses for every armour set. Armour sets were regenerated, so the stats on existing Spell Blade gear (hybrid sets, of the Viper greens and Sundered pieces) have changed
+- MAJOR: Every mount can now be used by both factions (class restrictions are kept)
+- MINOR: All 3D previews (Wardrobe, Collection Log, Companions) now use a free camera - left-drag to rotate and zoom, right-drag to pan, mouse wheel to zoom
+- MINOR: Spell Blade wands and the Shoot ability now work properly, and the spell book flipbook pages are fixed
+- MINOR: New Marks of Razagath icon, and equipment slot locks in your bags
+- MINOR: AtlasLoot now has a Razagath Loot panel showing the custom Spell Blade drops
+- MINOR: Bagnon - Sort button, watched currencies next to your gold, and a guild bank Buy Tab button
+- MINOR: Gilneas spells were updated
+- MINOR: Scott Knight has a new talk option, Tell me about the Gathering Island
+- Note: this update downloads about 175 MB of game files the first time you start the launcher
+
 ## 2026.10.08 - Bag sorting, currencies, guild bank tabs
 
 - NEW: Bagnon bags now have a Sort button on the inventory and bank windows - it stacks items together and orders them by type, quality and name

@@ -717,12 +717,8 @@ end
 local modelFrame = CreateFrame("PlayerModel", "RazagathCompanionsModel", display);
 modelFrame:SetAllPoints();
 Model_OnLoad(modelFrame);
-local DEFAULT_CAM = 1.0;
-local camScale = DEFAULT_CAM;
-local rotating = 0;
-local function ApplyCamScale()
-	if ( modelFrame.SetCamDistanceScale ) then modelFrame:SetCamDistanceScale(camScale); end
-end
+RazagathFreeCam(modelFrame, { face = 0.61 });
+modelFrame:SetScript("OnUpdateModel", function(self) self:ApplyView(); end);
 
 -- Info header (retail InfoButton): icon, large name, description lines.
 local info = CreateFrame("Frame", nil, display);
@@ -777,40 +773,11 @@ local function MakeControlButton(iconAtlas, index, onDown, onUp)
 	b:SetScript("OnMouseUp", function(self) self.icon:SetPoint("CENTER", 0, 0); if ( onUp ) then onUp(); end end);
 	return b;
 end
-local ROT_SPEED = 2;
-MakeControlButton("common-icon-zoomin", 1, function() camScale = Clamp(camScale * 0.85, 0.3, 4); ApplyCamScale(); end);
-MakeControlButton("common-icon-zoomout", 2, function() camScale = Clamp(camScale / 0.85, 0.3, 4); ApplyCamScale(); end);
-MakeControlButton("common-icon-rotateleft", 3, function() rotating = -1; end, function() rotating = 0; end);
-MakeControlButton("common-icon-rotateright", 4, function() rotating = 1; end, function() rotating = 0; end);
-MakeControlButton("common-icon-undo", 5, function()
-	camScale = DEFAULT_CAM; ApplyCamScale();
-	modelFrame.rotation = 0.61; modelFrame:SetRotation(modelFrame.rotation);
-end);
-
--- Drag the model itself to rotate it.
-local modelDragging, modelDragX = false, 0;
-modelFrame:EnableMouse(true);
-modelFrame:SetScript("OnMouseDown", function(self)
-	modelDragging = true;
-	modelDragX = GetCursorPosition();
-end);
-modelFrame:SetScript("OnMouseUp", function() modelDragging = false; end);
-modelFrame:SetScript("OnUpdate", function(self, elapsed)
-	if ( modelDragging ) then
-		if ( not IsMouseButtonDown("LeftButton") ) then
-			modelDragging = false;
-		else
-			local x = GetCursorPosition();
-			self.rotation = (self.rotation or 0) + (x - modelDragX) * 0.012;
-			modelDragX = x;
-			self:SetRotation(self.rotation);
-		end
-	end
-	if ( rotating ~= 0 ) then
-		self.rotation = (self.rotation or 0) + rotating * ROT_SPEED * elapsed;
-		self:SetRotation(self.rotation);
-	end
-end);
+MakeControlButton("common-icon-zoomin", 1, function() modelFrame.view.depth = modelFrame.view.depth + 0.6; modelFrame:ApplyView(); end);
+MakeControlButton("common-icon-zoomout", 2, function() modelFrame.view.depth = modelFrame.view.depth - 0.6; modelFrame:ApplyView(); end);
+MakeControlButton("common-icon-rotateleft", 3, function() modelFrame.autoRotate = -1; end, function() modelFrame.autoRotate = 0; end);
+MakeControlButton("common-icon-rotateright", 4, function() modelFrame.autoRotate = 1; end, function() modelFrame.autoRotate = 0; end);
+MakeControlButton("common-icon-undo", 5, function() modelFrame:ResetView(); end);
 
 -- ===========================================================================
 -- Retail "MagicButtonTemplate" (3-piece red button) used for Mount / Summon
@@ -1070,7 +1037,8 @@ function RazagathCompanions_SelectCreature(creatureID)
 	if ( not idx ) then return; end
 	local id, creatureName, spellID, icon, active = GetCompanionInfo(currentMode, idx);
 	modelFrame:SetCreature(id);
-	ApplyCamScale();
+	modelFrame:ResetView();
+	modelFrame:Settle(1.2);
 	infoIcon:SetTexture(icon);
 	infoName:SetText(creatureName);
 	infoSource:SetText(GetSpellDescription(spellID));

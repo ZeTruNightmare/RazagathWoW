@@ -55,6 +55,30 @@ function ItemSlot:Create()
 	border:Hide()
 	item.border = border
 
+	--Razagath: padlock for locked slots + a click catcher that is only shown in "lock slots" mode
+	local lockIcon = item:CreateTexture(nil, 'OVERLAY')
+	lockIcon:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-LOCK]])
+	lockIcon:SetWidth(14)
+	lockIcon:SetHeight(14)
+	lockIcon:SetPoint('TOPRIGHT', item, 'TOPRIGHT', -1, -1)
+	lockIcon:Hide()
+	item.lockIcon = lockIcon
+
+	local catcher = CreateFrame('Button', nil, item)
+	catcher:SetAllPoints(item)
+	catcher:SetFrameLevel(item:GetFrameLevel() + 5)
+	catcher:RegisterForClicks('LeftButtonUp')
+	catcher:SetScript('OnClick', function(self)
+		local slot = self:GetParent()
+		Bagnon.SlotLocks:Toggle(slot:GetBag(), slot:GetID())
+	end)
+	local hl = catcher:CreateTexture(nil, 'HIGHLIGHT')
+	hl:SetAllPoints(catcher)
+	hl:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
+	hl:SetBlendMode('ADD')
+	catcher:Hide()
+	item.lockCatcher = catcher
+
 	--hack, make sure the cooldown model stays visible
 	item.cooldown = _G[item:GetName() .. 'Cooldown']
 
@@ -187,6 +211,35 @@ function ItemSlot:UNIT_QUEST_LOG_CHANGED()
 	self:UpdateBorder()
 end
 
+function ItemSlot:SLOT_LOCK_UPDATE()
+	self:UpdateLockOverlay()
+end
+
+function ItemSlot:SLOT_LOCK_MODE()
+	self:UpdateLockOverlay()
+end
+
+--Razagath: padlock on locked slots; click catcher while in lock mode (live character's own bags only)
+function ItemSlot:UpdateLockOverlay()
+	local icon, catcher = self.lockIcon, self.lockCatcher
+	if not (icon and catcher) then return end
+
+	local bag, slot = self:GetBag(), self:GetID()
+	local ok = (not self:IsCached()) and Bagnon.SlotLocks:IsLockableBag(bag)
+
+	if ok and Bagnon.SlotLocks:IsLocked(bag, slot) then
+		icon:Show()
+	else
+		icon:Hide()
+	end
+
+	if ok and Bagnon.SlotLocks:IsMode() then
+		catcher:Show()
+	else
+		catcher:Hide()
+	end
+end
+
 function ItemSlot:HandleEvent(msg, ...)
 	local action = self[msg]
 	if action then
@@ -266,6 +319,7 @@ function ItemSlot:Update()
 	self:UpdateSlotColor()
 	self:UpdateSearch()
 	self:UpdateBagSearch()
+	self:UpdateLockOverlay()
 
 	if GameTooltip:IsOwned(self) then
 		self:UpdateTooltip()

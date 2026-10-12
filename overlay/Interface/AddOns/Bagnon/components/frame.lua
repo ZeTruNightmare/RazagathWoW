@@ -500,6 +500,9 @@ function Frame:PlaceMenuButtons()
 	if self:HasSortButton() then
 		local sort = self:GetSortButton() or self:CreateSortButton()
 		table.insert(menuButtons, sort)
+
+		local lock = self:GetLockButton() or self:CreateLockButton()
+		table.insert(menuButtons, lock)
 	end
 
 	for i, button in ipairs(menuButtons) do
@@ -621,6 +624,16 @@ end
 
 function Frame:GetSortButton()
 	return self.sortButton
+end
+
+function Frame:CreateLockButton()
+	local b = Bagnon.LockButton:New(self:GetFrameID(), self)
+	self.lockButton = b
+	return b
+end
+
+function Frame:GetLockButton()
+	return self.lockButton
 end
 
 --only the inventory and bank windows get one (the guild bank and keyring can't be sorted this way)
