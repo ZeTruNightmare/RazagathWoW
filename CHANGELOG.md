@@ -5,6 +5,16 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.13 - Crafting Halls II and III
+
+- MAJOR: Crafting Hall II (needs Prestige 1) - the second tier of the Gathering Island. Silver Vein, Iron Deposit, Coarse Stone and a gem vein (Moss Agate, Lesser Moonstone, Shadowgem); Briarthorn, Swiftthistle, Stranglekelp and Bruiseweed; Light Leather, Medium Leather and Medium Hide; and a fishing shore with a new set of five fish
+- MAJOR: Crafting Hall III (needs Prestige 2) - the third tier. Gold Vein, Mithril Deposit, Heavy Stone and a gem vein (Citrine, Aquamarine, Star Ruby); Wild Steelbloom, Kingsblood, Liferoot and Fadeleaf; Medium Leather, Heavy Leather and Heavy Hide; and a fishing shore with six more fish
+- MAJOR: Like Hall I, the nodes never run out, anyone can share them and they do not raise your skill. They ask for the same profession level as the normal versions (Silver 75, Iron 125, Gold 155, Mithril 175, herbs 70 to 160, Medium leather 75, Heavy leather 125)
+- MINOR: Hall I gets a Light Hide skinning pile (Skinning 45)
+- MINOR: The profession trainers, Scott Knight and the mailbox now stand in every Crafting Hall
+- MINOR: The new ore, herb and leather nodes are recoloured so each tier looks different from the last
+- Note: this update downloads about 90 MB of game files the first time you start the launcher
+
 ## 2026.10.12 - Collection Log, Wardrobe and the Gathering Island
 
 - MAJOR: Collection Log - a new account-wide log (minimap button or keybind) with tabs for Mounts, Pets, Achievements, Recipes, Eternals, Appearances and Unobtainable. Every section and tab pays out Marks of Razagath when you complete it, and anything that can no longer be earned sits in the Unobtainable tab so the other tabs can always be finished
