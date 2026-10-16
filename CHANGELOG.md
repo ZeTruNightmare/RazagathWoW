@@ -14,7 +14,7 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 - MAJOR: The Collection Log has a new Class Mounts category in the Mounts tab with its own completion reward - Warhorse and Charger (both versions), Felsteed, Dreadsteed, the Death Knight mounts, the Argent Charger and Zen Flight
 - MINOR: Pandaren emotes play their voices - this needs the launcher update, run the launcher once so it can re-patch Wow.exe
 - MINOR: Quests that are limited to one faction now also work for the Pandaren of that faction
-- Note: this update downloads about 100 MB of game files the first time you start the launcher
+- Note: this update downloads about 155 MB of game files the first time you start the launcher
 
 ## 2026.10.13 - Crafting Halls II and III
 
@@ -66,7 +66,7 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 - NEW: A brand-new login screen - a forest background, the World of Razagath logo and the Mists of Pandaria login music
 - The login screen no longer shows the ESRB notice or the Blizzard logo, and the dragon roars from the old Frozen Throne scene are gone
-- Note: this update downloads about 100 MB of game files the first time you start the launcher
+- Note: this update downloads about 155 MB of game files the first time you start the launcher
 
 ## 2026.10.07b - Launcher 1.7.0 - auto sign-in removed
 
