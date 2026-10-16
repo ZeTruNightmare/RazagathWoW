@@ -8,7 +8,9 @@
 ## SavedVariables: RazagathCompanionsDB
 ## SavedVariablesPerCharacter: RazagathGlobalChannelsChar, RazagathWhoChar
 
+Common\ChatNotices.lua
 SpellBlade\SpellBladeUI.lua
+Monk\MonkChi.lua
 BigBags\RazagathBigBags.lua
 Common\FreeCam.lua
 Companions\Atlas_Data.lua

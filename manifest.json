@@ -1,55 +1,55 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.13",
+    "clientVersion":  "2026.10.17",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.7.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/RazagathWoW.exe",
-                     "sha256":  "70575197417dad27689b4eaaa786cf9d90ca168b035185195b938646e588c436"
+                     "version":  "1.8.0",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/RazagathWoW.exe",
+                     "sha256":  "c082ae8eaafdc9c15372408af057cec46bb48c12f19c99754d846a268fca94c2"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "6c0c20544a69705de45597911de9663f40dc7258da164231d753175dc22e9cdd",
-                      "size":  84359596,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/patch-enUS-Z.MPQ"
+                      "sha256":  "35af751dd4c0de19dfaa96e4edaf3ef8e1ab6d7bea8c2b0a0a4e218442cf1931",
+                      "size":  139737667,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
-                      "sha256":  "8772b7e4af165c411159329f617095fdb779b9f82d0d8e1a6100f7b460cbbd45",
-                      "size":  3704581,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/Patch-Z.MPQ"
+                      "sha256":  "394ad4bc1558e0bd01978d491d70f6dcfb3053956ed6d18ad61a9afb3ed782fb",
+                      "size":  4259204,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Y.MPQ",
                       "sha256":  "677545068ad78bb11dea30c4c88157f116cc7cc7ca87d12cbf20bc416e15c0f6",
                       "size":  87389823,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/Patch-Y.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-Y.MPQ"
                   },
                   {
                       "path":  "Data/Patch-L.MPQ",
-                      "sha256":  "12a7581ee444f63434401c741cef64b59780d78c20d301a499e19913347ffda7",
-                      "size":  13148663,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/Patch-L.MPQ"
+                      "sha256":  "b17a23a2cf36a65f27380b92f983cac524d880aceb819e850330e52658a1883b",
+                      "size":  13214199,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-L.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
-                      "sha256":  "8a620df73cf3a19e0ae8f73efe6adeba59ff9964d6756430242e742596517ac0",
-                      "size":  4776962,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/RazagathAddons.zip",
+                      "sha256":  "118e40bfa6177904212838fad4cdd9f4b84bcc0f836091dbdc79cf6f94409f89",
+                      "size":  4778943,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/!RazagathGilneasShield",
@@ -81,7 +81,7 @@
                       "path":  "Interface/AddOns/Questie-335",
                       "sha256":  "31be2953cae5c0145b9ecae9d5e8466a1d756d4d6866332727669dc7f4914fb7",
                       "size":  33519683,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.13/Questie-335.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Questie-335.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Questie-335"
@@ -119,6 +119,21 @@
                   }
               ],
     "changelog":  [
+                      {
+                          "version":  "2026.10.17",
+                          "date":  "2026-10-16",
+                          "title":  "Pandaren, the Monk and Zen Flight",
+                          "notes":  [
+                                        "MAJOR: Pandaren are now playable, both Alliance and Horde. They start in Northshire Valley (Alliance) or the Valley of Trials (Horde), can be a Warrior, Hunter, Rogue, Priest, Shaman, Mage or Spell Blade, and have the real Pandaren look with all their customisation options, names and voices",
+                                        "MAJOR: Pandaren racials - Epicurean (better food), Gourmand (Cooking skill bonus), Inner Peace (rested experience builds twice as fast), Bouncy (half fall damage) and Quaking Palm (a short stun)",
+                                        "MAJOR: The Monk is a new class, for Pandaren only. Three skill lines to learn from the Monk trainer, Instructor Lin: Windwalker, Mistweaver and Brewmaster, with spells at every level up to 80. It uses mana and builds Chi (each point of Chi gives crit and dodge). Includes the Brewmaster stances, the Black Ox and Jade Serpent statues, Xuen the White Tiger, Storm Earth and Fire, Transcendence, Fists of Fury, Roll and Flying Serpent Kick, using the real animations, effects and sounds. The Monk talent tree is the real set of Monk talents with extra stat talents on the sides, and all trees can be mixed",
+                                        "MAJOR: Zen Flight - the Monk learns to fly on a meditation cloud from the Monk trainer, Rank 1 at level 60 (+60% flight speed) and Rank 2 at level 70 (+280%). Like the Paladin and Warlock class mounts it needs no riding skill",
+                                        "MAJOR: The Collection Log has a new Class Mounts category in the Mounts tab with its own completion reward - Warhorse and Charger (both versions), Felsteed, Dreadsteed, the Death Knight mounts, the Argent Charger and Zen Flight",
+                                        "MINOR: Pandaren emotes play their voices - this needs the launcher update, run the launcher once so it can re-patch Wow.exe",
+                                        "MINOR: Quests that are limited to one faction now also work for the Pandaren of that faction",
+                                        "Note: this update downloads about 100 MB of game files the first time you start the launcher"
+                                    ]
+                      },
                       {
                           "version":  "2026.10.13",
                           "date":  "2026-10-13",

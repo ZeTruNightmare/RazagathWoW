@@ -74,10 +74,10 @@ local LAZY = { [6] = true, [7] = true };               -- built only when their 
 local UNOB_SOURCES = { [1] = true, [2] = true, [4] = true, [6] = true };   -- kinds whose unobtainable entries show up on the Unobtainable tab
 
 local CAT_LABEL = {
-	razagath = "Razagath Exclusive", achievement = "Achievements", dungeon = "Dungeons & Raids", world = "World Drops & Rares",
+	razagath = "Razagath Exclusive", class = "Class Mounts", achievement = "Achievements", dungeon = "Dungeons & Raids", world = "World Drops & Rares",
 	vendor = "Vendors", quest = "Quest Rewards", object = "Chests & Containers", other = "Other / Unknown Source",
 };
-local CAT_ORDER = { "razagath", "achievement", "dungeon", "world", "vendor", "quest", "object", "other" };
+local CAT_ORDER = { "razagath", "class", "achievement", "dungeon", "world", "vendor", "quest", "object", "other" };
 
 local state = {
 	kind = DB.kind or 1,

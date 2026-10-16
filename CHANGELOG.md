@@ -5,6 +5,17 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.17 - Pandaren, the Monk and Zen Flight
+
+- MAJOR: Pandaren are now playable, both Alliance and Horde. They start in Northshire Valley (Alliance) or the Valley of Trials (Horde), can be a Warrior, Hunter, Rogue, Priest, Shaman, Mage or Spell Blade, and have the real Pandaren look with all their customisation options, names and voices
+- MAJOR: Pandaren racials - Epicurean (better food), Gourmand (Cooking skill bonus), Inner Peace (rested experience builds twice as fast), Bouncy (half fall damage) and Quaking Palm (a short stun)
+- MAJOR: The Monk is a new class, for Pandaren only. Three skill lines to learn from the Monk trainer, Instructor Lin: Windwalker, Mistweaver and Brewmaster, with spells at every level up to 80. It uses mana and builds Chi (each point of Chi gives crit and dodge). Includes the Brewmaster stances, the Black Ox and Jade Serpent statues, Xuen the White Tiger, Storm Earth and Fire, Transcendence, Fists of Fury, Roll and Flying Serpent Kick, using the real animations, effects and sounds. The Monk talent tree is the real set of Monk talents with extra stat talents on the sides, and all trees can be mixed
+- MAJOR: Zen Flight - the Monk learns to fly on a meditation cloud from the Monk trainer, Rank 1 at level 60 (+60% flight speed) and Rank 2 at level 70 (+280%). Like the Paladin and Warlock class mounts it needs no riding skill
+- MAJOR: The Collection Log has a new Class Mounts category in the Mounts tab with its own completion reward - Warhorse and Charger (both versions), Felsteed, Dreadsteed, the Death Knight mounts, the Argent Charger and Zen Flight
+- MINOR: Pandaren emotes play their voices - this needs the launcher update, run the launcher once so it can re-patch Wow.exe
+- MINOR: Quests that are limited to one faction now also work for the Pandaren of that faction
+- Note: this update downloads about 100 MB of game files the first time you start the launcher
+
 ## 2026.10.13 - Crafting Halls II and III
 
 - MAJOR: Crafting Hall II (needs Prestige 1) - the second tier of the Gathering Island. Silver Vein, Iron Deposit, Coarse Stone and a gem vein (Moss Agate, Lesser Moonstone, Shadowgem); Briarthorn, Swiftthistle, Stranglekelp and Bruiseweed; Light Leather, Medium Leather and Medium Hide; and a fishing shore with a new set of five fish
