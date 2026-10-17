@@ -5,6 +5,15 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.17b - Landro's promotions, instant recipes and enchant colours
+
+- MAJOR: Landro Longshot in Booty Bay now sells all of his promotion items for Marks of Razagath - pets cost 5, mounts 10 and everything else 2 (Landro's Pet Box 4, Landro's Gift Box 8). That is 10 pets (Hippogryph Hatchling, Rocket Chicken, Spectral Tiger Cub, the Mini-Mounts and more), 9 mounts (Riding Turtle, both Spectral Tigers, both X-51 Nether-Rockets, Big Battle Bear, Magic Rooster, Wooly White Rhino, Blazing Hippogryph) and the tabards, toys and other items
+- MAJOR: Recipes, patterns, plans and formulas are learned the moment you use them - no more 3 second cast
+- MINOR: Arcane Edge Weapon now glows purple and Stormblade Weapon glows red
+- MINOR: Stormblade Weapon, Stormblade Lightning and Thunder Edge have a new red icon
+- MINOR: The patch notes in the launcher are easier to read, with the big changes under a Major changes heading and the small ones under Minor changes (launcher 1.8.1)
+- Note: this update downloads about 145 MB of game files the first time you start the launcher
+
 ## 2026.10.17 - Pandaren, the Monk and Zen Flight
 
 - MAJOR: Pandaren are now playable, both Alliance and Horde. They start in Northshire Valley (Alliance) or the Valley of Trials (Horde), can be a Warrior, Hunter, Rogue, Priest, Shaman, Mage or Spell Blade, and have the real Pandaren look with all their customisation options, names and voices

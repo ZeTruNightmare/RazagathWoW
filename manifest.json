@@ -1,55 +1,55 @@
 {
     "schema":  1,
-    "clientVersion":  "2026.10.17",
+    "clientVersion":  "2026.10.17b",
     "gameExe":  "Wow.exe",
     "realmlist":  "set realmlist ztnwow.duckdns.org",
     "launcher":  {
-                     "version":  "1.8.0",
-                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/RazagathWoW.exe",
-                     "sha256":  "c082ae8eaafdc9c15372408af057cec46bb48c12f19c99754d846a268fca94c2"
+                     "version":  "1.8.1",
+                     "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/RazagathWoW.exe",
+                     "sha256":  "f1eb7972204618000b9f1ec8cdecad6c9be52495eb8315748410231bdd0bece3"
                  },
     "files":  [
                   {
                       "path":  "Data/enUS/patch-enUS-Z.MPQ",
-                      "sha256":  "35af751dd4c0de19dfaa96e4edaf3ef8e1ab6d7bea8c2b0a0a4e218442cf1931",
-                      "size":  139737667,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-Z.MPQ"
+                      "sha256":  "9eb1b46d479eb060cc33c27f44fe945ae8df6185b8a910332cbe9b308464f2df",
+                      "size":  139737090,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/patch-enUS-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Z.MPQ",
-                      "sha256":  "394ad4bc1558e0bd01978d491d70f6dcfb3053956ed6d18ad61a9afb3ed782fb",
-                      "size":  4259204,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-Z.MPQ"
+                      "sha256":  "4ee5da3eda5986eb0e7dde948e50f4f0a58d235e6d2bf95973c246e706f2213a",
+                      "size":  4255913,
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/Patch-Z.MPQ"
                   },
                   {
                       "path":  "Data/Patch-Y.MPQ",
                       "sha256":  "677545068ad78bb11dea30c4c88157f116cc7cc7ca87d12cbf20bc416e15c0f6",
                       "size":  87389823,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-Y.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/Patch-Y.MPQ"
                   },
                   {
                       "path":  "Data/Patch-L.MPQ",
                       "sha256":  "b17a23a2cf36a65f27380b92f983cac524d880aceb819e850330e52658a1883b",
                       "size":  13214199,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Patch-L.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/Patch-L.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-M.MPQ",
                       "sha256":  "b69713077e19498d20efa5eeaefdba98850764db6bdc99e292bfbdf7b1c858d6",
                       "size":  48767934,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-M.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/patch-enUS-M.MPQ"
                   },
                   {
                       "path":  "Data/enUS/patch-enUS-N.MPQ",
                       "sha256":  "ebb6543ae32c392e1d52d6927d3a059517fb413ec6b152db4f0beaad9a0bbf29",
                       "size":  20494466,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/patch-enUS-N.MPQ"
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/patch-enUS-N.MPQ"
                   },
                   {
                       "path":  "Interface/AddOns",
                       "sha256":  "118e40bfa6177904212838fad4cdd9f4b84bcc0f836091dbdc79cf6f94409f89",
                       "size":  4778943,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/RazagathAddons.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/RazagathAddons.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/!RazagathGilneasShield",
@@ -81,7 +81,7 @@
                       "path":  "Interface/AddOns/Questie-335",
                       "sha256":  "31be2953cae5c0145b9ecae9d5e8466a1d756d4d6866332727669dc7f4914fb7",
                       "size":  33519683,
-                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17/Questie-335.zip",
+                      "url":  "https://github.com/ZeTruNightmare/RazagathWoW/releases/download/patch-2026.10.17b/Questie-335.zip",
                       "type":  "zip",
                       "members":  [
                                       "Interface/AddOns/Questie-335"
@@ -120,6 +120,19 @@
               ],
     "changelog":  [
                       {
+                          "version":  "2026.10.17b",
+                          "date":  "2026-10-17",
+                          "title":  "Landro\u0027s promotions, instant recipes and enchant colours",
+                          "notes":  [
+                                        "MAJOR: Landro Longshot in Booty Bay now sells all of his promotion items for Marks of Razagath - pets cost 5, mounts 10 and everything else 2 (Landro\u0027s Pet Box 4, Landro\u0027s Gift Box 8). That is 10 pets (Hippogryph Hatchling, Rocket Chicken, Spectral Tiger Cub, the Mini-Mounts and more), 9 mounts (Riding Turtle, both Spectral Tigers, both X-51 Nether-Rockets, Big Battle Bear, Magic Rooster, Wooly White Rhino, Blazing Hippogryph) and the tabards, toys and other items",
+                                        "MAJOR: Recipes, patterns, plans and formulas are learned the moment you use them - no more 3 second cast",
+                                        "MINOR: Arcane Edge Weapon now glows purple and Stormblade Weapon glows red",
+                                        "MINOR: Stormblade Weapon, Stormblade Lightning and Thunder Edge have a new red icon",
+                                        "MINOR: The patch notes in the launcher are easier to read, with the big changes under a Major changes heading and the small ones under Minor changes (launcher 1.8.1)",
+                                        "Note: this update downloads about 145 MB of game files the first time you start the launcher"
+                                    ]
+                      },
+                      {
                           "version":  "2026.10.17",
                           "date":  "2026-10-16",
                           "title":  "Pandaren, the Monk and Zen Flight",
@@ -132,8 +145,8 @@
                                         "MAJOR: Spell Blade fix - about 2,750 items that every class can use (a side effect of the earlier class-lock update) were wrongly locked out for Spell Blades. They can use all of them again, and Spell Blades can use Dual Talent Specialization",
                                         "MAJOR: Pandaren can use everything their faction can - about 2,850 items (including 2,500 armour pieces) that no Pandaren could equip, plus faction-only quests, zone effects and spells",
                                         "MINOR: The same fix covers the Goblin and Worgen - faction spells and items such as Heroism and Bloodlust, the Paladin Seals, Mage portals and teleports, Engineering choppers and faction mounts now work for them, and they get the level 20 and 40 riding letters in the mail",
-                                        "MINOR: Monk trainers stand next to the priest trainers in Northshire Abbey and the Valley of Trials, and in Stormwind and Orgrimmar. Monks start with a pair of Initiate's Knuckles and can use leather, staves, fist weapons, swords, maces and dual wield",
-                                        "MINOR: A Monk who tries to use a Chi spell without enough Chi now gets a red 'Not enough Chi' message in the middle of the screen",
+                                        "MINOR: Monk trainers stand next to the priest trainers in Northshire Abbey and the Valley of Trials, and in Stormwind and Orgrimmar. Monks start with a pair of Initiate\u0027s Knuckles and can use leather, staves, fist weapons, swords, maces and dual wield",
+                                        "MINOR: A Monk who tries to use a Chi spell without enough Chi now gets a red \u0027Not enough Chi\u0027 message in the middle of the screen",
                                         "MINOR: Pandaren emotes play their voices - this needs the launcher update, run the launcher once so it can re-patch Wow.exe",
                                         "MINOR: Quests that are limited to one faction now also work for the Pandaren of that faction, and the Questie quest add-on knows the Pandaren races",
                                         "Note: this update downloads about 155 MB of game files the first time you start the launcher"
