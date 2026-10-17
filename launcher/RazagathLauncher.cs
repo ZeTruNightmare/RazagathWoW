@@ -128,7 +128,7 @@ namespace RazagathWoW
     internal static class ExePatcher
     {
         public const string CleanSha256   = "aa63a5750d60ef16746c686b3d5e26876d98953eab08b1c026cd0faf78e88cb8";
-        public const string PatchedSha256 = "655414533ea90d58c381c0ed0c4603f0e24a6dc7b18d9e8c8702f2f9a9a86f9f";
+        public const string PatchedSha256 = "13e4a534ac8019d623b66bde4bde02887e1705abf5cdc94aef91bf61c67f5997";
         public const long   ExpectedSize  = 7704216;
 
         private sealed class Poke
@@ -168,6 +168,19 @@ namespace RazagathWoW
             new Poke(0x0E162A, "D0B0B600",       "0006DD00"),       // VA 0x4E222A
             new Poke(0x0E1034, "B0000000",       "00020000"),       // VA 0x4E1C34  memset size 0xB0 -> 0x200
             new Poke(0x0E129B, "16000000",       "40000000"),       // VA 0x4E1E9B  free-loop count 22 -> 64
+            // EmotesTextSound table builder (VA 0x4CED00) and its two getters (VA 0x4CEB30 / 0x4CEB70) only kept rows with race id < 22
+            // (per-emote record = 22 races x 2 sexes x 4 bytes + emote id = 0xB4 bytes), so the voices of races 25/26 (Pandaren) were
+            // dropped. Widened to 64 races: block 0x200, record 0x204 (0x81 dwords per copy), race limit 0x40.
+            new Poke(0x0CDE13, "B4000000",       "04020000"),       // VA 0x4CEA13  record size (array grow) 0xB4 -> 0x204
+            new Poke(0x0CDE6B, "2D000000",       "81000000"),       // VA 0x4CEA6B  rep movsd count 45 -> 129
+            new Poke(0x0CDE78, "B4000000",       "04020000"),       // VA 0x4CEA78  record stride
+            new Poke(0x0CDF50, "16",             "40"),             // VA 0x4CEB50  getter 1 race limit 22 -> 64
+            new Poke(0x0CDF90, "16",             "40"),             // VA 0x4CEB90  getter 2 race limit
+            new Poke(0x0CE01E, "B4000000",       "04020000"),       // VA 0x4CEC1E  new-record size
+            new Poke(0x0CE02E, "B0000000",       "00020000"),       // VA 0x4CEC2E  memset size 0xB0 -> 0x200
+            new Poke(0x0CE037, "B0000000",       "00020000"),       // VA 0x4CEC37  emote-id field offset
+            new Poke(0x0CE19F, "B0000000",       "00020000"),       // VA 0x4CED9F  emote-id field offset (builder)
+            new Poke(0x0CE1B1, "16",             "40"),             // VA 0x4CEDB1  builder race limit 22 -> 64
             // Character texture compositor (VA 0x4F0864 / 0x4F0940): the loop that right-shifts a texture's width until it matches
             // its body region spins forever when the texture is NARROWER than the region (MoP hair/scalp textures are 128 wide);
             // turn the "jne" back-edge into "jg" so it exits instead.
@@ -191,6 +204,7 @@ namespace RazagathWoW
             "0c540dd96d7dc749501fcb7db2de4285db8662ec035b31aabbc6e53a5dee47fa", // 5 pokes (<= launcher 1.6.3)
             "81010facf1f1940d92b7367d6b3b6861d772166bd3bfad58af1e7d3ae76b510e", // 6 pokes (launcher 1.6.4 - 1.6.6)
             "3256f11b9c264abbc1a9dfd37b99889256dc7dd14fba314eec2b22650fb35f64", // 12-race set (launcher 1.6.7)
+            "655414533ea90d58c381c0ed0c4603f0e24a6dc7b18d9e8c8702f2f9a9a86f9f", // 64-race table set, before the emote-sound table poke
         };
 
         public static Outcome Ensure(string exePath)
@@ -641,6 +655,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.8.0", "2026-10-17", "Wow.exe patch so the voice emotes of the Pandaren races play (/cheer, /thank and the other voiced emotes). Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.7.0", "2026-10-07", "Removed the optional auto sign-in feature (the saved password and the automatic typing into the WoW login screen). It was the part of the launcher antivirus programs disliked most. Any saved account or password from older versions is deleted from your PC the first time this version starts. You sign in on the WoW login screen as usual." },
             new[] { "1.6.10", "2026-10-03", "Internal build change: the launcher and installer are now built reproducibly so they stay identical between patches, which helps antivirus programs learn to trust them. Nothing changes for you." },
             new[] { "1.6.9", "2026-10-03", "Safer launcher self-update: it now swaps its own file in place instead of writing a temporary script, which antivirus programs dislike. Nothing changes for you." },

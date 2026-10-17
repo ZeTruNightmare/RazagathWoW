@@ -59,7 +59,8 @@ if ($RebuildMpq) {
 #  1.6.4 = Wow.exe patched Large-Address-Aware (4 GB) + re-patch from Wow.exe.orig.
 #  1.6.7 = Wow.exe pokes for 12 playable races (Goblin + Worgen): race-array size + compositor loops.
 #  1.6.8 = Wow.exe pokes raise the playable-race cap to 31 (random-race array + relocated per-race table).
-$MinLauncher = [version]"1.6.8"
+#  1.8.0 = Wow.exe poke widens the EmotesTextSound table to 64 races (Pandaren voice emotes).
+$MinLauncher = [version]"1.8.0"
 $launcherOut = "$RepoDir\dist\RazagathWoW.exe"
 $curLv = (Get-Content "$RepoDir\manifest.json" | ConvertFrom-Json).launcher.version
 $lv = if ($LauncherVersion) { $LauncherVersion } else { $curLv }
