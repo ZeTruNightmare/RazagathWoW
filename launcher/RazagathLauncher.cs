@@ -655,6 +655,7 @@ namespace RazagathWoW
         // Newest first. Add an entry whenever launcher/build.ps1's version bumps.
         private static readonly string[][] LauncherLog =
         {
+            new[] { "1.8.1", "2026-10-17", "The patch notes are easier to read: the big changes are listed under a small green Major changes heading and the small ones under Minor changes, instead of every line starting with Major or Minor." },
             new[] { "1.8.0", "2026-10-17", "Wow.exe patch so the voice emotes of the Pandaren races play (/cheer, /thank and the other voiced emotes). Re-run the launcher once to re-patch Wow.exe." },
             new[] { "1.7.0", "2026-10-07", "Removed the optional auto sign-in feature (the saved password and the automatic typing into the WoW login screen). It was the part of the launcher antivirus programs disliked most. Any saved account or password from older versions is deleted from your PC the first time this version starts. You sign in on the WoW login screen as usual." },
             new[] { "1.6.10", "2026-10-03", "Internal build change: the launcher and installer are now built reproducibly so they stay identical between patches, which helps antivirus programs learn to trust them. Nothing changes for you." },
@@ -1264,8 +1265,7 @@ namespace RazagathWoW
                 HeadColor, 13f, FontStyle.Bold, 0, 0, true);
             if (!string.IsNullOrEmpty(latest.title))
                 _news.Add(latest.title, SubColor, 10.5f, FontStyle.Italic, 0, 2);
-            foreach (var n in latest.notes ?? new List<string>())
-                _news.Add("-   " + n, BodyColor, 10f, FontStyle.Regular, 14, 8);
+            AddNotes(_news, latest.notes, 10.5f, 10f, 8);
 
             // ...and the newest launcher change, so the Play tab shows both at once.
             if (LauncherLog.Length > 0)
@@ -1276,6 +1276,33 @@ namespace RazagathWoW
                 for (int i = 2; i < lg.Length; i++)
                     _news.Add("-   " + lg[i], BodyColor, 10f, FontStyle.Regular, 14, 8);
             }
+        }
+
+        // Patch notes: notes that start with "MAJOR:" / "MINOR:" are listed under a small green "Major changes" / "Minor changes" heading (prefix dropped) instead of every
+        // line repeating the word. Other notes (NEW:, plain lines) stay as they were - the ones that are not a "Note:" first, the "Note:" lines last.
+        private static void AddNotes(ChangelogView view, List<string> notes, float headSize, float bodySize, int gap)
+        {
+            var major = new List<string>(); var minor = new List<string>(); var lead = new List<string>(); var tail = new List<string>();
+            foreach (var n in notes ?? new List<string>())
+            {
+                if (n == null) continue;
+                if (n.StartsWith("MAJOR:", StringComparison.Ordinal)) major.Add(n.Substring(6).Trim());
+                else if (n.StartsWith("MINOR:", StringComparison.Ordinal)) minor.Add(n.Substring(6).Trim());
+                else if (n.StartsWith("Note:", StringComparison.Ordinal)) tail.Add(n);
+                else lead.Add(n);
+            }
+            foreach (var n in lead) view.Add("-   " + n, BodyColor, bodySize, FontStyle.Regular, 14, gap);
+            if (major.Count > 0)
+            {
+                view.Add("Major changes", HeadColor, headSize, FontStyle.Bold, 0, gap + 8, true);
+                foreach (var n in major) view.Add("-   " + n, BodyColor, bodySize, FontStyle.Regular, 14, gap);
+            }
+            if (minor.Count > 0)
+            {
+                view.Add("Minor changes", HeadColor, headSize, FontStyle.Bold, 0, gap + 8, true);
+                foreach (var n in minor) view.Add("-   " + n, BodyColor, bodySize, FontStyle.Regular, 14, gap);
+            }
+            foreach (var n in tail) view.Add("-   " + n, BodyColor, bodySize, FontStyle.Regular, 14, gap + (n == tail[0] ? 8 : 0));
         }
 
         private void RenderLauncherLog()
@@ -1301,8 +1328,7 @@ namespace RazagathWoW
                 first = false;
                 if (!string.IsNullOrEmpty(c.title))
                     _changelog.Add(c.title, SubColor, 9.75f, FontStyle.Italic, 0, 2);
-                foreach (var n in c.notes ?? new List<string>())
-                    _changelog.Add("-   " + n, BodyColor, 9.5f, FontStyle.Regular, 14, 6);
+                AddNotes(_changelog, c.notes, 10f, 9.5f, 6);
             }
         }
 
