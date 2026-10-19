@@ -5,6 +5,11 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.19c - Icon colour polish
+
+- MINOR: Cleaned up the inventory icons of the Spell Blade sets - leftover red and orange on the Blade, Arcane and hybrid icons now follow the set colour (for example the star gauntlets)
+- Note: this update downloads about 150 MB of game files the first time you start the launcher
+
 ## 2026.10.19b - Runeplated and gold trim fixes
 
 - MAJOR: The Runeplated set is now dark green with steel trim instead of red and gold, and its icons are dark green to match
