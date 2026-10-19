@@ -5,6 +5,15 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.19 - Spec colours, matching cloaks and a Collection Log update
+
+- MAJOR: Spell Blade gear now matches the spec it boosts - Blade sets and weapons glow red, Arcane purple and Holy gold. The armour glows and gems, the helm and shoulder effects and particles, the weapon glows and the wand shots all follow it. The hybrid sets are green: epic hybrid sets lime green, rare hybrid sets a darker green, and the Sundered Sigil weapons match
+- MAJOR: The Spell Blade spell animations match their spec too - Blade spells cast in red, Arcane in purple and Holy in gold, including the weapon enchant glows (Stormblade Weapon red, Arcane Edge Weapon purple, Radiant Weapon gold)
+- MAJOR: Every Spell Blade set now has a matching cloak, 21 in all, so the whole outfit matches. Cloaks drop from the same bosses as the rest of their set, count towards the set and come in the same colour
+- MAJOR: The Collection Log is up to date - Landro Longshot's pets and mounts now show where they can be bought, and the new gear looks are listed in the Appearances tab
+- MINOR: The Start Zone Selector in the cities and start zones is now a green portal instead of a slime
+- Note: this update downloads about 160 MB of game files the first time you start the launcher
+
 ## 2026.10.17b - Landro's promotions, instant recipes and enchant colours
 
 - MAJOR: Landro Longshot in Booty Bay now sells all of his promotion items for Marks of Razagath - pets cost 5, mounts 10 and everything else 2 (Landro's Pet Box 4, Landro's Gift Box 8). That is 10 pets (Hippogryph Hatchling, Rocket Chicken, Spectral Tiger Cub, the Mini-Mounts and more), 9 mounts (Riding Turtle, both Spectral Tigers, both X-51 Nether-Rockets, Big Battle Bear, Magic Rooster, Wooly White Rhino, Blazing Hippogryph) and the tabards, toys and other items
