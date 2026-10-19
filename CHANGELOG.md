@@ -5,6 +5,13 @@ The launcher reads the machine-readable copy of this from `manifest.json`
 
 ---
 
+## 2026.10.19b - Runeplated and gold trim fixes
+
+- MAJOR: The Runeplated set is now dark green with steel trim instead of red and gold, and its icons are dark green to match
+- MAJOR: Only the Holy sets keep yellow and gold trim - the gold on every Blade, Arcane and hybrid set is now plain dark steel like the rest of the metal
+- MINOR: The Sundered shoulders no longer have green leaking into their grey metal trim
+- Note: this update downloads about 150 MB of game files the first time you start the launcher
+
 ## 2026.10.19 - Spec colours, matching cloaks and a Collection Log update
 
 - MAJOR: Spell Blade gear now matches the spec it boosts - Blade sets and weapons glow red, Arcane purple and Holy gold. The armour glows and gems, the helm and shoulder effects and particles, the weapon glows and the wand shots all follow it. The hybrid sets are green: epic hybrid sets lime green, rare hybrid sets a darker green, and the Sundered Sigil weapons match
